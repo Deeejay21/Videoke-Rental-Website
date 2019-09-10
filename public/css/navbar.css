@@ -1,0 +1,72 @@
+/* For Black Background */
+#mainNavAdjust {
+    background-color: #212529;
+  }
+  
+  #mainNavAdjust .navbar-toggler {
+    font-size: 12px;
+    right: 0;
+    padding: 13px;
+    text-transform: uppercase;
+    color: white;
+    border: 0;
+    background-color: #3490dc;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+  
+  #mainNavAdjust .navbar-brand {
+    color: #3490dc;
+    font-family: "Kaushan Script", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+  
+  #mainNavAdjust .navbar-brand.active,
+  #mainNavAdjust .navbar-brand:active,
+  #mainNavAdjust .navbar-brand:focus,
+  #mainNavAdjust .navbar-brand:hover {
+    color: #2176bd;
+  }
+  
+  #mainNavAdjust .navbar-nav .nav-item .nav-link {
+    font-size: 90%;
+    font-weight: 400;
+    padding: 0.75em 0;
+    letter-spacing: 1px;
+    color: white;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+  
+  #mainNavAdjust .navbar-nav .nav-item .nav-link.active,
+  #mainNavAdjust .navbar-nav .nav-item .nav-link:hover {
+    color: #3490dc;
+  }
+
+@media (min-width: 992px) {
+  /* For Black Background */
+  #mainNavAdjust {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: padding-top 0.3s, padding-bottom 0.3s;
+    border: none;
+    background-color: #212529;
+  }
+
+  #mainNavAdjust .navbar-brand {
+    font-size: 1.75em;
+    transition: all 0.3s;
+  }
+
+  #mainNavAdjust .navbar-nav .nav-item .nav-link {
+    padding: 1.1em 1em !important;
+  }
+
+  #mainNavAdjust.navbar-shrink {
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #212529;
+  }
+
+  #mainNavAdjust.navbar-shrink .navbar-brand {
+    font-size: 1.25em;
+    padding: 12px 0;
+  }
+}
