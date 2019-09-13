@@ -3,6 +3,7 @@
 Auth::routes();
 
 Route::view('/facebook', 'pages.facebook');
+Route::get('/', 'UsersController@error');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/register', 'Auth\RegisterController@list');

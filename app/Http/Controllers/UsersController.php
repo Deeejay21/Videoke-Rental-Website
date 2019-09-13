@@ -15,6 +15,7 @@ class UsersController extends Controller
     
     public function home(User $user)
     {
+        // $this->authorize('update', $user->payment_id);
         $qrCode = new QrCode('Dear ' . $user->first_name . ', it is submitted that the payment worth ₱' . ($user->videoke->price / 2) . '.00 Via ' . $user->payment->name . ' has been successful. Please print this receipt or the QR Code and give it to our delivery boy so we can transact properly. This is for our customer safety that we assure that you are the one who reserve in our website. Thank you.');
         $qrCode->setSize(250);
         $qrCode->setWriterByName('svg');
@@ -52,4 +53,11 @@ class UsersController extends Controller
     {
         return view('users.accounts.payment', compact('user'));
     }
+
+    // public function error()
+    // {
+    //     $users = User::all();
+
+    //     return view('errors.404', compact('users'));
+    // }
 }
