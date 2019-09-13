@@ -31,7 +31,7 @@
                   </div>
 
         <div class="col-lg-12 text-center" style="padding-bottom: 16rem;">
-            <a class="btn btn-outline-primary mt-3" href="/">Back</a>
+            <a class="btn btn-outline-primary mt-3" href="javascript:history.back()">Back</a>
         </div>
     </div>
 

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             // $table->unsignedBigInteger('address_id');
             $table->string('gender');
-            $table->string('age', 3);
+            $table->unsignedSmallInteger('age');
             $table->string('phone');
             $table->string('email',150)->unique();
             $table->timestamp('email_verified_at')->nullable();

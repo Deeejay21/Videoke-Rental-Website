@@ -10719,6 +10719,11 @@ h6 {
   section {
     padding: 150px 0;
   }
+
+  .form-control {
+    flex: 0 0 50%;
+    max-width: 100%;
+  }
 }
 
 ::-moz-selection {
@@ -10845,7 +10850,7 @@ img::-moz-selection {
 header.masthead {
   text-align: center;
   color: white;
-  background-image: url(/images/header-bg.jpg?e2d2a51c2932205b52f4a5ae1943eb97);
+  background-image: url(/images/background.PNG);
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
@@ -11018,10 +11023,10 @@ header.masthead .intro-text .intro-heading {
 
 .portfolio-modal .close-modal {
   position: absolute;
-  top: 12px;
-  right: 100px;
-  width: 75px;
-  height: 75px;
+  /* top: 12px; */
+  /* right: 100px; */
+  width: 50%;
+  /* height: 75px; */
   cursor: pointer;
   background-color: transparent;
 }

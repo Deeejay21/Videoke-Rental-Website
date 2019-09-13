@@ -50,9 +50,9 @@
                             <div class="card-header">Reserved Videoke Schedule</div>
                             <div class="card-body">
                                 @foreach ($users as $user)
-                                @if ($user->is_paid == 'Paid')
+                                @if (($currentTime < $user->date_return()) && ($user->is_paid == 'Paid'))
                                     <ul>
-                                        <li>{{ $user->checked_in_at->format('F d, Y g:i A') }} to {{ $user->date_return() }}</li>
+                                      <li>{{ $user->checked_in_at->format('F d, Y g:i A') }} to {{ $user->date_return() }}</li>
                                     </ul>
                                 @endif
                                 @endforeach
@@ -66,7 +66,7 @@
         <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading text-uppercase">Register</h2>
-            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            <h3 class="section-subheading text-muted">Create Your Account</h3>
           </div>
         </div>
         
@@ -80,54 +80,79 @@
                 <div class="col-md-6">
                   <div class="form-group">
                         <label for="videoke_id" class="col-form-label text-md-right">Videoke Package</label>
-                        <select id="videoke_id" class="form-control" required name="videoke_id" autocomplete="videoke_id" autofocus>
-                                <option value="" selected>--- Select Videoke  ---</option>
+                        <select id="videoke_id" class="form-control @error('videoke_id') is-invalid @enderror" name="videoke_id" autocomplete="videoke_id" autofocus>
+                                <option value="0" selected>--- Select Videoke  ---</option>
                             @foreach ($videokes as $videoke)
-                                <option value="{{ $videoke->id }}">{{ $videoke->name }}</option>
+                                <option value="{{ $videoke->id }}" {{ old('videoke_id') == $videoke->id ? 'selected' : '' }}>{{ $videoke->name }}</option>
                             @endforeach
                         </select>
+                        @error('videoke_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror  
                   </div>
 
+                  {{-- {{ old('checked_in_at', $date_format->format('d F Y - h:i A')) }} --}}
+                  {{-- , $date_format->format('d F Y - h:i A') --}}
+
                   <div class="form-group">
-                        <label for="checked_in_at" class="col-form-label text-md-right">Date Needed</label>
+                        <label for="checked_in_at" class="col-form-label text-md-right">Date of Reservation</label>
                         <div class="input-group date form_datetime" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
-                            <input class="form-control fs" size="40" type="text" value="" readonly style="background-color: #fff;">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <input class="form-control fs @error('checked_in_at') is-invalid @enderror" size="40" type="text" value="{{ old('checked_in_at') }}" readonly style="background-color: #fff;">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                            @error('checked_in_at')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror  
                         </div>
                         <input type="hidden" id="checked_in_at" name="checked_in_at" value="" /><br/>
                   </div>
 
-                  <p align="center" style="color: #3490dc"><small>Note: If you want to order 2 or more videoke, you can login with your account and reserve another videoke.</small></p>
+                  <p align="center" class="text-muted"><small>Note: If you want to order 2 or more videoke, you can login with your account and reserve another videoke.</small></p>
 
-                  <div class="form-group">
-                    <label for="name" class="col-form-label text-md-right">First Name</label>
-                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="first_name" autofocus>
-
-                                @error('first_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                  </div>
-
-                  <div class="form-group">
-                    <label for="last_name" class="col-form-label text-md-right">Last Name</label>
-                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="last_name" autofocus>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name" class="col-form-label text-md-right">First Name</label>
+                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="first_name" autofocus>
+    
+                        @error('first_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                      </div>
+                    </div>
+    
+                      <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="last_name" class="col-form-label text-md-right">Last Name</label>
+                        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="last_name" autofocus>
+                            
                         @error('last_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                      </div>
+                      </div>
                   </div>
+                  
 
                   <div class="form-group">
                     <label for="gender" class="col-form-label text-md-right">Gender</label>
-                    <select id="gender" class="form-control" required name="gender" autocomplete="gender" autofocus>
-                        <option value="" selected>--- Select Gender  ---</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
+                    <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" autocomplete="gender" autofocus>
+                        <option value="0" selected>--- Select Gender  ---</option>
+                        <option value="male" @if (old('gender') == "male") {{ 'selected' }} @endif>Male</option>
+                        <option value="female" @if (old('gender') == "female") {{ 'selected' }} @endif>Female</option>
+                      </select>
+                      @error('gender')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror  
                   </div>
 
                   <div class="form-group">
@@ -177,12 +202,17 @@
 
                   <div class="form-group">
                     <label for="payment_id" class="col-form-label text-md-right">Payment</label>
-                    <select id="payment_id" class="form-control" required name="payment_id">
-                        <option value="" selected>--- Select Payment  ---</option>
+                    <select id="payment_id" class="form-control @error('payment_id') is-invalid @enderror" name="payment_id">
+                          <option value="0" selected>--- Select Payment  ---</option>
                         @foreach ($payments as $payment)
-                        <option value="{{ $payment->id }}">{{ $payment->name }}</option>
+                          <option value="{{ $payment->id }}" {{ old('payment_id') == $payment->id ? 'selected' : '' }}>{{ $payment->name }}</option>
                         @endforeach
                     </select>
+                    @error('payment_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror 
                   </div>
 
                   <div class="form-group">
@@ -231,11 +261,13 @@
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}" charset="UTF-8"></script>
         <script type="text/javascript">
+        
           var date = new Date();
               date.setDate(date.getDate());
             
               $('.form_datetime').datetimepicker({
-                //language:  'fr',
+                format: "dd MM yyyy - HH:ii P",
+                pickerPosition: "center",
                 weekStart: 1,
                 todayBtn:  1,
                 todayHighlight: 1,

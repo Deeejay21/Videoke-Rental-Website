@@ -29,6 +29,7 @@
                                     <select id="usertype" class="form-control" required name="usertype" autocomplete="usertype" autofocus>
                                         <option>{{ $user->usertype }}</option>
                                         <option value="User">User</option>
+                                        <option value="Courier">Courier</option>
                                         <option value="Admin">Admin</option>
                                     </select>
                                 </div>
