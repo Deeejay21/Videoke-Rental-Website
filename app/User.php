@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -47,6 +48,11 @@ class User extends Authenticatable
         return $this->belongsTO(Videoke::class);
     }
 
+    public function videoke_return()
+    {
+        return $this->hasOne(VideokeReturn::class);
+    }
+
     public function account()
     {
         return $this->hasOne(Account::class);
@@ -62,7 +68,17 @@ class User extends Authenticatable
 
     public function total_customers()
     {
-        return User::where('is_paid', 'Paid')->count();
+        return User::where([['is_paid', '<>', 'Paying'], ['usertype', 'User']])->count();
+    }
+
+    public function total_transaction()
+    {
+        return User::where([['is_paid', 'Paid'], ['usertype', 'User']])->count();
+    }
+
+    public function total_videoke()
+    {
+        return VideokeTotal::count();
     }
 
     public function august()
@@ -185,19 +201,17 @@ class User extends Authenticatable
             ->sum('videokes.price');
     }
 
-    protected $dates = ['checked_in_at'];
+    protected $dates = ['checked_in_at', 'return_at'];
 
     public function setChecked_in_atAttribute($cia)
     {
         $this->attributes['checked_in_at'] = Carbon::parse($cia);
     }
-
-    // protected $dates = ['checked_in_at', 'return_at'];
-
-    // public function setReturn_atAttribute($ra)
-    // {
-    //     $this->attributes['return_at'] = Carbon::parse($ra);
-    // }
+    
+    public function setReturn_atAttribute($ra)
+    {
+        $this->attributes['return_at'] = Carbon::parse($ra);
+    }
 
     public function path()
     {
@@ -209,15 +223,47 @@ class User extends Authenticatable
         return url('/courier/customers/' . $this->id . '/access');
     }
 
+    public function check_format()
+    {
+        return $this->checked_in_at->format('F d, Y (D) - g:i A');
+    }
+
+    public function return_at_issued()
+    {
+        $return_date = $this->updated_at;
+        return Carbon::createFromFormat('Y-m-d H:i:s', $return_date, 'UTC')
+            ->setTimezone('Asia/Manila')
+            ->format('F d, Y' . ' (' . 'D' . ') - g:i A');
+    }
+
+    public function qr_code_issued()
+    {
+        $update_date = $this->updated_at;
+        return Carbon::createFromFormat('Y-m-d H:i:s', $update_date, 'UTC')
+            ->setTimezone('Asia/Manila')
+            ->format('F d, Y' . ' (' . 'D' . ') - g:i A');
+    }
+
     public function date_return()
     {
         $checked_in_at = $this->checked_in_at;
-        $date_return = $this->videoke->number;  
+        $date_return = $this->videoke->number;
         
         $date = date_create($checked_in_at);
 
         date_add($date,date_interval_create_from_date_string($date_return));
-        return date_format($date,"F d, Y g:i A");
+        return date_format($date,"F d, Y' . ' (' . 'D' . ') - g:i A");
+    }
+
+    public function date_return_format()
+    {
+        $checked_in_at = $this->checked_in_at;
+        $date_return = $this->videoke->number;
+        
+        $date = date_create($checked_in_at);
+
+        date_add($date,date_interval_create_from_date_string($date_return));
+        return date_format($date,"F d, Y (D) - g:i A");
     }
 
     public function date_return_notification()
@@ -229,5 +275,24 @@ class User extends Authenticatable
 
         date_add($date,date_interval_create_from_date_string($date_return));
         return date_format($date,"F d, Y");
+    }
+
+    public function qr_code()
+    {
+        return $this->hasOne(QRCode::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            $user->qr_code()->create([
+                'qr_password' => Str::random(50),
+            ]);
+            $user->videoke_return()->create([
+                'return_at' => $user->date_return_format(),
+            ]);
+        });
     }
 }

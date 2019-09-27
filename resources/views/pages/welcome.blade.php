@@ -165,7 +165,7 @@
                           <h4 class="my-0 font-weight-normal">{{ $videoke->name }}</h4>
                       </div>
                       <div class="card-body">
-                          <h1 class="card-title pricing-card-title">₱{{ $videoke->price }}.00<small class="text-muted">/{{ $videoke->number }}</small></h1>
+                          <h1 class="card-title pricing-card-title">₱{{ number_format($videoke->price, 2, '.', ',') }}<small class="text-muted">/{{ $videoke->number }}</small></h1>
                           <ul class="list-unstyled mt-3 mb-4">
                                   <li>Latest Songs</li>
                                   <li>Quality Mic</li>

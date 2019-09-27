@@ -13,7 +13,7 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where([['usertype', 'User'], ['is_return', 'Operating']])->whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
         
         return view('courier.customers.index', compact('users'));

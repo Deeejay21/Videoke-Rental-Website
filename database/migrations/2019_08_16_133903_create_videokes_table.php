@@ -24,7 +24,7 @@ class CreateVideokesTable extends Migration
             $table->integer('id', true);
 			$table->string('name', 30)->nullable();
 			$table->string('number', 20)->nullable();
-			$table->integer('price')->nullable();
+            $table->integer('price')->nullable();
 			$table->timestamps();
         });
     }

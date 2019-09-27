@@ -48,6 +48,6 @@ class DashboardController extends Controller
               ->backgroundColor('#0084FF')
               ->fill(false);
               
-        return view('admin.dashboard.index', compact('total_sales', 'chart', 'year', 'total_payments', 'total_customers', 'total_videokes'));
+        return view('admin.dashboard.index', compact('total_sales', 'chart', 'year', 'total_payments', 'total_customers', 'total_videokes', 'user'));
     }
 }

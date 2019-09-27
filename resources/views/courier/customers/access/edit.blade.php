@@ -22,9 +22,10 @@
                             @method('PATCH')
                             @csrf
     
+                            @if (auth()->user()->usertype == 'Admin')
                             <div class="form-group row">
                                 <label for="usertype" class="col-md-4 col-form-label text-md-right">User Type</label>
-    
+                                
                                 <div class="col-md-6">
                                     <select id="usertype" class="form-control" required name="usertype" autocomplete="usertype" autofocus>
                                         <option>{{ $user->usertype }}</option>
@@ -34,19 +35,28 @@
                                     </select>
                                 </div>
                             </div>
+                            {{-- @endif --}}
     
+                            {{-- @if ($user->is_paid == 'Paid')
+                            @else --}}
                             <div class="form-group row">
                                 <label for="is_paid" class="col-md-4 col-form-label text-md-right">Payment Status</label>
     
                                 <div class="col-md-6">
                                     <select id="is_paid" class="form-control"  name="is_paid" autocomplete="is_paid" autofocus>
+                                        @if ($user->is_paid == 'Paid')
                                         <option>{{ $user->is_paid }}</option>
+                                        @else
                                         <option value="Paying">Paying</option>
-                                        <option value="Paid">Paid</option>
+                                        <option value="Half Payment">Half Payment</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>
+                            {{-- @endif --}}
                             
+                            {{-- @if ($user->usertype == 'Admin') --}}
+                                
                             <div class="form-group row">
                                 <label for="is_expired" class="col-md-4 col-form-label text-md-right">Account Status</label>
     
@@ -58,16 +68,18 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
                             
                             <div class="form-group row">
                                 <label for="is_return" class="col-md-4 col-form-label text-md-right">Videoke Status</label>
     
                                 <div class="col-md-6">
                                     <select id="is_return" class="form-control" required name="is_return" autocomplete="is_return" autofocus>
+                                        @if ($user->is_paid == 'Paid')
                                         <option>{{ $user->is_return }}</option>
-                                        <option value="Operating">Operating</option>
-                                        <option value="On-going">On-going</option>
                                         <option value="Return">Return</option>
+                                        @endif
+                                        <option value="Operating">Operating</option>
                                     </select>
                                 </div>
                             </div>
@@ -76,7 +88,7 @@
                                 <div class="col-4"></div>
                                 <div class="col-2 pl-5">
                                     <button type="submit" class="btn btn-outline-primary">
-                                        Edit Access
+                                        Edit Status
                                     </button>
                                 </div>
                                 <div class="col-2 pl-5">

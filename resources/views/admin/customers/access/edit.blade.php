@@ -42,7 +42,7 @@
                                     <select id="is_paid" class="form-control"  name="is_paid" autocomplete="is_paid" autofocus>
                                         <option>{{ $user->is_paid }}</option>
                                         <option value="Paying">Paying</option>
-                                        <option value="Paid">Paid</option>
+                                        <option value="Half Payment">Half Payment</option>
                                     </select>
                                 </div>
                             </div>

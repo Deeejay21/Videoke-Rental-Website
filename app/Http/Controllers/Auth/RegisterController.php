@@ -73,7 +73,7 @@ class RegisterController extends Controller
             'gender' => ['required', 'string', 'max:255', 'not_in:0'],
             'age' => ['required', 'integer', 'min:12', 'max:70'],
             'phone' => ['required', 'phone:PH'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
             'age.min' => 'The age must be at least 12 years old.',
@@ -154,7 +154,7 @@ class RegisterController extends Controller
     {
         $videokes = Videoke::all();
         $payments = Payment::all();
-        $users = User::all();
+        $users = User::where('usertype', 'Half Payment');
         $currentTime = Carbon::now('asia/manila');
         $currentTime = date('F d, Y');
 

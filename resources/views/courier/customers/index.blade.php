@@ -41,7 +41,7 @@
                     <div class="container">
                             <div class="row">
                                 <div class="col-8">
-                                    <h1>Customer List</h1>
+                                    <h1>Customer Reservation List</h1>
                                 </div>
                                 <div class="col-4 d-flex justify-content-end align-items-baseline">
                                     {{-- <a href="/admin/customers/access" class="btn btn-outline-primary">Customer Access</a> --}}
@@ -84,14 +84,11 @@
                                             <th>Age</th>
                                             <th>Contact Number</th>
                                             <th>Email</th>
-                                            <th>Payment</th>
-                                            <th>Videoke</th>
+                                            <th>Videoke Order</th>
                                             <th>Customer Delivery Date</th>
                                             <th>Customer Videoke Return Date</th>
                                             <th>Videoke Status</th>
-                                            <th>User Type</th>
                                             <th>Payment Status</th>
-                                            <th>Account Status</th>
                                             <th>Customer Created</th>
                                             <th>Action</th>
                                         </tr>
@@ -99,17 +96,16 @@
                                     <tbody>
                                         @foreach ($users as $user)
                                             <tr>
-                                                <td>{{ $user->id }}</td>
+                                                <td>{{ $user->id - 2}}</td>
                                                 <td>{{ $user->first_name }}</td>
                                                 <td>{{ $user->last_name }}</td>
                                                 <td>{{ $user->gender }}</td>
                                                 <td>{{ $user->age }}</td>
                                                 <td>{{ $user->phone }}</td>
                                                 <td>{{ $user->email }}</td>
-                                                <td>{{ $user->payment->name }}</td>
                                                 <td>{{ $user->videoke->name }}</td>
-                                                <td>{{ $user->checked_in_at->format('F d, Y g:i A') }}</td>
-                                                <td>{{ $user->date_return() }}</td>
+                                                <td>{{ $user->check_format() }}</td>
+                                                <td>{{ $user->videoke_return->return_at }}</td>
                                                 {{-- @if ($user->date_return() == $currentTime)
                                                     
                                                 @else
@@ -122,20 +118,10 @@
                                                 @else
                                                     <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_return }}</span></h5></td>
                                                 @endif
-                                                @if ( $user->usertype == 'Admin')
-                                                    <td><h5><span class="badge badge-pill badge-info">{{ $user->usertype }}</span></h5></td>
-                                                @else
-                                                    <td><h5><span class="badge badge-pill badge-secondary">{{ $user->usertype }}</span></h5></td>
-                                                @endif
                                                 @if ($user->is_paid == 'Paid')
                                                     <td><h5><span class="badge badge-pill badge-success">{{ $user->is_paid }}</span></h5></td>
                                                 @else
                                                     <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_paid }}</span></h5></td>
-                                                @endif
-                                                @if ( $user->is_expired == 'Active' )
-                                                    <td><h5><span class="badge badge-pill badge-success">{{ $user->is_expired }}</span></h5></td>
-                                                @else
-                                                    <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_expired }}</span></h5></td>
                                                 @endif
                                                 <td>{{ $user->created_at->diffForHumans() }}</td>
                                                 <td>

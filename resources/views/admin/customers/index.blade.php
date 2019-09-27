@@ -108,7 +108,7 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->payment->name }}</td>
                                                 <td>{{ $user->videoke->name }}</td>
-                                                <td>{{ $user->checked_in_at->format('F d, Y g:i A') }}</td>
+                                                <td>{{ $user->check_format() }}</td>
                                                 <td>{{ $user->date_return() }}</td>
                                                 {{-- @if ($user->date_return() == $currentTime)
                                                     
@@ -119,6 +119,8 @@
 
                                                 @if ( $user->is_return == 'Return')
                                                     <td><h5><span class="badge badge-pill badge-success">{{ $user->is_return }}</span></h5></td>
+                                                @elseif ($user->is_return == 'Pending')
+                                                    <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_return }}</span></h5></td>
                                                 @else
                                                     <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_return }}</span></h5></td>
                                                 @endif

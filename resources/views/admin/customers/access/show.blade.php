@@ -57,6 +57,7 @@
                         <th>Account Status</th>
                         <th>Videoke Status</th>
                         <th>Customer Created</th>
+                        <th>Videoke Date Return</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -79,14 +80,25 @@
                                 <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_expired }}</span></h5></td>
                             @endif
                             @if ($user->is_return == 'Return')
-                                <td><h5><span class="badge badge-pill badge-secondary">{{ $user->is_return }}</span></h5></td>
-                            @elseif ($user->is_return == 'Operating')
-                                <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_return }}</span></h5></td>
-                            @else
                                 <td><h5><span class="badge badge-pill badge-success">{{ $user->is_return }}</span></h5></td>
+                            @elseif ($user->is_return == 'Operating')
+                                <td>
+                                    <div class="btn-group">
+                                        <h5><span class="badge badge-pill badge-warning mr-2">{{ $user->is_return }}</span></h5>
+                                        <a href="/admin/customers/{{ $user->id }}/access/confirm" class="btn btn-outline-primary btn-sm">Confirm</a>
+                                    </div>
+                                </td>
+                            @else
+                                <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_return }}</span></h5></td>
                             @endif
                             <td>{{ $user->created_at->format('F/d/Y' . ' (' . 'D' . ')') }} - {{ $user->created_at->diffForHumans() }}</td>
-                            <td><a href="/admin/customers/{{ $user->id }}/access/edit" class="btn btn-outline-primary m-1">Edit</a></td>
+                            <td>
+                                <div class="btn-group">
+
+                                    <a href="/admin/customers/{{ $user->id }}/access/edit" class="btn btn-outline-primary m-1">Edit</a>
+                                    
+                                </div>
+                            </td>
                         </tr>
                 </tbody>
             </table>
