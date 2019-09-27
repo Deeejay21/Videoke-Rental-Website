@@ -6,7 +6,6 @@
                     <li class="nav-item"><a class="nav-link active" href="/courier">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="/courier/notification">Notification</a></li>
                     <li class="nav-item"><a class="nav-link" href="/courier/customers">Customers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/courier/reservations">Reservations</a></li>
                 </ul>
             </div>
     </div>

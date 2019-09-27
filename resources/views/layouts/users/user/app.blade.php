@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-@include('layouts.links.upper-links')
+@include('layouts.links.qrcode-upper')
 <body>
     <div id="app">
         @include('layouts.users.user.navbar')

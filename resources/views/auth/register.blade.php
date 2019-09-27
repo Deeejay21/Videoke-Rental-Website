@@ -49,6 +49,9 @@
                         <div class="card">
                             <div class="card-header">Reserved Videoke Schedule</div>
                             <div class="card-body">
+                              @if ($users->count() == 0)
+                                  <td>No Reservation Yet</td>
+                              @endif
                                 @foreach ($users as $user)
                                 @if (($currentTime < $user->date_return()) && ($user->is_paid == 'Paid'))
                                     <ul>
@@ -99,7 +102,7 @@
                   <div class="form-group">
                         <label for="checked_in_at" class="col-form-label text-md-right">Date of Reservation</label>
                         <div class="input-group date form_datetime" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
-                            <input class="form-control fs @error('checked_in_at') is-invalid @enderror" size="40" type="text" value="{{ old('checked_in_at') }}" readonly style="background-color: #fff;">
+                            <input class="form-control fs @error('checked_in_at') is-invalid @enderror" size="40" type="text" required readonly style="background-color: #fff;">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                             @error('checked_in_at')
                               <span class="invalid-feedback" role="alert">
@@ -213,30 +216,6 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror 
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
                   </div>
 
                 </div>

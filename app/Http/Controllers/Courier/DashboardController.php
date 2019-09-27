@@ -12,11 +12,6 @@ class DashboardController extends Controller
 {
     public function index(User $user)
     {
-        $users = User::all();
-        $total_customers = $user->total_customers();
-        $total_payments = Payment::count();
-        $total_videokes = VideokeTotal::count();
-
-        return view('courier.dashboard.index', compact('users', 'total_customers', 'total_payments', 'total_videokes'));
+        return view('courier.dashboard.index', compact('user'));
     }
 }

@@ -16,8 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('first_name');
-            $table->timestamp('checked_in_at');
-            $table->timestamp('return_at')->nullable();
+            $table->timestamp('checked_in_at')->nullable();
             $table->string('last_name');
             // $table->unsignedBigInteger('address_id');
             $table->string('gender');
@@ -30,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('videoke_id');
             $table->string('usertype', 10)->default('User');
-            $table->string('is_paid', 10)->default('Paying');
+            $table->string('is_paid', 20)->default('Paying');
             $table->string('is_expired', 10)->default('Active');
             $table->string('is_return', 10)->default('Operating');
             $table->timestamps();

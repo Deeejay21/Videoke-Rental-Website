@@ -3,6 +3,7 @@
 Auth::routes();
 
 Route::view('/facebook', 'pages.facebook');
+Route::get('/courier/customers/{user}/access/qrerror', 'QRErrorController@index');
 Route::get('/', 'UsersController@error');
 
 Route::middleware(['guest'])->group(function () {
@@ -15,10 +16,13 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/contact', 'ContactFormController1@store');
     Route::view('/service', 'pages.service');
     Route::view('/team', 'pages.team');
+    // Route::get('/qrcode', 'QRCodeLoginController@create');
+    // Route::post('/qrcode', 'QRCodeLoginController@store');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/{user}/account/home', 'UsersController@home');
+    Route::get('/qrcode/{user}/preview', 'UsersController@preview');
     // Route::get('/user/{user}/account/qrcode', 'UsersController@qrcode');
     Route::get('/user/{user}/account/personalinformation', 'UsersController@personalinformation');
     Route::get('/user/{user}/account/reservation', 'UsersController@reservation');
@@ -43,6 +47,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/customers/{user}/access', 'AccessController@show'); 
     Route::get('/admin/customers/{user}/access/edit', 'AccessController@edit');
     Route::patch('/admin/customers/{user}/access', 'AccessController@update');
+
+    
+    // IF I AM GOING TO EDIT THE CONFIRM BUTTON AND THEN SET THE IS_RETURN TO PENDING IT WILL NOT RETURN REDIRECT TO THE admin/customers/{user}/access BECAUSE THERE IS SAME URI LIKE THIS  
+    // Route::get('/admin/customers/{user}/access/confirm', 'ConfirmationController@edit');
+    // Route::patch('/admin/customers/{user}/access', 'ConfirmationController@update');
 
     Route::get('/admin/report', 'Admin\ReportController@index');
 
@@ -70,10 +79,11 @@ Route::middleware(['auth', 'courier'])->group(function () {
 
     Route::get('/courier/customers', 'Courier\UsersController@index');
 
+    Route::get('/courier/customers/{user}/access/confirm', 'QRCodeController@create');
+    Route::post('/courier/customers/{user}/access', 'QRCodeController@store');
+
     Route::get('/courier/customers/{user}/access', 'Courier\AccessController@show'); 
     Route::get('/courier/customers/{user}/access/edit', 'Courier\AccessController@edit');
     Route::patch('/courier/customers/{user}/access', 'Courier\AccessController@update');
 
-    Route::get('/courier/reservations', 'Courier\ReservationsController@index');
-    Route::get('/courier/reservations/{user}/show', 'Courier\ReservationsController@show');
 });

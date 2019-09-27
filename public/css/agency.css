@@ -4430,33 +4430,12 @@ input[type=button].btn-block {
   background-size: 100% 100%;
 }
 
-/* center */
 @media (max-width: 575.98px) {
   .navbar-expand-sm > .container,
   .navbar-expand-sm > .container-fluid {
     padding-right: 0;
     padding-left: 0;
   }
-  
-  .center {
-    text-align: center;
-  }
-  
-.form-control {
-  display: block;
-  width: 100%;
-  height: calc(1.6em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.6;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
 }
 
 @media (min-width: 576px) {
@@ -10527,7 +10506,7 @@ a.text-dark:focus {
 }
 
 .text-muted {
-  color: #6c757d!important;
+  color: #6c757d !important;
 }
 
 .text-black-50 {
@@ -10719,11 +10698,6 @@ h6 {
   section {
     padding: 150px 0;
   }
-
-  .form-control {
-    flex: 0 0 50%;
-    max-width: 100%;
-  }
 }
 
 ::-moz-selection {
@@ -10850,7 +10824,7 @@ img::-moz-selection {
 header.masthead {
   text-align: center;
   color: white;
-  background-image: url(/images/background.PNG);
+  background-image: url(/images/header-bg.jpg?e2d2a51c2932205b52f4a5ae1943eb97);
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
@@ -10988,7 +10962,7 @@ header.masthead .intro-text .intro-heading {
 }
 
 .portfolio-modal .modal-content {
-  padding: 80px 0;
+  padding: 100px 0;
   text-align: center;
 }
 
@@ -11023,10 +10997,10 @@ header.masthead .intro-text .intro-heading {
 
 .portfolio-modal .close-modal {
   position: absolute;
-  /* top: 12px; */
-  /* right: 100px; */
-  width: 50%;
-  /* height: 75px; */
+  top: 25px;
+  right: 25px;
+  width: 75px;
+  height: 75px;
   cursor: pointer;
   background-color: transparent;
 }
@@ -11302,7 +11276,7 @@ section#contact .form-group input.form-control {
 }
 
 section#contact .form-group textarea.form-control {
-  height: 185px;
+  height: 248px;
 }
 
 section#contact .form-control:focus {

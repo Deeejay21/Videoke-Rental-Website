@@ -14,7 +14,6 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::all();
-
         
         return view('admin.customers.index', compact('users'));
     }
@@ -61,7 +60,20 @@ class UsersController extends Controller
 
     public function update(User $user)
     {
-        $user->update($this->validateRequest());
+        $data = request()->validate([
+            'checked_in_at' => '',
+            'first_name' => '',
+            'last_name' => '',
+            'gender' => '',
+            'age' => '',
+            'phone' => '',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'password' => '',
+            'videoke_id' => '',
+            'payment_id' => '',
+        ]);
+
+        $user->update($data);
 
 
         return redirect('/admin/customers')->with('update', 'Customer ' . $user->first_name .  ' has been updated.');
@@ -74,19 +86,4 @@ class UsersController extends Controller
         return redirect('/admin/customers')->with('delete', 'Customer ' . $user->first_name .  ' has been deleted.');
     }
 
-    private function validateRequest()
-    {
-        return request()->validate([
-            'checked_in_at' => '',
-            'first_name' => '',
-            'last_name' => '',
-            'gender' => '',
-            'age' => '',
-            'phone' => '',
-            'email' => '',
-            'password' => '',
-            'videoke_id' => '',
-            'payment_id' => '',
-        ]);
-    }
 }

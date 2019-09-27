@@ -80,22 +80,26 @@
                 <div class="col-md-6">
                   <div class="form-group">
                         <label for="videoke_id" class="col-form-label text-md-right">Videoke Package</label>
-                                                    <select id="videoke_id" class="form-control" required name="videoke_id" autocomplete="videoke_id" autofocus>
-                                                            <option value="{{ $videoke->id }}">{{ $videoke->name }}</option>
-                                                    </select>
+                        <select id="videoke_id" class="form-control" name="videoke_id" autocomplete="videoke_id" autofocus>
+                                <option value="{{ $videoke->id }}">{{ $videoke->name }}</option>
+                        </select>
                   </div>
 
                   <div class="form-group">
-                        <label for="checked_in_at" class="col-form-label text-md-right">Date Needed</label>
-                        <div class="input-group date form_datetime" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
-                            <input class="form-control fs" size="40" type="text" value="" readonly style="background-color: #fff;">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                        </div>
-                        <input type="hidden" id="checked_in_at" name="checked_in_at" value="" /><br/>
-                  </div>
+                    <label for="checked_in_at" class="col-form-label text-md-right">Date of Reservation</label>
+                    <div class="input-group date form_datetime" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
+                        <input class="form-control fs @error('checked_in_at') is-invalid @enderror" size="40" type="text" value="{{ old('checked_in_at') }}" readonly style="background-color: #fff;">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        @error('checked_in_at')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror  
+                    </div>
+                    <input type="hidden" id="checked_in_at" name="checked_in_at" value="" /><br/>
+              </div>
 
-                  <p align="center" style="color: #3490dc"><small>Note: If you want to order 2 or more videoke, you can login with your account and reserve another videoke.</small></p>
+                  <p align="center"><small>Note: If you want to order 2 or more videoke, you can login with your account and reserve another videoke.</small></p>
 
                   <div class="form-group">
                     <label for="name" class="col-form-label text-md-right">First Name</label>
@@ -120,11 +124,16 @@
 
                   <div class="form-group">
                     <label for="gender" class="col-form-label text-md-right">Gender</label>
-                    <select id="gender" class="form-control" required name="gender" autocomplete="gender" autofocus>
-                        <option value="" selected>--- Select Gender  ---</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
+                    <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" autocomplete="gender" autofocus>
+                        <option value="0" selected>--- Select Gender  ---</option>
+                        <option value="male" @if (old('gender') == "male") {{ 'selected' }} @endif>Male</option>
+                        <option value="female" @if (old('gender') == "female") {{ 'selected' }} @endif>Female</option>
+                      </select>
+                      @error('gender')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror  
                   </div>
 
                   <div class="form-group">
@@ -174,12 +183,17 @@
 
                   <div class="form-group">
                     <label for="payment_id" class="col-form-label text-md-right">Payment</label>
-                    <select id="payment_id" class="form-control" required name="payment_id">
-                        <option value="" selected>--- Select Payment  ---</option>
+                    <select id="payment_id" class="form-control @error('payment_id') is-invalid @enderror" name="payment_id">
+                          <option value="0" selected>--- Select Payment  ---</option>
                         @foreach ($payments as $payment)
-                        <option value="{{ $payment->id }}">{{ $payment->name }}</option>
+                          <option value="{{ $payment->id }}" {{ old('payment_id') == $payment->id ? 'selected' : '' }}>{{ $payment->name }}</option>
                         @endforeach
                     </select>
+                    @error('payment_id')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror 
                   </div>
 
                   <div class="form-group">

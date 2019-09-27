@@ -14,7 +14,6 @@
                         <p class="card-text"><strong>Gender:</strong> {{ $user->gender }}</p>
                         <p class="card-text"><strong>Email:</strong> {{ $user->email }}</p>
                         <p class="card-text"><strong>Phone Number:</strong> {{ $user->phone }}</p>
-                        <p class="card-text"><strong>Payment:</strong> {{ $user->payment->name }}</p>
             </div>
     </div>
 

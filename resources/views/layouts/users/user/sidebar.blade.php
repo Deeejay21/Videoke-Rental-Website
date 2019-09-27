@@ -1,7 +1,7 @@
 
 
 
-@if (auth()->user()->is_paid == 'Paid')
+@if  (($user->is_paid == 'Half Payment') || ($user->is_paid == 'Paid'))
     
 <div class="card accountC">
     <h5 class="card-header">Account</h5>
