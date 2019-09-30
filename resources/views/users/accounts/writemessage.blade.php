@@ -14,7 +14,7 @@
     @endif
 
     @if (! session()->has('message'))
-    <form action="/user/{{ $user->id }}/account/writemessage" method="POST">
+    <form class="form-prevent-multiple-submits" action="/user/{{ $user->id }}/account/writemessage" method="POST">
         @csrf
         
         <div class="form-group">
@@ -25,10 +25,12 @@
         
         <div class="center">
 
-            <button type="submit" class="btn btn-outline-primary">Send Message</button>
+            <button type="submit" class="button-prevent-multiple-submits btn btn-outline-primary">Send Message</button>
         </div>
         
     </form>
     @endif
+    
+    <script src="{{ asset('js/submit.js') }}"></script>
 
 @endsection

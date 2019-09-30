@@ -10,7 +10,7 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where([['usertype', 'User'], ['is_paid', 'Paid'], ['is_return', 'Return']])->get();
 
         return view('admin.report.index', compact('users'));
     }

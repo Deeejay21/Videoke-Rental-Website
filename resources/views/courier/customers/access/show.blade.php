@@ -54,7 +54,8 @@
                         <th>ID</th>
                         <th>Payment Status</th>
                         <th>Videoke Status</th>
-                        <th>Videoke Date Return</th>
+                        <th>Videoke Delivery Date</th>
+                        <th>Videoke Return Date</th>
                         <th>Payment Confirmation Date Issued</th>
                         <th>Videoke Date Returned Issued</th>
                         {{-- <th>Customer Registered Date</th> --}}
@@ -79,7 +80,9 @@
                                 <td><h5><span class="badge badge-pill badge-warning mr-2">{{ $user->is_return }}</span></h5></td>
                             @endif
 
-                            <td>{{ $user->videoke_return->return_at }}</td>
+                            <td>{{ $user->check_format() }}</td>
+
+                            <td>{{ $user->date_return_format() }}</td>
                            
                             @if ($user->is_paid == 'Paid')
                             <td>{{ $user->qr_code_issued() }}</td>

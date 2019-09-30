@@ -16,7 +16,7 @@ class CreateVideokeReturnsTable extends Migration
         Schema::create('videoke_returns', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('return_at')->nullable();
             $table->timestamps();
         });

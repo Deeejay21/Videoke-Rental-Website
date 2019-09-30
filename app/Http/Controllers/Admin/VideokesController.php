@@ -4,10 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Videoke;
+use App\User;
 
 class VideokesController extends Controller
 {
+    public function rent()
+    {
+        $currentTime = Carbon::now('Asia/Manila');
+
+        $users = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
+
+        return view('admin.videokes.rent', compact('users', 'currentTime'));
+    }
+    
     public function index()
     {
         $videokes = Videoke::all();
@@ -25,6 +36,11 @@ class VideokesController extends Controller
         Videoke::create($this->validateRequest());
 
         return redirect('/admin/videokes')->with('success', 'Videoke has been successfully added.');
+    }
+
+    public function show()
+    {
+        //
     }
 
     public function edit(Videoke $videoke)

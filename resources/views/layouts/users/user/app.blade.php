@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-@include('layouts.links.qrcode-upper')
+@include('layouts.users.user.app-write')
 <body>
     <div id="app">
         @include('layouts.users.user.navbar')
@@ -22,5 +22,6 @@
             @include('layouts.users.guest.footer')
         </div>
     </div>
+
 </body>
 </html>
