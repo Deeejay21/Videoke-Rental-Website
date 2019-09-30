@@ -19,7 +19,7 @@ class ReservationsController extends Controller
         // date_add($date,date_interval_create_from_date_string($date_return));
         // echo date_format($date,"F d, Y g:i A");
 
-        $users = User::all();
+        $users = User::where('usertype', 'User')->whereIn('is_return', ['Operating', 'Return'])->get();
 
         return view('admin.reservations.index', compact('users'));
     }

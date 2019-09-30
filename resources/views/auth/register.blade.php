@@ -75,7 +75,7 @@
         
         <div class="row">
           <div class="col-lg-12">
-            <form action="/register" method="POST">
+            <form class="form-prevent-multiple-submits" action="/register" method="POST">
                 @csrf
 
               <div class="row">
@@ -227,7 +227,7 @@
                 </div> --}}
                 <div class="clearfix"></div>
                 <div class="col-lg-12 text-center">
-                  <button class="btn btn-outline-primary mt-3" type="submit">Register</button>
+                  <button class="button-prevent-multiple-submits btn btn-outline-primary mt-3" type="submit">Register</button>
                 </div>
               </div>
             </form>

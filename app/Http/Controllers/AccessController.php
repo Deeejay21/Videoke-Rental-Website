@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 
 class AccessController extends Controller
 {
@@ -20,6 +20,8 @@ class AccessController extends Controller
     public function update(User $user)
     {
         $data = request()->validate([
+            'videoke_id' => '',
+            'payment_id' => '',
             'usertype' => '',
             'is_paid' => '',
             'is_expired' => '',

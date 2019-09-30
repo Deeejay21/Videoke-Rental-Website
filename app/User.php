@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -63,6 +63,7 @@ class User extends Authenticatable
         return User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->where('users.is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->sum('videokes.price');
     }
 
@@ -87,6 +88,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '8')
             ->sum('videokes.price');
     }
@@ -97,6 +99,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '9')
             ->sum('videokes.price');
     }
@@ -107,6 +110,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '10')
             ->sum('videokes.price');
     }
@@ -117,6 +121,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '11')
             ->sum('videokes.price');
     }
@@ -127,6 +132,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '12')
             ->sum('videokes.price');
     }
@@ -137,6 +143,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '1')
             ->sum('videokes.price');
     }
@@ -147,6 +154,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '2')
             ->sum('videokes.price');
     }
@@ -157,6 +165,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '3')
             ->sum('videokes.price');
     }
@@ -167,6 +176,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '4')
             ->sum('videokes.price');
     }
@@ -177,6 +187,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '5')
             ->sum('videokes.price');
     }
@@ -187,6 +198,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '6')
             ->sum('videokes.price');
     }
@@ -197,6 +209,7 @@ class User extends Authenticatable
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
+            ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '7')
             ->sum('videokes.price');
     }

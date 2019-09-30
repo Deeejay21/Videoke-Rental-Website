@@ -12,4 +12,9 @@ class Payment extends Model
     {
         return $this->hasMany(User::class);
     }   
+
+    // public function users_filter()
+    // {
+    //     return $this->hasMany(User::class)->where('usertype', 'User')->where('is_paid', 'Paid')->where('is_return', 'Return');
+    // }   
 }

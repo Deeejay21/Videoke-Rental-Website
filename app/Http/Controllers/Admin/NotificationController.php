@@ -9,12 +9,21 @@ use App\Http\Controllers\Controller;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function delivery()
     {
         $users = User::all();
         $currentTime = Carbon::now('asia/manila');
         $currentTime = date('F d, Y');
 
-        return view('admin.notification.index', compact('users', 'currentTime'));
+        return view('admin.notification.delivery', compact('users', 'currentTime'));
+    }
+
+    public function return()
+    {
+        $users = User::all();
+        $currentTime = Carbon::now('asia/manila');
+        $currentTime = date('F d, Y');
+
+        return view('admin.notification.return', compact('users', 'currentTime'));
     }
 }

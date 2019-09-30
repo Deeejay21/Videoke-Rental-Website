@@ -7,9 +7,14 @@ use App\User;
 
 class UsersController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth' => 'verified']);
     }
     
     public function home(User $user)

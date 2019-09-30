@@ -430,7 +430,7 @@
         @endif
 
         @if (! session()->has('message'))
-          <form action="/contact" method="POST">
+          <form class="form-prevent-multiple-submits" action="/contact" method="POST">
             @csrf
 
             <div class="row">
@@ -455,7 +455,7 @@
               </div>
               <div class="clearfix"></div>
               <div class="col-lg-12 text-center">
-                <button class="btn btn-outline-primary" type="submit">Send Message</button>
+                <button class="button-prevent-multiple-submits btn btn-outline-primary" type="submit">Send Message</button>
               </div>
             </div>
           </form>

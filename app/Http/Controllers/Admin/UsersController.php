@@ -11,9 +11,31 @@ use App\Payment;
 
 class UsersController extends Controller
 {
+
+    public function firstPayment()
+    {
+        $users = User::where('usertype', 'User')->where('is_paid', 'Half Payment')->get();
+        
+        return view('admin.customers.first-payment', compact('users'));
+    }
+
+    public function fullyPaid()
+    {
+        $users = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
+        
+        return view('admin.customers.fully-paid', compact('users'));
+    }
+
+    public function paying()
+    {
+        $users = User::where('usertype', 'User')->where('is_paid', 'Paying')->get();
+        
+        return view('admin.customers.paying', compact('users'));
+    }
+    
     public function index()
     {
-        $users = User::all();
+        $users = User::where('usertype', 'User')->get();
         
         return view('admin.customers.index', compact('users'));
     }

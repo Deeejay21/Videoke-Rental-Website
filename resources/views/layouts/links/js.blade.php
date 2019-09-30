@@ -1,3 +1,4 @@
+<script src="{{ asset('js/submit.js') }}"></script>
 
   <!-- Bootstrap core JavaScript -->
   <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
