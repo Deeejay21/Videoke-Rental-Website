@@ -1,10 +1,10 @@
-@extends('layouts.users.user.app')
+@extends('layouts.users.user.app2')
 
 @section('title', 'Videoke | Home')
 
 @section('content')
 
-@if (($user->is_paid == 'Half Payment') || ($user->is_paid == 'Paid'))
+@if (($user->is_paid == 'Half Payment') || ($user->is_paid == 'Paid') && ($user->is_return == 'Operating'))
 <div class="alert alert-success paid" role="alert">
     <h4 class="alert-heading center"><strong>Welcome to Videoke Rental Website</strong></h4>
     <hr>
@@ -29,6 +29,8 @@
                             </div>
                         </div>
             </div>
+@elseif (($user->is_paid == 'Paid') && ($user->is_return == 'Return'))
+            <h1><a href="">Reserve Again</a></h1>
 @else
 <div class="alert alert-danger notice" role="alert">
     <h4 class="alert-heading center"><strong>Notice</strong></h4>

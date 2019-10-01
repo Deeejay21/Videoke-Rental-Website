@@ -257,7 +257,10 @@
 
     <p><a href="/admin/payments/create" class="btn btn-outline-primary">Add New Payment</a></p>
 
-    <table class="table table-bordered" id="table1">
+@include('layouts.users.admin.session')
+
+
+    <table class="form-prevent-multiple-submits table table-bordered" id="table1">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -281,7 +284,7 @@
                                         @csrf
                                         @method('DELETE')
         
-                                        <button type="submit" class="btn btn-outline-danger" style="margin: 4px;">Delete</button>
+                                        <button type="submit" class="button-prevent-multiple-submits btn btn-outline-danger" style="margin: 4px;">Delete</button>
                                     </form>
                             </div>
                         </td>
@@ -290,9 +293,9 @@
             </tbody>
         </table>
 
-@include('layouts.users.admin.session')
-
 @section('lower-extends')
+<script src="{{ asset('js/submit.js') }}"></script>
+
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">

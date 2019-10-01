@@ -83,18 +83,14 @@
                                     </select>
                                 </div>
                             </div>
-    
+
                             <div class="row">
-                                <div class="col-4"></div>
-                                <div class="col-2 pl-5">
-                                    <button type="submit" class="btn btn-outline-primary">
-                                        Edit Status
-                                    </button>
+                                <div class="col-md-12 text-center">
+                                    <div class="btn-group btn-group-md">
+                                        <button type="submit" class="btn btn-outline-primary">Edit Payment</button>
+                                        <a href="{{ $user->path_courier() }}" class="btn btn-outline-secondary ml-4">Back</a>
+                                    </div>
                                 </div>
-                                <div class="col-2 pl-5">
-                                    <a href="{{ $user->path_courier() }}" class="btn btn-outline-secondary">Back</a>
-                                </div>
-                                <div class="col-4"></div>
                             </div>
                         </form>
                     </div>

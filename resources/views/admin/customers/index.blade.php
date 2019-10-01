@@ -268,7 +268,6 @@
             <th>Customer Delivery Date</th>
             <th>Customer Videoke Return Date</th>
             <th>Customer Registered Date</th>
-            <th>User Type</th>
             <th>Account Status</th>
             <th>Payment Status</th>
             <th>Videoke Status</th>
@@ -290,11 +289,6 @@
                 <td>{{ $user->check_format() }}</td>
                 <td>{{ $user->date_return_format() }}</td>
                 <td>{{ $user->created_at->format('F d, Y (D) - g:i A') }} - {{ $user->created_at->diffForHumans() }}</td>
-                @if ( $user->usertype == 'Admin')
-                <td><h5><span class="badge badge-pill badge-info">{{ $user->usertype }}</span></h5></td>
-                @else
-                <td><h5><span class="badge badge-pill badge-secondary">{{ $user->usertype }}</span></h5></td>
-                @endif
                 @if ( $user->is_expired == 'Active' )
                     <td><h5><span class="badge badge-pill badge-success">{{ $user->is_expired }}</span></h5></td>
                 @else
@@ -318,11 +312,11 @@
                     <div class="btn-group">
                             <a href="/admin/customers/{{ $user->id }}/access" class="btn btn-outline-success" style="margin: 4px;">Status</a>
                     <a href="/admin/customers/{{ $user->id }}/edit" class="btn btn-outline-primary" style="margin: 4px;">Edit</a>
-                    <form action="/admin/customers/{{ $user->id }}" method="post">
+                    <form class="form-prevent-multiple-submits" action="/admin/customers/{{ $user->id }}" method="post">
                         @csrf
                         @method('DELETE')
 
-                        <button type="submit" class="btn btn-outline-danger" style="margin: 4px;">Delete</button>
+                        <button type="submit" class="button-prevent-multiple-submits btn btn-outline-danger" style="margin: 4px;">Delete</button>
                     </form>
 
                     </div>
@@ -333,6 +327,8 @@
 </table>
 
 @section('lower-extends')
+<script src="{{ asset('js/submit.js') }}"></script>
+
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">

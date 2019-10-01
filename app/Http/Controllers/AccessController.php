@@ -9,12 +9,20 @@ class AccessController extends Controller
 {
     public function show(User $user)
     {
-        return view('admin.customers.access.show', compact('user'));
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        $currentTime = $this->currentTime();
+
+        return view('admin.customers.access.show', compact('currentTime', 'usersNotification', 'user'));
     }
 
     public function edit(User $user)
     {
-        return view('admin.customers.access.edit', compact('user'));
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        $currentTime = $this->currentTime();
+
+        return view('admin.customers.access.edit', compact('currentTime', 'usersNotification', 'user'));
     }
 
     public function update(User $user)
@@ -30,6 +38,6 @@ class AccessController extends Controller
 
         $user->update($data);
 
-        return redirect('/admin/customers/' . $user->id . '/access');
+        return redirect('/admin/customers/' . $user->id . '/access')->with('update', 'Customer ' . $user->first_name .  ' has been updated.');
     }
 }

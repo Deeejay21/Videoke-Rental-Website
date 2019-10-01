@@ -20,7 +20,7 @@
         <div class="form-group">
             <label for="message">Message:</label>
             <textarea name="message" id="message" cols="30" rows="10" class="form-control">{{ old('message') }}</textarea>
-            <p>{{ $errors->first('message') }}</p>
+            <p class="text-danger"><strong>{{ $errors->first('message') }}</strong></p>
         </div>
         
         <div class="center">

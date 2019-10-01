@@ -62,8 +62,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
-            ->where('users.is_paid', 'Paid')
             ->where('users.usertype', 'User')
+            ->whereIn('users.is_paid', ['Paid', 'Half Payment'])
             ->sum('videokes.price');
     }
 

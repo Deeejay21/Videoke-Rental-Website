@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\User;
-use Carbon\Carbon;
 use App\Payment;
+use Carbon\Carbon;
 use App\VideokeTotal;
 use App\Charts\SalesChart;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
     public function index(User $user)
     {
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        $currentTime = $this->currentTime();
+
         $date = Carbon::now();
 
         $year = Carbon::now();
@@ -44,10 +48,10 @@ class DashboardController extends Controller
         $chart = new SalesChart;
         $chart->labels([$date->month('8')->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F')]);
         $chart->dataset('Total Sales', 'line', [$august, $september, $october, $november, $december, $january, $february, $march, $april, $may, $june, $july])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
               
-        return view('admin.dashboard.index', compact('total_sales', 'chart', 'year', 'total_payments', 'total_customers', 'total_videokes', 'user'));
+        return view('admin.dashboard.index', compact('total_sales', 'chart', 'year', 'total_payments', 'total_customers', 'total_videokes', 'user', 'currentTime', 'usersNotification'));
     }
 }

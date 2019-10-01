@@ -10,7 +10,11 @@ class QRCodeController extends Controller
 {
     public function create(User $user)
     {
-        return view('admin.qrcode.create', compact('user'));
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        return view('admin.qrcode.create', compact('user', 'currentTime', 'usersNotification'));
     }
 
     public function store(Request $request, User $user)
@@ -31,7 +35,7 @@ class QRCodeController extends Controller
             $user->qr_code()->update($data);
             $user->update($status);
             
-            return redirect('/admin/customers/' . $user->id . '/access');
+            return redirect('/admin/customers/' . $user->id . '/access')->with('success', 'Customer ' . $user->first_name . ' payment done successfully.');
         } else {
             return redirect('/admin/customers/' . $user->id . '/access/qrerror');
         }

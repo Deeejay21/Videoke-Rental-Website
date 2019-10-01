@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
+use App\Payment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Payment;
 
 class PaymentsController extends Controller
 {
@@ -12,12 +13,21 @@ class PaymentsController extends Controller
     {
         $payments = Payment::all();
 
-        return view('admin.payments.index', compact('payments'));
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        return view('admin.payments.index', compact('payments', 'usersNotification', 'currentTime'));
     }
 
     public function create()
     {
-        return view('admin.payments.create');
+        
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        return view('admin.payments.create', compact('currentTime', 'usersNotification'));
     }
 
     public function store(Payment $payment)
@@ -29,7 +39,11 @@ class PaymentsController extends Controller
 
     public function edit(Payment $payment)
     {
-        return view('admin.payments.edit', compact('payment'));
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        return view('admin.payments.edit', compact('payment', 'usersNotification', 'currentTime'));
     }
 
     public function update(Payment $payment)

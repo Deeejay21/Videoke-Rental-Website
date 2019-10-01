@@ -254,8 +254,10 @@
 </div>
 
 <div class="col-lg-12">
-        <p><a href="/admin/customers" class="btn btn-outline-secondary">Back</a></p>
-    </div>
+    <p><a href="/admin/customers" class="btn btn-outline-secondary">Back</a></p>
+</div>
+
+@include('layouts.users.admin.session')
 
 <div class="table-responsive">
     <table class="table table-bordered bg-white">
@@ -335,7 +337,5 @@
         </tbody>
     </table>
 </div>
-
-@include('layouts.users.admin.session')
 
 @endsection

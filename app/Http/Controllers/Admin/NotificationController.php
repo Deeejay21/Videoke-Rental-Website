@@ -3,27 +3,43 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 
 class NotificationController extends Controller
 {
-    public function delivery()
+    // public function delivery()
+    // {
+    //     $usersDelivery = User::where([['usertype', 'User'], ['is_paid', 'Half Payment']])->get();
+
+    //     $usersReturn = User::where([['usertype', 'User'], ['is_paid', 'Paid']])->get();
+
+    //     $currentTime = Carbon::now('asia/manila')->addDays(9);
+
+    //     return view('admin.notification.delivery', compact('currentTime', 'usersDelivery', 'usersReturn'));
+    // }
+
+    // public function return()
+    // {
+    //     $usersReturn = User::where([['usertype', 'User'], ['is_paid', 'Paid']])->get();
+
+    //     $usersDelivery = User::where([['usertype', 'User'], ['is_paid', 'Half Payment']])->get();
+        
+    //     $currentTime = Carbon::now('asia/manila')->addDays(10);
+
+    //     return view('admin.notification.return', compact('currentTime', 'usersReturn', 'usersDelivery'));
+    // }
+    public function index()
     {
-        $users = User::all();
-        $currentTime = Carbon::now('asia/manila');
-        $currentTime = date('F d, Y');
+        $usersReturn = User::where([['usertype', 'User'], ['is_paid', 'Paid']])->get();
 
-        return view('admin.notification.delivery', compact('users', 'currentTime'));
-    }
+        $usersDelivery = User::where([['usertype', 'User'], ['is_paid', 'Half Payment']])->get();
 
-    public function return()
-    {
-        $users = User::all();
-        $currentTime = Carbon::now('asia/manila');
-        $currentTime = date('F d, Y');
+        $usersNotification = User::where('usertype', 'User')->get();
 
-        return view('admin.notification.return', compact('users', 'currentTime'));
+        $currentTime = $this->currentTime();
+
+        return view('admin.notification.index', compact('currentTime', 'usersNotification', 'usersReturn', 'usersDelivery'));
     }
 }

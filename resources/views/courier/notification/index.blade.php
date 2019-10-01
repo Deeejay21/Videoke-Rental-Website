@@ -29,7 +29,7 @@
                     {{-- @if ($delivery->count() == 0)
                         <td colspan="6" align="center"><b>No Videoke Delivery For This Moment</b></td>
                     @endif --}}
-                    @foreach ($users as $user)
+                    @foreach ($usersDelivery as $user)
                     @if (($user->is_paid == 'Half Payment') && ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y')))
                     <tr>
                         <td>{{ $user->id - 2 }}</td>
@@ -71,7 +71,7 @@
                     {{-- @if ($return->count() == 0)
                         <td colspan="6" align="center"><b>No Videoke Return For This Moment</b></td>
                     @endif --}}
-                    @foreach ($userReturn as $user)
+                    @foreach ($usersReturn as $user)
                         @if (($user->is_paid == 'Paid') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
                         <tr>
                             <td>{{ $user->id - 2 }}</td>
