@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\User;
-use Carbon\Carbon;
 use App\Payment;
+use Carbon\Carbon;
 use App\VideokeTotal;
 use App\Charts\SalesChart;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SalesController extends Controller
 {
     public function chart(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $users = User::all();
 
         $date = Carbon::now();
@@ -46,22 +50,30 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels([$date->month('8')->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F')]);
         $chart->dataset('Total Sales', 'line', [$august, $september, $october, $november, $december, $january, $february, $march, $april, $may, $june, $july])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
               
-        return view('admin.sales.chart', compact('user', 'users', 'total_sales', 'chart', 'year', 'total_payments', 'total_customers', 'total_videokes'));
+        return view('admin.sales.chart', compact('user', 'users', 'total_sales', 'chart', 'year', 'total_payments', 'total_customers', 'total_videokes', 'currentTime', 'usersNotification'));
     }
 
     public function index()
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $users = User::where([['usertype', 'User'], ['is_paid', 'Paid']])->get();
 
-        return view('admin.sales.index', compact('users'));
+        return view('admin.sales.index', compact('currentTime', 'usersNotification', 'users'));
     }
 
     public function january(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -75,15 +87,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['January']);
         $chart->dataset('Amount', 'bar', [$january])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.january', compact('total_sales', 'january', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.january', compact('currentTime', 'usersNotification', 'total_sales', 'january', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function february(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -97,15 +113,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['February']);
         $chart->dataset('Amount', 'bar', [$february])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.february', compact('total_sales', 'february', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.february', compact('currentTime', 'usersNotification', 'total_sales', 'february', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function march(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -119,15 +139,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['March']);
         $chart->dataset('Amount', 'bar', [$march])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.march', compact('total_sales', 'march', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.march', compact('currentTime', 'usersNotification', 'total_sales', 'march', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function april(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -141,15 +165,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['April']);
         $chart->dataset('Amount', 'bar', [$april])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.april', compact('total_sales', 'april', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.april', compact('currentTime', 'usersNotification', 'total_sales', 'april', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function may(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -163,15 +191,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['May']);
         $chart->dataset('Amount', 'bar', [$may])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.may', compact('total_sales', 'may', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.may', compact('currentTime', 'usersNotification', 'total_sales', 'may', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function june(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -185,15 +217,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['June']);
         $chart->dataset('Amount', 'bar', [$june])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.june', compact('total_sales', 'june', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.june', compact('currentTime', 'usersNotification', 'total_sales', 'june', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function july(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -207,15 +243,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['July']);
         $chart->dataset('Amount', 'bar', [$july])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.july', compact('total_sales', 'july', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.july', compact('currentTime', 'usersNotification', 'total_sales', 'july', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function august(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -229,15 +269,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['August']);
         $chart->dataset('Amount', 'bar', [$august])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.august', compact('total_sales', 'august', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.august', compact('currentTime', 'usersNotification', 'total_sales', 'august', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function september(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -251,15 +295,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['September']);
         $chart->dataset('Amount', 'bar', [$september])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.september', compact('total_sales', 'september', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.september', compact('currentTime', 'usersNotification', 'total_sales', 'september', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function october(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -273,15 +321,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['October']);
         $chart->dataset('Amount', 'bar', [$october])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.october', compact('total_sales', 'october', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.october', compact('currentTime', 'usersNotification', 'total_sales', 'october', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function november(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -295,15 +347,19 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['November']);
         $chart->dataset('Amount', 'bar', [$november])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.november', compact('total_sales', 'november', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.november', compact('currentTime', 'usersNotification', 'total_sales', 'november', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 
     public function december(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $year = Carbon::now();
 
         $total_customers = $user->total_customers();
@@ -317,10 +373,10 @@ class SalesController extends Controller
         $chart = new SalesChart;
         $chart->labels(['December']);
         $chart->dataset('Amount', 'bar', [$december])
-              ->color('#0084FF')
-              ->backgroundColor('#0084FF')
+              ->color('#716aca')
+              ->backgroundColor('#716aca')
               ->fill(false);
 
-        return view('admin.sales.months.december', compact('total_sales', 'december', 'chart', 'year', 'total_payments', 'total_customers'));
+        return view('admin.sales.months.december', compact('currentTime', 'usersNotification', 'total_sales', 'december', 'chart', 'year', 'total_payments', 'total_customers'));
     }
 }

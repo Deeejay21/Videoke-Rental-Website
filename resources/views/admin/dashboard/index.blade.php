@@ -31,24 +31,11 @@
 
         <!-- Notification -->
         <li class="sidenav-item">
-                <a href="javascript:" class="sidenav-link sidenav-toggle">
-                        <i class="sidenav-icon feather icon-bell"></i>
-                    <div>Notification</div>
-                </a>
-                <ul class="sidenav-menu">
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/delivery" class="sidenav-link">
-                            <div>Videoke Delivery</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/return" class="sidenav-link">
-                            <div>Videoke Return</div>
-                        </a>
-                    </li>
-    
-                </ul>
-            </li>
+            <a href="/admin/notification" class="sidenav-link">
+                    <i class="sidenav-icon feather icon-bell"></i>
+                <div>Notification</div>
+            </a>
+        </li>
 
         <!-- Customers -->
         <li class="sidenav-item">
@@ -320,9 +307,8 @@
                 <div class="card-header">
                     <h1><strong>Sales Chart</strong></h1>
                     <p>{{ $year->format('Y') }}</p>
-
                     <div class="btn-group">
-                        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Month<span class="caret"></span></button>
+                        <button class="btn btn-default btn-md dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Month<span class="caret"></span></button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/admin/sales/january">January</a></li>
                             <li><a class="dropdown-item" href="/admin/sales/february">February</a></li>
@@ -347,5 +333,6 @@
     </div>
 
     {!! $chart->script() !!}
+    
     
 @endsection

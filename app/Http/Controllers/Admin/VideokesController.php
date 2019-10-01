@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use App\Videoke;
 use App\User;
 
@@ -12,22 +11,32 @@ class VideokesController extends Controller
 {
     public function rent()
     {
-        $currentTime = Carbon::now('Asia/Manila');
+        $currentTime = $this->currentTime();
 
+        $usersNotification = User::where('usertype', 'User')->get();
+        
         $users = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
-
-        return view('admin.videokes.rent', compact('users', 'currentTime'));
+        
+        return view('admin.videokes.rent', compact('currentTime', 'usersNotification', 'users'));
     }
     
     public function index()
     {
         $videokes = Videoke::all();
 
-        return view('admin.videokes.index', compact('videokes'));
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+        
+        return view('admin.videokes.index', compact('currentTime', 'usersNotification', 'videokes'));
     }
 
     public function create()
-    {
+    {   
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+        
         return view('admin.videokes.create');
     }
 
@@ -44,8 +53,12 @@ class VideokesController extends Controller
     }
 
     public function edit(Videoke $videoke)
-    {
-        return view('admin.videokes.edit', compact('videoke'));
+    {   
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+        
+        return view('admin.videokes.edit', compact('currentTime', 'usersNotification', 'videoke'));
     }
 
     public function update(Videoke $videoke)

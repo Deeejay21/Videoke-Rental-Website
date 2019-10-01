@@ -1,6 +1,6 @@
 @extends('layouts.users.admin.app-panel')
 
-@section('title', 'Videoke | Admin Notification')
+@section('title', 'Notification Delivery')
 
 @section('upper-extends')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"> 
@@ -32,25 +32,12 @@
         </li>
 
         <!-- Notification -->
-        <li class="sidenav-item open active">
-                <a href="javascript:" class="sidenav-link sidenav-toggle">
-                        <i class="sidenav-icon feather icon-bell"></i>
-                    <div>Notification <span class="badge badge-dot badge-danger"></span></div>
-                </a>
-                <ul class="sidenav-menu">
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/delivery" class="sidenav-link">
-                            <div>Videoke Delivery</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item active">
-                        <a href="/admin/notification/return" class="sidenav-link">
-                            <div>Videoke Return</div>
-                        </a>
-                    </li>
-    
-                </ul>
-            </li>
+        <li class="sidenav-item active">
+            <a href="/admin/notification" class="sidenav-link">
+                <i class="sidenav-icon feather icon-bell"></i>
+                <div>Notification</div>
+            </a>
+        </li>
 
         <!-- Customers -->
         <li class="sidenav-item">
@@ -247,51 +234,89 @@
 @endsection
 
 @section('content')
-<h4 class="font-weight-bold pb-3 mb-0">Notification for Videoke Return</h4>
+<h4 class="font-weight-bold pb-3 mb-0">Notification for Videoke Delivery</h4>
 <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/admin"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item active">Notification</li>
-        <li class="breadcrumb-item active">Videoke Return</li>
     </ol>
 </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered bg-white" id="table1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Reservation Delivery Date</th>
-                    <th>Videoke Return Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
-                    @if (($user->is_paid == 'Paid') && ($user->date_return_notification() == $currentTime))
-                        
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered bg-white" id="table1">
+                <thead>
                     <tr>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                        <td>{{ $user->address }}</td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->check_format() }}</td>
-                        <td>{{ $user->date_return_format() }}</td>
-                        <td width="10">
-                            <div class="btn-group">
-                            <p>Receipt</p>
-                            </div>
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
+                        <th>Reservation Delivery Date</th>
+                        <th>Videoke Return Date</th>
+                        <th>Action</th>
                     </tr>
-                    @endif
+                </thead>
+                <tbody>
+                    @foreach ($usersDelivery as $user)
+                        @if ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                        <tr>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->phone }}</td>
+                            {{-- <td>{{ $user->checked_in_at->format('F d, Y g:i A') }}</td> --}}
+                            <td>{{ $user->check_format() }}</td>
+                            <td>{{ $user->date_return_format() }}</td>
+                            <td width="10">
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-info">receipt</button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endif
                     @endforeach
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+
+    <h4 class="pt-5 font-weight-bold pb-3 mb-0">Notification for Videoke Return</h4>
+
+    <div class="table-responsive">
+            <table class="table table-bordered bg-white" id="table2">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
+                        <th>Reservation Delivery Date</th>
+                        <th>Videoke Return Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($usersReturn as $user)
+                        @if ($user->date_return_notification() == $currentTime->format('F d, Y'))
+                            
+                        <tr>
+                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->phone }}</td>
+                            <td>{{ $user->check_format() }}</td>
+                            <td>{{ $user->date_return_format() }}</td>
+                            <td width="10">
+                                <div class="btn-group">
+                                <p>Receipt</p>
+                                </div>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                </tbody>
+            </table>
+        </div>
 
 @section('lower-extends')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -299,6 +324,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+        } );
+    } );
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#table2').DataTable( {
         } );
     } );
 </script>

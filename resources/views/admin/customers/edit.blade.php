@@ -3,7 +3,7 @@
 @section('upper-extends')
 @endsection
 
-@section('title', 'Customer Edit')
+@section('title', 'Edit Customer')
 
 @section('sidebar')
 <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
@@ -252,6 +252,7 @@
         <li class="breadcrumb-item"><a href="/admin"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item active">Customers</li>
         <li class="breadcrumb-item active">Customer List</li>
+        <li class="breadcrumb-item active">Edit Customer</li>
     </ol>
 </div>
 
@@ -264,7 +265,7 @@
                     <form method="POST" action="/admin/customers/{{ $user->id }}">
                         @method('PATCH')
                         @csrf
-
+{{-- 
                     <div class="form-group row">
                         <label for="videoke_id" class="col-md-4 col-form-label text-md-right">Videoke Package</label>
 
@@ -276,12 +277,12 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group row">
                         <label for="checked_in_at" class="col-md-4 col-form-label text-md-right">Reservation Date:</label>
                         <div class="input-group date form_datetime col-md-7" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
-                            <input class="form-control" size="40" type="text" value="{{ old('checked_in_at') ?? $user->checked_in_at->format('F d, Y g:i A') }}" readonly>
+                            <input class="form-control" size="40" type="text" value="{{ old('checked_in_at') ?? $user->checked_in_at }}" readonly>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                         </div>
@@ -386,7 +387,7 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <div class="btn-group btn-group-md">
-                                    <button type="submit" class="btn btn-outline-primary">Confirm</button>
+                                    <button type="submit" class="btn btn-outline-primary">Edit Customer</button>
                                     <a href="/admin/customers" class="btn btn-outline-secondary ml-4">Back</a>
                                 </div>
                             </div>

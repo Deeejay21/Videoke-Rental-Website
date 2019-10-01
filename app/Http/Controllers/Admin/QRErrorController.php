@@ -10,6 +10,10 @@ class QRErrorController extends Controller
 {
     public function index(User $user)
     {
-        return view('pages.qrerror', compact('user'));
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        return view('pages.qrerror', compact('user', 'currentTime', 'usersNotification'));
     }
 }

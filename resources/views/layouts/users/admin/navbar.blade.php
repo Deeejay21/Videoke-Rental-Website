@@ -73,19 +73,133 @@
             <hr class="d-lg-none w-100 my-2">
 
             <div class="navbar-nav align-items-lg-center ml-auto">
-                <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
-                    <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
-                        <i class="feather icon-bell navbar-icon align-middle"></i>
-                        <span class="badge badge-danger badge-dot indicator"></span>
-                        <span class="d-lg-none align-middle">&nbsp; Notifications</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="list-group list-group-flush">
-                            <a href="javascript:"></a>
+                 {{--    @foreach ($usersReturn as $return)
+                    @if ($return->date_return_notification() == $currentTime->format('F d, Y'))
+                    <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                        <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                            <i class="feather icon-bell navbar-icon align-middle"></i>
+                            <span class="badge badge-danger badge-dot indicator"></span>
+                            <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="list-group list-group-flush">
+                                <a href="/admin/notification/return" class="text-muted py-2 text-center">Notification for Videoke Return</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    @else
+                        <div class="nav-item dropdown mr-lg-3">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                                <i class="feather icon-bell navbar-icon align-middle"></i>
+                                <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="list-group list-group-flush">
+                                    <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
 
+                    @foreach ($usersDelivery as $delivery)
+                        @if ($delivery->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                        <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                                <i class="feather icon-bell navbar-icon align-middle"></i>
+                                <span class="badge badge-danger badge-dot indicator"></span>
+                                <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="list-group list-group-flush">
+                                <a href="/admin/notification/return" class="text-muted py-2 text-center">Notification for Videoke Return</a>
+                                <a href="/admin/notification/delivery" class="text-muted py-2 text-center">Notification for Videoke Delivery</a>
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                        <div class="nav-item dropdown mr-lg-3">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                                <i class="feather icon-bell navbar-icon align-middle"></i>
+                                <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="list-group list-group-flush">
+                                    <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach --}}
+
+                    {{-- @if (($return->date_return_notification() == $currentTime->format('F d, Y')) && ($return->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y')))
+                    <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                                <i class="feather icon-bell navbar-icon align-middle"></i>
+                                <span class="badge badge-danger badge-dot indicator"></span>
+                                <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="list-group list-group-flush">
+                                    <a href="hahaha" class="text-muted py-2 text-center">Notification for Videoke Delivery</a>
+                                    <a href="hahaha" class="text-muted py-2 text-center">Notification for Videoke Return</a>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                    <div class="nav-item dropdown mr-lg-3">
+                        <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                            <i class="feather icon-bell navbar-icon align-middle"></i>
+                            <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="list-group list-group-flush">
+                                <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif --}}
+                    
+                    @foreach ($usersNotification as $user)
+                    @if (($user->is_paid == 'Paid') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
+                    <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                        <a class="nav-link hide-arrow" href="/admin/notification">
+                            <i class="feather icon-bell navbar-icon align-middle"></i>
+                            <span class="badge badge-danger badge-dot indicator"></span>
+                            <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                        </a>
+                    </div>
+                    @elseif (($user->is_paid == 'Half Payment') && $user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                    <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                        <a class="nav-link hide-arrow" href="/admin/notification">
+                            <i class="feather icon-bell navbar-icon align-middle"></i>
+                            <span class="badge badge-danger badge-dot indicator"></span>
+                            <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                        </a>
+                    </div>
+                    {{-- @elseif (($user->date_return_notification() == $currentTime->format('F d, Y')) && ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y')))
+                    <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                                <i class="feather icon-bell navbar-icon align-middle"></i>
+                                <span class="badge badge-danger badge-dot indicator"></span>
+                                <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                            </a>
+                        </div> --}}
+                    @else
+                    <div class="nav-item dropdown mr-lg-3">
+                        <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                            <i class="feather icon-bell navbar-icon align-middle"></i>
+                            <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="list-group list-group-flush">
+                                <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    @endforeach
+                    
                 <!-- Divider -->
                 <div class="nav-item d-none d-lg-block text-big font-weight-light line-height-1 opacity-25 mr-3 ml-1">|</div>
                 <div class="demo-navbar-user nav-item dropdown">

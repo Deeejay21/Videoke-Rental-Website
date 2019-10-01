@@ -260,7 +260,7 @@
                 <div class="card-header">Edit Customer Access</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ $user->path() }}">
+                    <form class="form-prevent-multiple-submits" method="POST" action="{{ $user->path() }}">
                         @method('PATCH')
                         @csrf
 
@@ -317,7 +317,7 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <div class="btn-group btn-group-md">
-                                    <button type="submit" class="btn btn-outline-primary">Edit Access</button>
+                                    <button type="submit" class="button-prevent-multiple-submits btn btn-outline-primary">Edit Access</button>
                                     <a href="{{ $user->path() }}" class="btn btn-outline-secondary ml-4">Back</a>
                                 </div>
                             </div>
@@ -328,6 +328,8 @@
         </div>
     </div>
 
-@include('layouts.users.admin.session')
+@section('lower-extends')
+    <script src="{{ asset('js/submit.js') }}"></script>    
+@endsection
 
 @endsection

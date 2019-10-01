@@ -93,8 +93,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/sales/november', 'Admin\SalesController@november');
     Route::get('/admin/sales/december', 'Admin\SalesController@december');
     
-    Route::get('/admin/notification/delivery', 'Admin\NotificationController@delivery');
-    Route::get('/admin/notification/return', 'Admin\NotificationController@return');
+    Route::get('/admin/notification', 'Admin\NotificationController@index');
+    // Route::get('/admin/notification/delivery', 'Admin\NotificationController@delivery');
+    // Route::get('/admin/notification/return', 'Admin\NotificationController@return');
 });
 
 Route::middleware(['auth', 'courier'])->group(function () {

@@ -2,42 +2,57 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use App\User;
 use App\Videoke;
 use App\Payment;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
 
     public function firstPayment()
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $users = User::where('usertype', 'User')->where('is_paid', 'Half Payment')->get();
         
-        return view('admin.customers.first-payment', compact('users'));
+        return view('admin.customers.first-payment', compact('currentTime', 'usersNotification', 'users'));
     }
 
     public function fullyPaid()
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $users = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
         
-        return view('admin.customers.fully-paid', compact('users'));
+        return view('admin.customers.fully-paid', compact('currentTime', 'usersNotification', 'users'));
     }
 
     public function paying()
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $users = User::where('usertype', 'User')->where('is_paid', 'Paying')->get();
         
-        return view('admin.customers.paying', compact('users'));
+        return view('admin.customers.paying', compact('currentTime', 'usersNotification', 'users'));
     }
     
     public function index()
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $users = User::where('usertype', 'User')->get();
         
-        return view('admin.customers.index', compact('users'));
+        return view('admin.customers.index', compact('currentTime', 'usersNotification', 'users'));
     }
 
     // public function create()
@@ -74,10 +89,15 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+
         $videokes = Videoke::all();
+
         $payments = Payment::all();
 
-        return view('admin.customers.edit', compact('user', 'videokes', 'payments'));
+        return view('admin.customers.edit', compact('currentTime', 'usersNotification', 'user', 'videokes', 'payments'));
     }
 
     public function update(User $user)
