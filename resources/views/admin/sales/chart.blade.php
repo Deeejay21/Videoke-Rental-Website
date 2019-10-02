@@ -290,6 +290,4 @@
     
     {!! $chart->script() !!}
 
-@include('layouts.users.admin.session')
-
 @endsection

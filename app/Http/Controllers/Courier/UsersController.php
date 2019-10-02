@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Courier;
 
-use Carbon\Carbon;
 use App\User;
 use App\Videoke;
 use App\Payment;
@@ -15,8 +14,11 @@ class UsersController extends Controller
     {
         $users = User::where([['usertype', 'User'], ['is_return', 'Operating']])->whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        
-        return view('courier.customers.index', compact('users'));
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        $currentTime = $this->currentTime();
+
+        return view('courier.customers.index', compact('usersNotification', 'currentTime', 'users'));
     }
 
     // public function create()
@@ -54,9 +56,14 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $videokes = Videoke::all();
+
         $payments = Payment::all();
 
-        return view('courier.customers.edit', compact('user', 'videokes', 'payments'));
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        $currentTime = $this->currentTime();
+
+        return view('courier.customers.edit', compact('usersNotification', 'currentTime', 'user', 'videokes', 'payments'));
     }
 
     public function update(User $user)

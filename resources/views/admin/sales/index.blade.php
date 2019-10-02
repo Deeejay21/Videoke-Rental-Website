@@ -302,6 +302,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+            "language": {
+                "emptyTable": "No Sales List"
+            }
         } );
     } );
 </script>

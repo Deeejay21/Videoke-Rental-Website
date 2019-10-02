@@ -14,6 +14,6 @@ class Controller extends BaseController
 
     protected function currentTime()
     {
-        return Carbon::now('Asia/Manila')->addDays(9);
+        return Carbon::now('Asia/Manila')->addDays(7);
     }
 }

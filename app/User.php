@@ -45,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function videoke()
     {
-        return $this->belongsTO(Videoke::class);
+        return $this->belongsTo(Videoke::class);
     }
 
     public function videoke_return()
@@ -56,6 +56,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function account()
     {
         return $this->hasOne(Account::class);
+    }
+
+    public function another_reservation()
+    {
+        return $this->hasMany(AnotherReservation::class);
     }
 
     public function total_sales()
@@ -241,6 +246,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->checked_in_at->format('F d, Y (D) - g:i A');
     }
 
+    // public function reserve_format()
+    // {
+    //     return $this->checked_in_at->format('F d, Y (D) - g:i A');
+    // }
+
     public function return_at_issued()
     {
         $return_date = $this->updated_at;
@@ -308,4 +318,17 @@ class User extends Authenticatable implements MustVerifyEmail
             ]);
         });
     }
+
+    // public function qr()
+    // {
+    //     $qrs = $this->another_reservation;
+
+    //     // dd($qrs);
+
+    //     foreach ($qrs as $qr) {
+    //         $qr;
+    //     }
+
+    //     return $qr;
+    // }
 }

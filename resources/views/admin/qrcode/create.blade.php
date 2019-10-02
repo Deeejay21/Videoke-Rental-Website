@@ -253,7 +253,7 @@
         <li class="breadcrumb-item"><a href="/admin"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item active">Customers</li>
         <li class="breadcrumb-item active">Customer List</li>
-        <li class="breadcrumb-item active">Customer Access</li>
+        <li class="breadcrumb-item active">Status</li>
         <li class="breadcrumb-item active">Confirm</li>
     </ol>
 </div>
@@ -261,8 +261,8 @@
 <div id="app">
     <form action="/admin/customers/{{ $user->id }}/access" method="post">
         @csrf
-        <div class="row pb-5">
-            <div class="col-md-8 offset-2 pt mb-2">
+        <div class="row justify-content-center">
+                <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">QR Code Confirmation</div>
                     <div class="card-body">
@@ -292,6 +292,5 @@
         </div>
     </form>
 </div>
-@include('layouts.users.admin.session')
 
 @endsection

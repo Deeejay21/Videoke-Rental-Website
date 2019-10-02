@@ -1,6 +1,6 @@
 @extends('layouts.users.admin.app-panel')
 
-@section('title', 'Notification Delivery')
+@section('title', 'Notification')
 
 @section('upper-extends')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"> 
@@ -234,13 +234,15 @@
 @endsection
 
 @section('content')
-<h4 class="font-weight-bold pb-3 mb-0">Notification for Videoke Delivery</h4>
+<h4 class="font-weight-bold pb-3 mb-0">Notification</h4>
 <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/admin"><i class="feather icon-home"></i></a></li>
         <li class="breadcrumb-item active">Notification</li>
     </ol>
 </div>
+
+<h4 class="font-weight-bold pb-3 mb-0">Notification for Videoke Delivery</h4>
 
     <div class="row">
         <div class="table-responsive">
@@ -260,7 +262,7 @@
                     @foreach ($usersDelivery as $user)
                         @if ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
                         <tr>
-                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->id - 2 }}</td>
                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                             <td>{{ $user->address }}</td>
                             <td>{{ $user->phone }}</td>
@@ -300,7 +302,7 @@
                         @if ($user->date_return_notification() == $currentTime->format('F d, Y'))
                             
                         <tr>
-                            <td>{{ $user->id }}</td>
+                            <td>{{ $user->id - 2 }}</td>
                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                             <td>{{ $user->address }}</td>
                             <td>{{ $user->phone }}</td>
@@ -324,6 +326,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+            "language": {
+                "emptyTable": "No Notification for Videoke Delivery"
+            }
         } );
     } );
 </script>
@@ -331,6 +336,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table2').DataTable( {
+            "language": {
+                "emptyTable": "No Notification for Videoke Return"
+            }
         } );
     } );
 </script>

@@ -1,98 +1,161 @@
-@extends('layouts.users.courier.app')
+@extends('layouts.users.courier.app-panel')
 
-@section('title', 'Videoke | Courier Notification')
+@section('upper-extends')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">    
+@endsection
+
+@section('title', 'Notification')
+
+@section('sidebar')
+<div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
+    <div class="app-brand demo">
+        <span class="app-brand-logo demo">
+            <img src="{{ asset('assets/img/logo-mic.png') }}" alt="Brand Logo" class="img-fluid">
+        </span>
+        <a href="/courier" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Courier <strong>PANEL</strong></a>
+        <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
+            <i class="ion ion-md-menu align-middle"></i>
+        </a>
+    </div>
+    <div class="sidenav-divider mt-0"></div>
+    <ul class="sidenav-inner py-1">
+        <!-- Dashboards -->
+        <li class="sidenav-item">
+            <a href="/courier" class="sidenav-link">
+                <i class="sidenav-icon feather icon-home"></i>
+                <div>Dashboard</div>
+            </a>
+        </li>
+
+        <!-- Notification -->
+        <li class="sidenav-item active">
+            <a href="/courier/notification" class="sidenav-link">
+                    <i class="sidenav-icon feather icon-bell"></i>
+                <div>Notification</div>
+            </a>
+        </li>
+
+        <!-- Customers -->
+        <li class="sidenav-item">
+            <a href="/courier/customers" class="sidenav-link">
+                    <i class="sidenav-icon feather icon-user"></i>
+                <div>Customers</div>
+            </a>
+        </li>
+    </ul>
+</div>
+@endsection
 
 @section('content')
+<h4 class="font-weight-bold pb-3 mb-0">Notification</h4>
+<div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/courier"><i class="feather icon-home"></i></a></li>
+        <li class="breadcrumb-item active">Notification</li>
+    </ol>
+</div>
 
-<div class="container pb-5">
-    <div class="row">
-        <div class="col-8">
-            <h1>Notification For Delivery</h1>
-        </div>
-    </div>
-    
-    <div class="row pr-5">
+<h4 class="font-weight-bold pb-3 mb-0">Notification for Videoke Delivery</h4>
+
+<div class="row">
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered bg-white" id="table1">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
                         <th>Address</th>
+                        <th>Phone Number</th>
                         <th>Reservation Delivery Date</th>
-                        <th>Receipt</th>
+                        <th>Videoke Return Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @if ($delivery->count() == 0)
-                        <td colspan="6" align="center"><b>No Videoke Delivery For This Moment</b></td>
-                    @endif --}}
                     @foreach ($usersDelivery as $user)
-                    @if (($user->is_paid == 'Half Payment') && ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y')))
-                    <tr>
-                        <td>{{ $user->id - 2 }}</td>
-                        <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ $user->address }}</td>
-                        <td>{{ $user->check_format() }}</td>
-                    </tr>
-                    @endif
+                        @if ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                        <tr>
+                            <td>{{ $user->id - 2 }}</td>
+                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->phone }}</td>
+                            {{-- <td>{{ $user->checked_in_at->format('F d, Y g:i A') }}</td> --}}
+                            <td>{{ $user->check_format() }}</td>
+                            <td>{{ $user->date_return_format() }}</td>
+                            <td width="10">
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-info">receipt</button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-8">
-            <h1>Notification For Videoke Return</h1>
-        </div>
-    </div>
+    <h4 class="pt-5 font-weight-bold pb-3 mb-0">Notification for Videoke Return</h4>
 
-    <div class="row pb-5 pr-5">
-        <div class="table-responsive">
-            <table class="table table-bordered">
+    <div class="table-responsive">
+            <table class="table table-bordered bg-white" id="table2">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
                         <th>Address</th>
+                        <th>Phone Number</th>
+                        <th>Reservation Delivery Date</th>
                         <th>Videoke Return Date</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @if ($return->count() == 0)
-                        <td colspan="6" align="center"><b>No Videoke Return For This Moment</b></td>
-                    @endif --}}
                     @foreach ($usersReturn as $user)
-                        @if (($user->is_paid == 'Paid') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
+                        @if ($user->date_return_notification() == $currentTime->format('F d, Y'))
+                            
                         <tr>
                             <td>{{ $user->id - 2 }}</td>
                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->phone }}</td>
                             <td>{{ $user->address }}</td>
+                            <td>{{ $user->phone }}</td>
+                            <td>{{ $user->check_format() }}</td>
                             <td>{{ $user->date_return_format() }}</td>
+                            <td width="10">
+                                <div class="btn-group">
+                                <p>Receipt</p>
+                                </div>
+                            </td>
                         </tr>
-                        @elseif (($user->is_paid == 'Paid') && ($user->is_return == 'Return') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
                         @endif
                         @endforeach
-                        {{-- @if (count([$user->is_paid]) == 1)
-                            <tr>
-                                <td>hahaha</td>
-                            </tr>
-                        @endif --}}
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
 
+@section('lower-extends')
+<script src="{{ asset('js/submit.js') }}"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#table1').DataTable( {
+            "language": {
+                "emptyTable": "No Notification for Videoke Delivery"
+            }
+        } );
+    } );
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#table2').DataTable( {
+            "language": {
+                "emptyTable": "No Notification for Videoke Return"
+            }
+        } );
+    } );
+</script>
+@endsection
 @endsection

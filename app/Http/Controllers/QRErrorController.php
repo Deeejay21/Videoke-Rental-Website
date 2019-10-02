@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 
 class QRErrorController extends Controller
 {
     public function index(User $user)
     {
-        return view('pages.qrerror', compact('user'));
+        $usersNotification = User::where('usertype', 'User')->get();
+        
+        $currentTime = $this->currentTime();
+
+        return view('pages.qrerror', compact('usersNotification', 'currentTime', 'user'));
     }
 }

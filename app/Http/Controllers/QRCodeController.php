@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
 
 class QRCodeController extends Controller
 {
     public function create(User $user)
     {
-        return view('users.qrcode.create', compact('user'));
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        $currentTime = $this->currentTime();
+
+        return view('users.qrcode.create', compact('usersNotification', 'currentTime', 'user'));
     }
 
     public function store(Request $request, User $user)
@@ -30,7 +34,7 @@ class QRCodeController extends Controller
             $user->qr_code()->update($data);
             $user->update($status);
             
-            return redirect('/courier/customers/' . $user->id . '/access');
+            return redirect('/courier/customers/' . $user->id . '/access')->with('success', 'Customer ' . $user->first_name . ' payment done successfully.');
         } else {
             return redirect('/courier/customers/' . $user->id . '/access/qrerror');
         }
