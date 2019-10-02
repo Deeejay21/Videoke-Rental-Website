@@ -91,6 +91,8 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="pt-2">New to Videoke Rental? <a href="/register">Reserve now »</a></div>
                     </form>
                 </div>
             </div>

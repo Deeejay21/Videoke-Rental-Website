@@ -29,8 +29,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('payment_id');
             $table->unsignedBigInteger('videoke_id');
             $table->string('usertype', 10)->default('User');
-            $table->string('is_paid', 20)->default('Paying');
             $table->string('is_expired', 10)->default('Active');
+            $table->string('is_paid', 20)->default('Paying');
             $table->string('is_return', 10)->default('Operating');
             $table->timestamps();
             $table->index(['payment_id', 'videoke_id'], 'FK');

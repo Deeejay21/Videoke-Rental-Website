@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">    
 @endsection
 
-@section('title', 'First Payment')
+@section('title', 'Customer Paying')
 
 @section('sidebar')
 <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
@@ -333,7 +333,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table2').DataTable( {
-            "scrollX": true
+            "scrollX": true,
+            "language": {
+                "emptyTable": "No Customer Paying Reserved"
+            }
         } );
     } );
 </script>

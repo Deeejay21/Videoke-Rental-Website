@@ -307,6 +307,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+            "language": {
+                "emptyTable": "No Videoke Package Found"
+            }
         } );
     } );
 </script>

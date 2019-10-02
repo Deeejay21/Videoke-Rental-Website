@@ -30,6 +30,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/{user}/account/payment', 'UsersController@payment');
     Route::get('/user/{user}/account/writemessage', 'ContactFormController@create');
     Route::post('/user/{user}/account/writemessage', 'ContactFormController@store');
+
+    // Route::get('/user/{anotherReservation}/reserve/register', 'AnotherReservationController@create');
+    // Route::post('/user/{anotherReservation}/reserve', 'AnotherReservationController@store');
+    Route::get('/reserve/register', 'AnotherReservationController@create');
+    Route::post('/reserve', 'AnotherReservationController@store');
+    // Route::post('/reserve/{anotherReservation}', 'AnotherReservationController@show');
+    // Route::post('/reserve/{anotherReservation}', 'AnotherReservationController@destroy');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -72,10 +79,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/admin/customers/{user}/access/qrerror', 'QRErrorController@index');
 
-    // IF I AM GOING TO EDIT THE CONFIRM BUTTON AND THEN SET THE IS_RETURN TO PENDING IT WILL NOT RETURN REDIRECT TO THE admin/customers/{user}/access BECAUSE THERE IS SAME URI LIKE THIS  
-    // Route::get('/admin/customers/{user}/access/confirm', 'ConfirmationController@edit');
-    // Route::patch('/admin/customers/{user}/access', 'ConfirmationController@update');
-
     Route::get('/admin/report', 'Admin\ReportController@index');
 
     Route::get('/admin/sales', 'Admin\SalesController@index');
@@ -94,8 +97,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/sales/december', 'Admin\SalesController@december');
     
     Route::get('/admin/notification', 'Admin\NotificationController@index');
-    // Route::get('/admin/notification/delivery', 'Admin\NotificationController@delivery');
-    // Route::get('/admin/notification/return', 'Admin\NotificationController@return');
 });
 
 Route::middleware(['auth', 'courier'])->group(function () {

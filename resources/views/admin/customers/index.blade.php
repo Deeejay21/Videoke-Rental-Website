@@ -265,8 +265,8 @@
             <th>Email</th>
             <th>Payment</th>
             <th>Videoke</th>
-            <th>Customer Delivery Date</th>
-            <th>Customer Videoke Return Date</th>
+            <th>Videoke Delivery Date</th>
+            <th>Videoke Videoke Return Date</th>
             <th>Customer Registered Date</th>
             <th>Account Status</th>
             <th>Payment Status</th>
@@ -334,7 +334,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table2').DataTable( {
-            "scrollX": true
+            "scrollX": true,
+            "language": {
+                "emptyTable": "No Customer Videoke Reserved"
+            }
         } );
     } );
 </script>

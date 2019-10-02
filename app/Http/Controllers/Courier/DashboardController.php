@@ -12,6 +12,10 @@ class DashboardController extends Controller
 {
     public function index(User $user)
     {
-        return view('courier.dashboard.index', compact('user'));
+        $usersNotification = User::where('usertype', 'User')->get();
+
+        $currentTime = $this->currentTime();
+
+        return view('courier.dashboard.index', compact('usersNotification', 'currentTime', 'user'));
     }
 }

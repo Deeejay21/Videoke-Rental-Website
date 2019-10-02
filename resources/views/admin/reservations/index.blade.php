@@ -264,8 +264,8 @@
                 <th>Customer Name</th>
                 <th>Videoke Order</th>
                 <th>Videoke Status</th>
-                <th>Reservation Delivery Date</th>
-                <th>Reservation Return Date</th>
+                <th>Videoke Delivery Date</th>
+                <th>Videoke Return Date</th>
             </tr>
         </thead>
         <tbody>
@@ -308,6 +308,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+            "language": {
+                "emptyTable": "No Reservation List"
+            }
         } );
     } );
 </script>

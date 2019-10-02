@@ -29,6 +29,10 @@ class ReservationsController extends Controller
 
     public function show(User $user)
     {
+        $currentTime = $this->currentTime();
+
+        $usersNotification = User::where('usertype', 'User')->get();
+        
         return view('admin.reservations.show', compact('user', 'currentTime', 'usersNotification'));
     }
 }

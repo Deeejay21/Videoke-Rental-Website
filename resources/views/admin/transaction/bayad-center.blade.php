@@ -286,6 +286,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+            "language": {
+                "emptyTable": "No Transaction for Bayad Center"
+            }
         } );
     } );
 </script>
