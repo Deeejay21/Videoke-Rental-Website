@@ -73,10 +73,56 @@
                 <th>Customer Registered Date</th>
                 <th>Payment Status</th>
                 <th>Videoke Status</th>
+                <th>Payment Confirmation Date Issued</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
+
+            @foreach ($anotherReservation as $another)
+                <tr>
+                    <td>{{ $another->id - 2}}</td>
+                    <td>{{ $another->first_name }}</td>
+                    <td>{{ $another->last_name }}</td>
+                    <td>{{ $another->gender }}</td>
+                    <td>{{ $another->age }}</td>
+                    <td>{{ $another->phone }}</td>
+                    <td>{{ $another->email }}</td>
+                    <td>{{ $another->videoke->name }}</td>
+                    {{-- <td>{{ $another->check_format() }}</td> --}}
+                    <td>{{ $another->reserve_format() }}</td>
+                    <td>{{ $another->reserve_return_format() }}</td>
+                    <td>{{ $another->created_at->format('F d, Y (D) - g:i A') }} - {{ $another->created_at->diffForHumans() }}</td>
+                    @if ($another->is_paid == 'Paid')
+                        <td><h5><span class="badge badge-pill badge-success">{{ $another->is_paid }}</span></h5></td>
+                    @else
+                        <td><h5><span class="badge badge-pill badge-warning">{{ $another->is_paid }}</span></h5></td>
+                    @endif
+                    @if ( $another->is_return == 'Return')
+                        <td><h5><span class="badge badge-pill badge-success">{{ $another->is_return }}</span></h5></td>
+                    @else
+                        <td><h5><span class="badge badge-pill badge-warning">{{ $another->is_return }}</span></h5></td>
+                    @endif
+                    @if ($another->is_paid == 'Paid')
+                    <td>{{ $another->qrcode_issued_at_format() }}</td>
+                    @else
+                        <td>Not Yet Issued</td>
+                    @endif
+
+                    @if ($another->is_paid == 'Half Payment' && $another->is_return == 'Operating')
+                    <td>
+                        <div class="btn-group">
+                            <a href="/courier/customers/{{ $another->id }}/access/confirm-return" class="btn btn-outline-success" style="margin: 4px;">Confirm</a>
+                        </div>
+                    </td>
+                    @elseif ($another->is_paid == 'Paid' && $another->is_return == 'Operating')
+                    <td>
+                        <a href="/courier/customer/{{ $another->id }}/access/videoke-update" class="btn btn-outline-primary" style="margin: 4px;">Return</a>
+                    </td>
+                    @endif
+                </tr>
+            @endforeach
+
             @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->id - 2}}</td>
@@ -100,11 +146,22 @@
                     @else
                         <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_return }}</span></h5></td>
                     @endif
+                    @if ($user->is_paid == 'Paid')
+                    <td>{{ $user->qrcode_issued_at_format() }}</td>
+                    @else
+                        <td>Not Yet Issued</td>
+                    @endif
+                    @if ($user->is_paid == 'Half Payment' && $user->is_return == 'Operating')
                     <td>
                         <div class="btn-group">
-                            <a href="/courier/customers/{{ $user->id }}/access" class="btn btn-outline-success" style="margin: 4px;">Status</a>
+                            <a href="/courier/customers/{{ $user->id }}/access/confirm" class="btn btn-outline-success" style="margin: 4px;">Confirm</a>
                         </div>
                     </td>
+                    @elseif ($user->is_paid == 'Paid' && $user->is_return == 'Operating')
+                    <td>
+                        <a href="/courier/customers/{{ $user->id }}/access/edit" class="btn btn-outline-primary" style="margin: 4px;">Return</a>
+                    </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

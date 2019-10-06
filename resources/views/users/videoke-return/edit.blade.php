@@ -63,12 +63,13 @@
                 <div class="card-header">Edit Customer</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ $user->path_courier() }}">
+                    <form method="POST" action="/courier/customer/{{ $user->id }}/access/videokeupdate">
                         @method('PATCH')
                         @csrf
 
                         <input type="hidden" value="{{ $currentDate }}" class="form-control" name="videoke_return_issued_at">
-                        
+
+                        {{-- @foreach ($anotherReservation as $another) --}}
                         <div class="form-group row">
                             <label for="is_return" class="col-md-4 col-form-label text-md-right">Videoke Status</label>
 
@@ -78,6 +79,19 @@
                                 </select>
                             </div>
                         </div>
+                        {{-- @endforeach --}}
+{{--                         
+                        @if ($user->is_return == 'Operating')
+                        <div class="form-group row">
+                            <label for="is_return" class="col-md-4 col-form-label text-md-right">Videoke Status</label>
+
+                            <div class="col-md-6">
+                                <select id="is_return" class="form-control" required name="is_return" autocomplete="is_return" autofocus>
+                                    <option value="Return">Return</option>
+                                </select>
+                            </div>
+                        </div>
+                        @endif --}}
 
                         <div class="row">
                             <div class="col-md-12 text-center">

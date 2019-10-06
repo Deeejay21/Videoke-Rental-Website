@@ -16,9 +16,9 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('first_name');
-            $table->timestamp('checked_in_at')->nullable();
             $table->string('last_name');
             // $table->unsignedBigInteger('address_id');
+            $table->timestamp('checked_in_at')->nullable();
             $table->string('gender');
             $table->unsignedSmallInteger('age');
             $table->string('phone');
@@ -32,6 +32,8 @@ class CreateUsersTable extends Migration
             $table->string('is_expired', 10)->default('Active');
             $table->string('is_paid', 20)->default('Paying');
             $table->string('is_return', 10)->default('Operating');
+            $table->timestamp('qrcode_issued_at')->nullable();
+            $table->timestamp('videoke_return_issued_at')->nullable();
             $table->timestamps();
             $table->index(['payment_id', 'videoke_id'], 'FK');
         });

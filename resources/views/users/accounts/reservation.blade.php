@@ -4,12 +4,14 @@
 
 @section('content')
 
-@foreach ($user->another_reservation as $another)
+@include('layouts.users.admin.session')
+
+@foreach ($user->another_reservation->reverse() as $another)
 <div class="card mb-3">
     <div class="card-header d-flex bd-highlight">
         <h5 class="pt-1 flex-grow-1">Reservation Details</h5>
         @if ($another->is_paid == 'Paying' && $another->is_return == 'Operating')
-            <div class=""><a href="" class="btn btn-outline-primary btn-sm">Edit</a></div>
+            <div class=""><a href="/user/{{ $user->id }}/account/reserve-updates" class="btn btn-outline-primary btn-sm">Edit</a></div>
         @endif
     </div>
     <div class="card-body">
@@ -35,7 +37,7 @@
     <div class="card-header d-flex bd-highlight">
         <h5 class="pt-1 flex-grow-1">Reservation Details</h5>
         @if ($user->is_paid == 'Paying')
-            <div class=""><a href="" class="btn btn-outline-primary btn-sm">Edit</a></div>
+            <div class=""><a href="/user/{{ $user->id }}/account/reserve-update" class="btn btn-outline-primary btn-sm">Edit</a></div>
         @endif
     </div>
     <div class="card-body">

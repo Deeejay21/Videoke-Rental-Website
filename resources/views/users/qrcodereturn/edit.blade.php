@@ -58,13 +58,18 @@
 </div>
 
 <div id="app">
-    <form action="/courier/customers/{{ $user->id }}/access" method="post">
+    <form action="/courier/customers/{{ $user->id }}/access/confirmreturn" method="post">
+        @method('PATCH')
         @csrf
+
         <div class="row justify-content-center">
                 <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">QR Code Confirmation</div>
                     <div class="card-body">
+
+                        <input type="hidden" value="{{ $currentDate }}" class="form-control" name="qrcode_issued_at">
+                        
                         <input type="hidden" value="Paid" class="form-control" name="is_paid">
 
                         <webcam-reader></webcam-reader>
@@ -77,7 +82,7 @@
                             <div class="col-md-12 text-center">
                                 <div class="btn-group btn-group-md">
                                     <button type="submit" class="btn btn-outline-primary">Confirm</button>
-                                    <a href="/courier/customers/{{ $user->id }}/access" class="btn btn-outline-secondary ml-4">Back</a>
+                                    <a href="/courier/customers" class="btn btn-outline-secondary ml-4">Back</a>
                                 </div>
                             </div>
                         </div>

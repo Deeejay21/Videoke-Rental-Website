@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Courier;
+namespace App\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class AccessController extends Controller
+class VideokeReturnController extends Controller
 {
-    public function show(User $user)
+    public function edit(User $user)
     {
         $usersNotification = User::where('usertype', 'User')->get();
-        
+
         $currentTime = $this->currentTime();
+
+        $currentDate = Carbon::now('Asia/Manila');
 
         $anotherReservation = User::with('another_reservation')
             ->join('another_reservations', 'another_reservations.user_id', '=', 'users.id')
@@ -23,33 +24,17 @@ class AccessController extends Controller
             ->where('users.usertype', 'User')
             ->get();
 
-        // $anotherReservation = $user->another_reservation()->get();
-
-        // dd($anotherReservation);
-
-
-        return view('courier.customers.access.show', compact('anotherReservation', 'usersNotification', 'currentTime', 'user'));
-    }
-
-    public function edit(User $user)
-    {
-        $usersNotification = User::where('usertype', 'User')->get();
-        
-        $currentTime = $this->currentTime();
-
-        $currentDate = Carbon::now('Asia/Manila');
-
-        return view('courier.customers.access.edit', compact('currentDate', 'usersNotification', 'currentTime', 'user'));
+        return view('users.videoke-return.edit', compact('anotherReservation', 'currentDate', 'user', 'currentTime', 'usersNotification'));
     }
 
     public function update(User $user)
     {
         $data = request()->validate([
             'is_return' => '',
-            'videoke_return_issued_at' => '',
+            'videoke_return_issued_at' => ''
         ]);
 
-        $user->update($data);
+        $user->another_reservation()->where('is_return', 'Operating')->update($data);
 
         return redirect('/courier/customers')->with('success', 'The videoke of ' . $user->first_name .  ' has been returned successfully.');
     }

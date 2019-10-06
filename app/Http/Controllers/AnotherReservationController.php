@@ -28,8 +28,13 @@ class AnotherReservationController extends Controller
             'qr_password' => '',
             'payment_id' => 'required',
         ]);
+
+        // $return = request()->validate([
+        //     'is_return' => ''
+        // ]);
         
         auth()->user()->another_reservation()->create($data);
+        // auth()->user()->another_return()->create($return);
 
         return redirect('/user/' . auth()->user()->id . '/account/home')->with('success', 'Hahaha');
     }

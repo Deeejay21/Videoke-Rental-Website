@@ -72,6 +72,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($usersAnotherDelivery as $delivery)
+                        @if ($delivery->reserved_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                        <tr>
+                            <td>{{ $delivery->user->id - 2 }}</td>
+                            <td>{{ $delivery->user->first_name }} {{ $delivery->user->last_name }}</td>
+                            <td>{{ $delivery->user->address }}</td>
+                            <td>{{ $delivery->user->phone }}</td>
+                            {{-- <td>{{ $delivery->checked_in_at->format('F d, Y g:i A') }}</td> --}}
+                            <td>{{ $delivery->reserve_format() }}</td>
+                            <td>{{ $delivery->reserve_return_format() }}</td>
+                            <td width="10">
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-info">receipt</button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endif
+                    @endforeach
+
                     @foreach ($usersDelivery as $user)
                         @if ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
                         <tr>
@@ -107,13 +126,31 @@
                         <th>Phone Number</th>
                         <th>Reservation Delivery Date</th>
                         <th>Videoke Return Date</th>
-                        <th>Action</th>
+                        {{-- <th>Action</th> --}}
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($usersAnotherReturn as $return)
+                        @if ($return->date_return_notification() == $currentTime->format('F d, Y'))
+                            
+                        <tr>
+                            <td>{{ $return->user->id - 2 }}</td>
+                            <td>{{ $return->user->first_name }} {{ $return->user->last_name }}</td>
+                            <td>{{ $return->user->address }}</td>
+                            <td>{{ $return->user->phone }}</td>
+                            <td>{{ $return->reserve_format() }}</td>
+                            <td>{{ $return->reserve_return_format() }}</td>
+                            {{-- <td width="10">
+                                <div class="btn-group">
+                                        <a href="/courier/customers/{{ $user->id }}/access/edit" class="btn btn-outline-primary" style="margin: 4px;">Return</a>
+                                </div>
+                            </td> --}}
+                        </tr>
+                        @endif
+                    @endforeach
+
                     @foreach ($usersReturn as $user)
                         @if ($user->date_return_notification() == $currentTime->format('F d, Y'))
-                            
                         <tr>
                             <td>{{ $user->id - 2 }}</td>
                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
@@ -121,11 +158,10 @@
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->check_format() }}</td>
                             <td>{{ $user->date_return_format() }}</td>
-                            <td width="10">
+                            {{-- <td width="10">
                                 <div class="btn-group">
-                                <p>Receipt</p>
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                         @endif
                         @endforeach

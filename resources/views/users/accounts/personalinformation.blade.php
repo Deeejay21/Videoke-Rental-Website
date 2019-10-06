@@ -4,15 +4,17 @@
 
 @section('content')
 
+@include('layouts.users.admin.session')
+
 <div class="card">
     <div class="card-header d-flex bd-highlight">
         <h5 class="pt-1 flex-grow-1">Personal Details</h5>
         @if (($user->is_paid == 'Paying') || ($user->is_paid == 'Paid' && $user->is_return == 'Return'))
             @if (($anotherPaying->count() == 1 && $anotherOperating->count() == 1 && $anotherPaidReturn->count() == $anotherPaidReturn->count()))
-                <div class=""><a href="" class="btn btn-outline-primary btn-sm">Edit</a></div>
+                <div class=""><a href="/user/{{ $user->id }}/account/edit" class="btn btn-outline-primary btn-sm">Edit</a></div>
             @endif
             @if ($anotherPaidReturn->count() == $another)
-                <div class=""><a href="" class="btn btn-outline-primary btn-sm">Edit</a></div>
+                <div class=""><a href="/user/{{ $user->id }}/account/edit" class="btn btn-outline-primary btn-sm">Edit</a></div>
             @endif
         @endif
     </div>
@@ -26,5 +28,6 @@
         <p class="card-text"><strong>Phone Number:</strong> {{ $user->phone }}</p>
     </div>
 </div>
+    
 
 @endsection
