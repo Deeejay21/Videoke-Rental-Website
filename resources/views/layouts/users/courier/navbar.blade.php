@@ -22,37 +22,90 @@
         <hr class="d-lg-none w-100 my-2">
 
         <div class="navbar-nav align-items-lg-center ml-auto">
-                @foreach ($usersNotification as $user)
-                @if (($user->is_paid == 'Paid') && ($user->is_return == 'Operating') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
-                <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
-                    <a class="nav-link hide-arrow" href="/courier/notification">
-                        <i class="feather icon-bell navbar-icon align-middle"></i>
-                        <span class="badge badge-danger badge-dot indicator"></span>
+                {{-- @if ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
+            <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                <a class="nav-link hide-arrow" href="/courier/notification">
+                    <i class="feather icon-bell navbar-icon align-middle"></i>
+                    <span class="badge badge-danger badge-dot indicator"></span>
+                    @foreach ($usersNotification->where('is_return', 'Operating')->where('is_paid', 'Half Payment') as $user)
+                    @if ($user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                    @endif
+                    @endforeach
                         <span class="d-lg-none align-middle">&nbsp; Notifications</span>
                     </a>
-                </div>
-                @elseif (($user->is_paid == 'Half Payment') && ($user->is_return == 'Operating') && $user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
-                <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
-                    <a class="nav-link hide-arrow" href="/courier/notification">
-                        <i class="feather icon-bell navbar-icon align-middle"></i>
-                        <span class="badge badge-danger badge-dot indicator"></span>
-                        <span class="d-lg-none align-middle">&nbsp; Notifications</span>
-                    </a>
-                </div>
-                @else
-                <div class="nav-item dropdown mr-lg-3">
-                    <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
-                        <i class="feather icon-bell navbar-icon align-middle"></i>
-                        <span class="d-lg-none align-middle">&nbsp; Notification</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="list-group list-group-flush">
-                            <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
-                        </div>
-                    </div>
                 </div>
                 @endif
-                @endforeach
+
+                @if (($user->is_paid == 'Half Payment') && ($user->is_return == 'Operating') && $user->checked_in_at->format('F d, Y') <> $currentTime->format('F d, Y'))
+            <div class="nav-item dropdown mr-lg-3">
+                <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                    <i class="feather icon-bell navbar-icon align-middle"></i>
+                    <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="list-group list-group-flush">
+                        <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                    </div>
+                </div>
+            </div>
+            @endif
+                
+            @if (($user->is_paid == 'Paid') && ($user->is_return == 'Operating') && ($user->date_return_notification() <> $currentTime->format('F d, Y')))
+            <div class="nav-item dropdown mr-lg-3">
+                <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                    <i class="feather icon-bell navbar-icon align-middle"></i>
+                    <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="list-group list-group-flush">
+                        <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                    </div>
+                </div>
+            </div>
+            @endif
+                
+            @if (($user->is_paid == 'Paid') && ($user->is_return == 'Return') && ($user->date_return_notification() <> $currentTime->format('F d, Y')))
+            <div class="nav-item dropdown mr-lg-3">
+                <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                    <i class="feather icon-bell navbar-icon align-middle"></i>
+                    <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="list-group list-group-flush">
+                        <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                    </div>
+                </div>
+            </div>
+            @endif
+                
+            @if (($user->is_paid == 'Paid') && ($user->is_return == 'Return'))
+            <div class="nav-item dropdown mr-lg-3">
+                <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                    <i class="feather icon-bell navbar-icon align-middle"></i>
+                    <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="list-group list-group-flush">
+                        <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                    </div>
+                </div>
+            </div>
+            @endif
+                
+            @if (($user->is_paid == 'Paying') && ($user->is_return == 'Operating'))
+            <div class="nav-item dropdown mr-lg-3">
+                <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                    <i class="feather icon-bell navbar-icon align-middle"></i>
+                    <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="list-group list-group-flush">
+                        <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                    </div>
+                </div>
+            </div>
+            @endif --}}
+
                 
             <!-- Divider -->
             <div class="nav-item d-none d-lg-block text-big font-weight-light line-height-1 opacity-25 mr-3 ml-1">|</div>

@@ -89,7 +89,6 @@
 </div>
 @endif
 
-
 @if (($user->is_paid == 'Half Payment') && ($user->is_return == 'Operating'))
 <div class="alert alert-success paid" role="alert">
     <h4 class="alert-heading center"><strong>Welcome to Videoke Rental Website</strong></h4>
@@ -127,7 +126,6 @@
     <p class="mb-0">If you need help, feel free to leave a message in a <strong><a href="/user/{{ $user->id }}/account/writemessage">Write Message</a></strong> Section. Thank you.</p>
 </div>
 @endif
-
 
 <script type="text/javascript">
     function prepHref(linkElement) {

@@ -22,7 +22,7 @@ class ReservationsController extends Controller
 
         $usersNotification = User::where('usertype', 'User')->get();
 
-        $users = User::where('usertype', 'User')->whereIn('is_return', ['Operating', 'Return'])->get();
+        $users = User::where('usertype', 'User')->get();
 
         return view('admin.reservations.index', compact('users', 'currentTime', 'usersNotification'));
     }

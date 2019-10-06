@@ -23,7 +23,22 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user/{user}/account/home', 'UsersController@home');
+    Route::get('/user/{user}/account/edit', 'UsersController@edit');
+    Route::patch('/user/{user}/account/personalinformation', 'UsersController@update');
     Route::get('/qrcode/{user}/preview', 'UsersController@preview');
+
+    Route::get('/user/{user}/account/reserve-update', 'ReservationUpdateController@edit');
+    Route::patch('/user/{user}/account/reserveupdate', 'ReservationUpdateController@update');
+
+    Route::get('/user/{user}/account/reserve-updates', 'AnotherReservationUpdateController@edit');
+    Route::patch('/user/{user}/account/reserveupdates', 'AnotherReservationUpdateController@update');
+
+    Route::get('/user/{user}/account/payment-updates', 'AnotherPaymentUpdateController@edit');
+    Route::patch('/user/{user}/account/paymentupdates', 'AnotherPaymentUpdateController@update');
+
+    Route::get('/user/{user}/account/payment-update', 'PaymentUpdateController@edit');
+    Route::patch('/user/{user}/account/paymentupdate', 'PaymentUpdateController@update');
+
     // Route::get('/user/{user}/account/qrcode', 'UsersController@qrcode');
     Route::get('/user/{user}/account/personalinformation', 'UsersController@personalinformation');
     Route::get('/user/{user}/account/reservation', 'UsersController@reservation');
@@ -106,13 +121,17 @@ Route::middleware(['auth', 'courier'])->group(function () {
 
     Route::get('/courier/customers', 'Courier\UsersController@index');
 
-    Route::get('/courier/customers/{user}/access/confirm', 'QRCodeController@create');
-    Route::post('/courier/customers/{user}/access', 'QRCodeController@store');
+    Route::get('/courier/customers/{user}/access/confirm', 'QRCodeController@edit');
+    Route::patch('/courier/customers/{user}/access/confirm', 'QRCodeController@update');
 
     Route::get('/courier/customers/{user}/access/qrerror', 'QRErrorController@index');
 
-    Route::get('/courier/customers/{user}/access', 'Courier\AccessController@show'); 
     Route::get('/courier/customers/{user}/access/edit', 'Courier\AccessController@edit');
     Route::patch('/courier/customers/{user}/access', 'Courier\AccessController@update');
 
+    Route::get('/courier/customers/{user}/access/confirm-return', 'ConfirmReturnController@edit');
+    Route::patch('/courier/customers/{user}/access/confirmreturn', 'ConfirmReturnController@update');
+
+    Route::get('/courier/customer/{user}/access/videoke-update', 'VideokeReturnController@edit');
+    Route::patch('/courier/customer/{user}/access/videokeupdate', 'VideokeReturnController@update');
 });

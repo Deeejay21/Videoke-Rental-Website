@@ -5,53 +5,41 @@ namespace App\Http\Controllers\Courier;
 use App\User;
 use App\Videoke;
 use App\Payment;
+use App\AnotherReservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(User $user)
     {
         $users = User::where([['usertype', 'User'], ['is_return', 'Operating']])->whereIn('is_paid', ['Half Payment', 'Paid'])->get();
+
+        $anotherReservation = User::with('another_reservation')
+            ->join('another_reservations', 'another_reservations.user_id', '=', 'users.id')
+            ->select('another_reservations.*', 'users.id', 'users.usertype', 'users.first_name', 'users.last_name', 'users.gender', 'users.age', 'users.phone', 'users.email')
+            ->where('another_reservations.is_return', 'Operating')
+            // ->where('another_reservations.user_id', 'users.id')
+            ->whereIn('another_reservations.is_paid', ['Paid', 'Half Payment'])
+            ->where('users.usertype', 'User')
+            ->get();
+
+        // $user = User::find(4);
+
+        // $anotherReservation = AnotherReservation::with('user')
+        //     ->join('users', 'users.id', '=', 'another_reservations.id')
+        //     ->select('users.id', 'users.first_name', 'users.last_name', 'users.email', 'users.age', 'users.gender', 'users.phone', 'another_reservations.*')
+        //     ->where('users.usertype', 'User')
+        //     ->whereIn('another_reservations.is_paid', ['Paid', 'Half Payment'])
+        //     ->get();
+
 
         $usersNotification = User::where('usertype', 'User')->get();
 
         $currentTime = $this->currentTime();
 
-        return view('courier.customers.index', compact('usersNotification', 'currentTime', 'users'));
+        return view('courier.customers.index', compact('anotherReservation', 'usersNotification', 'currentTime', 'users'));
     }
-
-    // public function create()
-    // {
-    //     $videokes = Videoke::all();
-    //     $payments = Payment::all();
-
-    //     return view('courier.customers.create', compact('videokes', 'payments'));
-    // }
-
-    // public function store()
-    // {
-    //     $data = request()->validate([
-    //         'first_name' => 'required',
-    //         'last_name' => 'required',
-    //         'gender' => 'required',
-    //         'age' => 'required',
-    //         'phone' => 'required',
-    //         'email' => 'email|required|unique:users',
-    //         'password' => 'required',
-    //         'videoke_id' => 'required',
-    //         'payment_id' => 'required',
-    //     ]);
-
-    //     User::create($data);
-
-    //     return redirect('/courier/customers')->with('success', 'Customer has been added.');
-    // }
-
-    // public function show()
-    // {
-    //     //
-    // }
 
     public function edit(User $user)
     {

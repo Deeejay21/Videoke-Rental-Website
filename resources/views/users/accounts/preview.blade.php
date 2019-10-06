@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @include('layouts.links.qrcode-upper')
+<style>
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 21vh;
+    }
+</style>
 <body>
     <div id="app">
         @include('layouts.users.user.navbar')
 
+        @if ($user->is_paid == 'Half Payment')
         <div class="container">
-            <div class="row pt-2">
-                <div class="col-1 offset-11">
-                    <a href="/user/{{ $user->id }}/account/home" class="btn btn-outline-primary">Exit</a>
-                </div>
+            <div class="row justify-content-center pt-4">
+                <a href="/user/{{ $user->id }}/account/home" class="btn btn-outline-primary">Exit</a>
             </div>
-            <div class="row">
-                <div class="col-4 offset-5" style="margin-top: 23vh">
-                    <qr-code user-Password="{{ $user->qr_code->qr_password }}"></qr-code>
-                </div>
-            </div>
+            
+            <qr-code user-Password="{{ $user->qr_code->qr_password }}" class="img"></qr-code>
         </div>
-        {{-- <main class=""> --}}
-        {{-- </main> --}}
+        @endif
+        
+        @foreach ($anotherHalf as $half)
+        @if ($half->is_paid == 'Half Payment')
+        <div class="container">
+            <div class="row justify-content-center pt-4">
+                <a href="/user/{{ $user->id }}/account/home" class="btn btn-outline-primary">Exit</a>
+            </div>
 
-    </div>
+                <qr-code user-Password="{{ $half->qr_password }}" class="img"></qr-code>
+            </div>
+        @endif
+        @endforeach
+
 </body>
 </html>

@@ -48,10 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Videoke::class);
     }
 
-    public function videoke_return()
-    {
-        return $this->hasOne(VideokeReturn::class);
-    }
+    // public function videoke_return()
+    // {
+    //     return $this->hasOne(VideokeReturn::class);
+    // }
 
     public function account()
     {
@@ -61,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function another_reservation()
     {
         return $this->hasMany(AnotherReservation::class);
+    }
+
+    public function another_return()
+    {
+        return $this->hasMany(AnotherReturn::class);
     }
 
     public function total_sales()
@@ -219,7 +224,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->sum('videokes.price');
     }
 
-    protected $dates = ['checked_in_at', 'return_at'];
+    protected $dates = ['checked_in_at', 'return_at', 'reserved_at', 'qrcode_issued_at', 'videoke_return_issued_at'];
 
     public function setChecked_in_atAttribute($cia)
     {
@@ -246,18 +251,59 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->checked_in_at->format('F d, Y (D) - g:i A');
     }
 
-    // public function reserve_format()
+    public function reserve_format()
+    {
+        return $this->reserved_at->format('F d, Y (D) - g:i A');
+    }
+
+    public function qrcode_issued_at_format()
+    {
+        return $this->qrcode_issued_at->format('F d, Y (D) - g:i A');
+    }
+
+    public function videoke_return_issued_at_format()
+    {
+        return $this->videoke_return_issued_at->format('F d, Y (D) - g:i A');
+    }
+
+    public function another_qrcode_issued_at_format()
+    {
+        return $this->qrcode_issued_at->format('F d, Y (D) - g:i A');
+    }
+
+    public function another_videoke_return_issued_at_format()
+    {
+        return $this->videoke_return_issued_at->format('F d, Y (D) - g:i A');
+    }
+
+    // public function another_qrcode_issued_at_format()
     // {
-    //     return $this->checked_in_at->format('F d, Y (D) - g:i A');
+    //     return $this->qrcode_issued_at->format('F d, Y (D) - g:i A');
     // }
 
-    public function return_at_issued()
+    // public function another_videoke_return_issued_at_format()
+    // {
+    //     return $this->videoke_return_issued_at->format('F d, Y (D) - g:i A');
+    // }
+    
+    public function reserve_return_format()
     {
-        $return_date = $this->updated_at;
-        return Carbon::createFromFormat('Y-m-d H:i:s', $return_date, 'UTC')
-            ->setTimezone('Asia/Manila')
-            ->format('F d, Y' . ' (' . 'D' . ') - g:i A');
+        $reserved_at = $this->reserved_at;
+        $date_return = $this->videoke->number;
+        
+        $date = date_create($reserved_at);
+
+        date_add($date,date_interval_create_from_date_string($date_return));
+        return date_format($date,"F d, Y (D) - g:i A");
     }
+
+    // public function return_at_issued()
+    // {
+    //     $return_date = $this->videoke_return->updated_at;
+    //     return Carbon::createFromFormat('Y-m-d H:i:s', $return_date, 'UTC')
+    //         ->setTimezone('Asia/Manila')
+    //         ->format('F d, Y' . ' (' . 'D' . ') - g:i A');
+    // }
 
     public function qr_code_issued()
     {
@@ -313,9 +359,9 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->qr_code()->create([
                 'qr_password' => Str::random(50),
             ]);
-            $user->videoke_return()->create([
-                'return_at' => $user->date_return_format(),
-            ]);
+            // $user->videoke_return()->create([
+            //     'return_at' => $user->date_return_format(),
+            // ]);
         });
     }
 

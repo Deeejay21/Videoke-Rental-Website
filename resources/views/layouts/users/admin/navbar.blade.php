@@ -73,8 +73,8 @@
         <hr class="d-lg-none w-100 my-2">
 
         <div class="navbar-nav align-items-lg-center ml-auto">
-                @foreach ($usersNotification as $user)
-                @if (($user->is_paid == 'Paid') && ($user->is_return == 'Operating') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
+                {{-- @foreach ($usersNotification as $user)
+                @if (($user->is_paid == 'Paid') && ($user->videoke_return->is_return == 'Operating') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
                 <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
                     <a class="nav-link hide-arrow" href="/admin/notification">
                         <i class="feather icon-bell navbar-icon align-middle"></i>
@@ -82,7 +82,7 @@
                         <span class="d-lg-none align-middle">&nbsp; Notifications</span>
                     </a>
                 </div>
-                @elseif (($user->is_paid == 'Half Payment') && ($user->is_return == 'Operating') && $user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                @elseif (($user->is_paid == 'Half Payment') && ($user->videoke_return->is_return == 'Operating') && $user->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y'))
                 <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
                     <a class="nav-link hide-arrow" href="/admin/notification">
                         <i class="feather icon-bell navbar-icon align-middle"></i>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 @endif
-                @endforeach
+                @endforeach --}}
                 
             <!-- Divider -->
             <div class="nav-item d-none d-lg-block text-big font-weight-light line-height-1 opacity-25 mr-3 ml-1">|</div>

@@ -11,9 +11,21 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $usersReturn = User::where([['usertype', 'User'], ['is_paid', 'Paid'], ['is_return', 'Operating']])->get();
+        $usersReturn = User::with('videoke_return')
+            ->join('videoke_returns', 'videoke_returns.user_id', '=', 'users.id')
+            ->select('videoke_returns.*', 'users.*')
+            ->where('is_return', 'Operating')
+            ->where('users.usertype', 'User')
+            ->where('users.is_paid', 'Paid')
+            ->get();
 
-        $usersDelivery = User::where([['usertype', 'User'], ['is_paid', 'Half Payment'], ['is_return', 'Operating']])->get();
+        $usersDelivery = User::with('videoke_return')
+            ->join('videoke_returns', 'videoke_returns.user_id', '=', 'users.id')
+            ->select('videoke_returns.*', 'users.*')
+            ->where('is_return', 'Operating')
+            ->where('users.usertype', 'User')
+            ->where('users.is_paid', 'Half Payment')
+            ->get();
 
         $usersNotification = User::where('usertype', 'User')->get();
 

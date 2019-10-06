@@ -1,6 +1,6 @@
 @extends('layouts.users.user.app2')
 
-@section('title', 'Videoke | Home')
+@section('title', 'Videoke | Reservation')
 
 @section('content')
 

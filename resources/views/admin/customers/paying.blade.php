@@ -315,12 +315,12 @@
                 @else
                     <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_paid }}</span></h5></td>
                 @endif
-                @if ( $user->is_return == 'Return')
-                    <td><h5><span class="badge badge-pill badge-success">{{ $user->is_return }}</span></h5></td>
-                @elseif ($user->is_return == 'Pending')
-                    <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_return }}</span></h5></td>
+                @if ( $user->videoke_return->is_return == 'Return')
+                    <td><h5><span class="badge badge-pill badge-success">{{ $user->videoke_return->is_return }}</span></h5></td>
+                @elseif ($user->videoke_return->is_return == 'Pending')
+                    <td><h5><span class="badge badge-pill badge-danger">{{ $user->videoke_return->is_return }}</span></h5></td>
                 @else
-                    <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_return }}</span></h5></td>
+                    <td><h5><span class="badge badge-pill badge-warning">{{ $user->videoke_return->is_return }}</span></h5></td>
                 @endif
             </tr>
         @endforeach

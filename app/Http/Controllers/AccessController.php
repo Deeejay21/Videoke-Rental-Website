@@ -38,6 +38,6 @@ class AccessController extends Controller
 
         $user->update($data);
 
-        return redirect('/admin/customers/' . $user->id . '/access')->with('success', 'Videoke of ' . $user->first_name .  ' has been returned.');
+        return redirect('/admin/customers/' . $user->id . '/access')->with('update', 'Customer ' . $user->first_name .  ' has been updated successfully.');
     }
 }
