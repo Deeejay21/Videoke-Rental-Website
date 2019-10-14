@@ -84,6 +84,8 @@
                                     {{ __('Login') }}
                                 </button>
 
+                                {{-- <a href="/qrcode" class="btn btn-outline-primary">Login With QR Code</a> --}}
+
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}

@@ -96,7 +96,8 @@
 </div>
 @endif
 
-@foreach ($user->another_reservation->reverse() as $another)
+{{-- @foreach ($user->another_reservation->reverse() as $another) --}}
+@foreach ($user->another_reservation as $another)
 <div class="card mb-3">
         <div class="card-header d-flex bd-highlight">
             <h5 class="pt-1 flex-grow-1">Payment Details</h5>

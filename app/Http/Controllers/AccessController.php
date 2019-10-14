@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AccessController extends Controller
@@ -22,7 +23,9 @@ class AccessController extends Controller
 
         $currentTime = $this->currentTime();
 
-        return view('admin.customers.access.edit', compact('currentTime', 'usersNotification', 'user'));
+        $currentDate = Carbon::now('Asia/Manila');
+
+        return view('admin.customers.access.edit', compact('currentDate', 'currentTime', 'usersNotification', 'user'));
     }
 
     public function update(User $user)
@@ -34,6 +37,7 @@ class AccessController extends Controller
             'is_paid' => '',
             'is_expired' => '',
             'is_return' => '',
+            'videoke_return_issued_at' => '',
         ]);
 
         $user->update($data);

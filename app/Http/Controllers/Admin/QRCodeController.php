@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,9 @@ class QRCodeController extends Controller
 
         $usersNotification = User::where('usertype', 'User')->get();
 
-        return view('admin.qrcode.create', compact('user', 'currentTime', 'usersNotification'));
+        $currentDate = Carbon::now('Asia/Manila');
+
+        return view('admin.qrcode.create', compact('currentDate', 'user', 'currentTime', 'usersNotification'));
     }
 
     public function store(Request $request, User $user)
@@ -29,7 +32,8 @@ class QRCodeController extends Controller
             $user->qr_code()->update($data);
     
             $status = request()->validate([
-                'is_paid' => ''
+                'is_paid' => '',
+                'qrcode_issued_at' => '',
             ]);
             
             $user->qr_code()->update($data);

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class AnotherReservation extends Model
@@ -56,4 +57,25 @@ class AnotherReservation extends Model
         date_add($date,date_interval_create_from_date_string($date_return));
         return date_format($date,"F d, Y");
     }
+    
+    public function date_return_format()
+    {
+        $checked_in_at = $this->checked_in_at;
+        $date_return = $this->videoke->number;
+        
+        $date = date_create($checked_in_at);
+
+        date_add($date,date_interval_create_from_date_string($date_return));
+        return date_format($date,"F d, Y (D) - g:i A");
+    }
+    
+    public function check_format()
+    {
+        return $this->user->checked_in_at->format('F d, Y (D) - g:i A');
+    }
+
+    // public function getReservedAtAttribute($date)
+    // {
+    //     return $this->attributes['reserved_at'] = Carbon::parse($date)->create('F d, Y (D) - g:i A', 'America/Toronto');
+    // }
 }

@@ -63,22 +63,28 @@ class VideokesController extends Controller
 
     public function update(Videoke $videoke)
     {
-        $videoke->update($this->validateRequest());
+        $data = request()->validate([
+            'name' => 'required|unique:videokes,name,'.$videoke->id,
+            'number' => 'required',
+            'price' => 'required',
+        ]);
 
-        return redirect('/admin/videokes')->with('update', 'Videoke has been successfully updated.');
+        $videoke->update($data);
+
+        return redirect('/admin/videokes')->with('update', 'The ' . $videoke->name . ' has been successfully updated.');
     }
 
     public function destroy(Videoke $videoke)
     {
         $videoke->delete();
 
-        return redirect('/admin/videokes')->with('delete', 'Videoke has been successfully deleted.');
+        return redirect('/admin/videokes')->with('delete',  'The ' . $videoke->name . ' has been successfully deleted.');
     }
 
     private function validateRequest()
     {
         return request()->validate([
-            'name' => 'required',
+            'name' => 'required|unique:videokes',
             'number' => 'required',
             'price' => 'required',
         ]);

@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ReservationUpdateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['edit_reservation'])->only(['edit']);
+    }
+    
     public function edit(User $user)
     {
         $videokes = Videoke::all();
@@ -18,7 +23,7 @@ class ReservationUpdateController extends Controller
     public function update()
     {
         $data = request()->validate([
-            // 'checked_in_at' => '',
+            'checked_in_at' => 'required',
             'videoke_id' => 'required'
         ]);
 

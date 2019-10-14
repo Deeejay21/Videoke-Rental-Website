@@ -249,8 +249,9 @@
                                     <i class="lnr lnr-earth text-primary display-4"></i>
                                 </div>
                                 <div class="col">
-                                    <h6 class="mb-0 text-muted"><span class="text-primary">Total Transaction</span></h6>
-                                    <h4 class="mt-3 mb-0">{{ $user->total_transaction() }}</h4>
+                                    {{-- <h6 class="mb-0 text-muted"><span class="text-primary">Total Transaction</span></h6> --}}
+                                    <h6 class="mb-0 text-muted"><span class="text-primary">Total Reservation</span></h6>
+                                    <h4 class="mt-3 mb-0">{{ $user->total_reservation() }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -264,7 +265,7 @@
                                 </div>
                                 <div class="col">
                                     <h6 class="mb-0 text-muted"><span class="text-primary">Total Customer</span></h6>
-                                    <h4 class="mt-3 mb-0">{{ $total_customers }}</h4>
+                                    <h4 class="mt-3 mb-0">{{ $user->total_customers() }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +278,7 @@
                                 </div>
                                 <div class="col">
                                     <h6 class="mb-0 text-muted"><span class="text-primary">Total Videoke</span></h6>
-                                    <h4 class="mt-3 mb-0">{{ $total_videokes }}</h4>
+                                    <h4 class="mt-3 mb-0">{{ $user->total_videoke() }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +292,7 @@
                                 </div>
                                 <div class="col">
                                     <h6 class="mb-0 text-muted"><span class="text-primary">Total Sales</span></h6>
-                                    <h4 class="mt-3 mb-0">₱{{ number_format($total_sales, 2, '.', ',') }}</h4>
+                                    <h4 class="mt-3 mb-0">₱{{ number_format($user->total_sales(), 2, '.', ',') }}</h4>
                                 </div>
                             </div>
                         </div>

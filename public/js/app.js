@@ -5262,11 +5262,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_chenfengyuan_vue_qrcode__WEBPACK_IMPORTED_MODULE_1__["default"].name, _chenfengyuan_vue_qrcode__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -54479,7 +54474,12 @@ Vue.component("qr-code", __webpack_require__(/*! ./components/QrCode.vue */ "./r
  */
 
 var app = new Vue({
-  el: "#app"
+  el: "#app",
+  methods: {
+    printme: function printme() {
+      window.print();
+    }
+  }
 });
 
 /***/ }),

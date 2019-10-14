@@ -23,6 +23,16 @@ class AdminMiddleware
         {
             return redirect('/user/' . auth()->user()->id . '/account/home');
         }
+    // public function handle($request, Closure $next)
+    // {
+    //     if (auth()->user()->id == auth()->user()->qr_code()->user_id)
+    //     {
+    //         return $next($request);
+    //     }
+    //     else 
+    //     {
+    //         return redirect('/user/' . auth()->user()->id . '/account/home');
+    //     }
 
         // if (auth()->user()->usertype == 'admin')
         // {

@@ -1,6 +1,7 @@
 @extends('layouts.users.admin.app-panel')
 
 @section('upper-extends')
+    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('title', 'Edit Customer')
@@ -265,28 +266,28 @@
                     <form method="POST" action="/admin/customers/{{ $user->id }}">
                         @method('PATCH')
                         @csrf
-{{-- 
+
                     <div class="form-group row">
                         <label for="videoke_id" class="col-md-4 col-form-label text-md-right">Videoke Package</label>
 
                         <div class="col-md-6">
                             <select id="videoke_id" class="form-control" name="videoke_id" autocomplete="videoke_id" autofocus>
-                                    <option>{{ $user->videoke->name }}</option>
+                                    <option value="{{ $user->videoke->id }}">{{ $user->videoke->name }}</option>
                                 @foreach ($videokes as $videoke)
                                     <option value="{{ $videoke->id }}">{{ $videoke->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                    </div> --}}
+                    </div>
 
                     <div class="form-group row">
                         <label for="checked_in_at" class="col-md-4 col-form-label text-md-right">Reservation Date:</label>
                         <div class="input-group date form_datetime col-md-7" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
-                            <input class="form-control" size="40" type="text" value="{{ old('checked_in_at') ?? $user->checked_in_at }}" readonly>
+                            <input class="form-control" size="40" type="text" value="{{ $user->checked_in_at }}" readonly>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                         </div>
-                        <input type="hidden" id="checked_in_at" name="checked_in_at" value="" /><br/>
+                        <input type="hidden" id="checked_in_at" name="checked_in_at" value="{{ $user->checked_in_at }}" /><br/>
                     </div>
 
                         <div class="form-group row">
@@ -401,14 +402,30 @@
 @include('layouts.users.admin.session')
 
 @section('lower-extends')
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
+<script type="text/javascript" src="{{ asset('jquery/jquery-1.8.3.min.js') }}" charset="UTF-8"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}" charset="UTF-8"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#table2').DataTable( {
-            "scrollX": true
-        } );
-    } );
+
+  var date = new Date();
+      date.setDate(date.getDate());
+    
+      $('.form_datetime').datetimepicker({
+        format: "dd MM yyyy - HH:ii P",
+        pickerPosition: "center",
+        weekStart: 1,
+        todayBtn:  1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        isRTL: false,
+        autoclose: true,
+        startDate: date
+        // setDaysOfWeekDisabled: [],
+        // setDatesDisabled: 
+    });
 </script>
 @endsection
 @endsection

@@ -22,10 +22,13 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/user/{user}/account/home', 'UsersController@home');
+    // Route::get('/user/{user}/account/home', 'UsersController@home');
     Route::get('/user/{user}/account/edit', 'UsersController@edit');
     Route::patch('/user/{user}/account/personalinformation', 'UsersController@update');
     Route::get('/qrcode/{user}/preview', 'UsersController@preview');
+    Route::get('/user/{user}/expired', 'UsersController@expired');
+
+    Route::get('/user/{user}/account/home', 'UsersController@home')->name('user');
 
     Route::get('/user/{user}/account/reserve-update', 'ReservationUpdateController@edit');
     Route::patch('/user/{user}/account/reserveupdate', 'ReservationUpdateController@update');
@@ -64,6 +67,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/customers/{user}/edit', 'Admin\UsersController@edit'); 
     Route::patch('/admin/customers/{user}', 'Admin\UsersController@update'); 
     Route::delete('/admin/customers/{user}', 'Admin\UsersController@destroy');
+
+    Route::get('/admin/customers/{anotherReservation}/edit-customer', 'Admin\AnotherUserController@edit'); 
+    Route::patch('/admin/customer/{anotherReservation}', 'Admin\AnotherUserController@update'); 
+    Route::delete('/admin/customer/{anotherReservation}', 'Admin\AnotherUserController@destroy');
 
     Route::get('/admin/videokes/rent', 'Admin\VideokesController@rent');
     Route::resource('/admin/videokes', 'Admin\VideokesController');
@@ -118,6 +125,8 @@ Route::middleware(['auth', 'courier'])->group(function () {
     Route::get('/courier', 'Courier\DashboardController@index');
 
     Route::get('/courier/notification', 'Courier\NotificationController@index');
+    Route::get('/courier/notification/customer/{user}', 'Courier\NotificationController@show');
+    Route::get('/courier/notification/customers/{user}', 'Courier\NotificationController@receipt');
 
     Route::get('/courier/customers', 'Courier\UsersController@index');
 

@@ -253,7 +253,7 @@
 
 @include('layouts.users.admin.session')
 
-<table class="table table-bordered" id="table2">
+<table class="hover table table-bordered" id="table2">
     <thead>
         <tr class="text-center">
             <th>ID</th>
@@ -275,6 +275,53 @@
         </tr>
     </thead>
     <tbody>
+            @foreach ($anotherCustomer as $customer)
+            <tr>
+                <td>{{ $customer->id }}</td>
+                <td>{{ $customer->first_name }}</td>
+                <td>{{ $customer->last_name }}</td>
+                <td>{{ $customer->gender }}</td>
+                <td>{{ $customer->age }}</td>
+                <td>{{ $customer->phone }}</td>
+                <td>{{ $customer->email }}</td>
+                <td>{{ $customer->payment->name }}</td>
+                <td>{{ $customer->videoke->name }}</td>
+                <td>{{ $customer->reserve_format() }}</td>
+                <td>{{ $customer->reserve_return_format() }}</td>
+                <td>{{ $customer->created_at->format('F d, Y (D) - g:i A') }} - {{ $customer->created_at->diffForHumans() }}</td>
+                @if ( $customer->is_expired == 'Active' )
+                    <td><h5><span class="badge badge-pill badge-success">{{ $customer->is_expired }}</span></h5></td>
+                @else
+                    <td><h5><span class="badge badge-pill badge-danger">{{ $customer->is_expired }}</span></h5></td>
+                @endif
+                @if ($customer->is_paid == 'Paid')
+                    <td><h5><span class="badge badge-pill badge-success">{{ $customer->is_paid }}</span></h5></td>
+                @elseif ($customer->is_paid == 'Half Payment')
+                    <td><h5><span class="badge badge-pill badge-warning">{{ $customer->is_paid }}</span></h5></td>
+                @else
+                    <td><h5><span class="badge badge-pill badge-danger">{{ $customer->is_paid }}</span></h5></td>
+                @endif
+                @if ( $customer->is_return == 'Return')
+                    <td><h5><span class="badge badge-pill badge-success">{{ $customer->is_return }}</span></h5></td>
+                @else
+                    <td><h5><span class="badge badge-pill badge-warning">{{ $customer->is_return }}</span></h5></td>
+                @endif
+                <td>
+                    <div class="btn-group">
+                        <a href="/admin/customers/{{ $customer->id }}/access" class="btn btn-outline-success" style="margin: 4px;">Status</a>
+                        <a href="/admin/customers/{{ $customer->id }}/edit-customer" class="btn btn-outline-primary" style="margin: 4px;">Edit</a>
+                    <form class="form-prevent-multiple-submits" action="/admin/customer/{{ $customer->id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete Customer {{ $customer->id }}?')" class="button-prevent-multiple-submits btn btn-outline-danger" style="margin: 4px;">Delete</button>
+                    </form>
+
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+
         @foreach ($users as $user)
             <tr>
                 <td>{{ $user->id - 2 }}</td>
@@ -301,10 +348,10 @@
                 @else
                     <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_paid }}</span></h5></td>
                 @endif
-                @if ( $user->videoke_return->is_return == 'Return')
-                    <td><h5><span class="badge badge-pill badge-success">{{ $user->videoke_return->is_return }}</span></h5></td>
+                @if ( $user->is_return == 'Return')
+                    <td><h5><span class="badge badge-pill badge-success">{{ $user->is_return }}</span></h5></td>
                 @else
-                    <td><h5><span class="badge badge-pill badge-warning">{{ $user->videoke_return->is_return }}</span></h5></td>
+                    <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_return }}</span></h5></td>
                 @endif
                 <td>
                     <div class="btn-group">
@@ -314,7 +361,7 @@
                         @csrf
                         @method('DELETE')
 
-                        <button type="submit" class="button-prevent-multiple-submits btn btn-outline-danger" style="margin: 4px;">Delete</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete Customer {{ $user->first_name }}?')" class="button-prevent-multiple-submits btn btn-outline-danger" style="margin: 4px;">Delete</button>
                     </form>
 
                     </div>

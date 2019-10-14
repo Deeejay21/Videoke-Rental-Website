@@ -265,7 +265,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/admin/videokes">
+                    <form class="form-prevent-multiple-submits" method="POST" action="/admin/videokes">
                         @csrf
 
                         <div class="form-group row">
@@ -313,7 +313,7 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <div class="btn-group btn-group-md">
-                                    <button type="submit" class="btn btn-outline-primary">Add Videoke</button>
+                                    <button type="submit" class="button-prevent-multiple-submits btn btn-outline-primary">Add Package</button>
                                     <a href="/admin/videokes" class="btn btn-outline-secondary ml-4">Back</a>
                                 </div>
                             </div>
@@ -324,4 +324,9 @@
         </div>
     </div>
 </div>
+
+@section('lower-extends')
+    <script src="{{ asset('js/submit.js') }}"></script>    
+@endsection
+
 @endsection

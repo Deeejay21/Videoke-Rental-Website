@@ -22,14 +22,6 @@ class DashboardController extends Controller
 
         $year = Carbon::now();
 
-        $total_customers = $user->total_customers();
-
-        $total_videokes = VideokeTotal::count();
-
-        $total_sales = $user->total_sales();
-
-        $total_payments = Payment::count();
-
         $august = $user->august();
         $september = $user->september();
         $october = $user->october();
@@ -43,8 +35,6 @@ class DashboardController extends Controller
         $june = $user->june();
         $july = $user->july();
 
-        // $total_transactions = User::where('is_completed', 'Completed')->get();
-
         $chart = new SalesChart;
         $chart->labels([$date->month('8')->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F'), $date->addMonth()->format('F')]);
         $chart->dataset('Total Sales', 'line', [$august, $september, $october, $november, $december, $january, $february, $march, $april, $may, $june, $july])
@@ -52,6 +42,6 @@ class DashboardController extends Controller
               ->backgroundColor('#716aca')
               ->fill(false);
               
-        return view('admin.dashboard.index', compact('total_sales', 'chart', 'year', 'total_payments', 'total_customers', 'total_videokes', 'user', 'currentTime', 'usersNotification'));
+        return view('admin.dashboard.index', compact('chart', 'year', 'user', 'currentTime', 'usersNotification'));
     }
 }

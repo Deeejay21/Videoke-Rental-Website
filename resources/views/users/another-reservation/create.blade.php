@@ -1,4 +1,4 @@
-@extends('layouts.users.user.app2')
+@extends('layouts.users.user.app-datetime')
 
 @section('title', 'Videoke | Reservation')
 

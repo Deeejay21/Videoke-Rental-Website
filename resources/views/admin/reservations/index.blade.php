@@ -257,7 +257,7 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table table-bordered" id="table1">
+    <table class="cell-border display hover" id="table1">
         <thead>
             <tr>
                 <th>ID</th>

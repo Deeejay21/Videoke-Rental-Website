@@ -257,7 +257,6 @@
         <div class="col-md-8">
         <div class="card">
             <div class="card-header">Customer Details</div>
-            <div class="card-body">
                 <div class="card-body">
                     <p class="card-text"><strong>First Name:</strong> {{ $user->first_name }}</p>
                     <p class="card-text"><strong>Last Name:</strong> {{ $user->last_name }}</p>

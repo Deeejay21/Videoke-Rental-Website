@@ -91,7 +91,7 @@
 
 @if (($user->is_paid == 'Half Payment') && ($user->is_return == 'Operating'))
 <div class="alert alert-success paid" role="alert">
-    <h4 class="alert-heading center"><strong>Welcome to Videoke Rental Website</strong></h4>
+    <h4 class="alert-heading center"><strong>Welcome to Videoke Rental</strong></h4>
     <hr>
     <h5 class="card-text">Hi {{ $user->first_name }},</h5>
     <p>I hope we accompanied you to your reservation. Please wait for your reservation delivery date. Thank you.</p>
@@ -106,7 +106,6 @@
                 <h4 class="card-title"><strong>QR Code:</strong></h4>
                 <p class="card-text">
 
-                {{-- Should Print --}}
                 <qr-code user-Password="{{ $user->qr_code->qr_password }}"></qr-code>
                 <a href="/qrcode/{{ $user->id }}/preview" class="btn btn-outline-primary">Preview</a>
                 <a href="#" onclick="prepHref(this)" download class="btn btn-outline-secondary">Download QR Code</a>
