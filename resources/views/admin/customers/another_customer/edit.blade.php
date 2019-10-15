@@ -1,10 +1,10 @@
 @extends('layouts.users.admin.app-panel')
 
 @section('upper-extends')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">    
+    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
 @endsection
 
-@section('title', 'Payment')
+@section('title', 'Edit Customer')
 
 @section('sidebar')
 <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
@@ -53,13 +53,13 @@
             </li>
 
         <!-- Customers -->
-        <li class="sidenav-item">
+        <li class="sidenav-item active open">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-user"></i>
                 <div>Customers</div>
             </a>
             <ul class="sidenav-menu">
-                <li class="sidenav-item">
+                <li class="sidenav-item active">
                     <a href="/admin/customers" class="sidenav-link">
                         <div>Customer List</div>
                     </a>
@@ -111,7 +111,7 @@
         </li>
 
         <!--  Payment -->
-        <li class="sidenav-item active">
+        <li class="sidenav-item">
             <a href="/admin/payments" class="sidenav-link">
                 <i class="sidenav-icon feather icon-credit-card"></i>
                 <div>Payment</div>
@@ -247,65 +247,188 @@
 @endsection
 
 @section('content')
-<h4 class="font-weight-bold pb-3 mb-0">Payment List</h4>
+<h4 class="font-weight-bold pb-3 mb-0">Customer List</h4>
 <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/admin"><i class="feather icon-home"></i></a></li>
-        <li class="breadcrumb-item active">Payment</li>
+        <li class="breadcrumb-item active">Customers</li>
+        <li class="breadcrumb-item active">Customer List</li>
+        <li class="breadcrumb-item active">Edit Customer</li>
     </ol>
 </div>
 
-    <p><a href="/admin/payments/create" class="btn btn-outline-primary">Add New Payment</a></p>
+<div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Register') }}</div>
+
+                <div class="card-body">
+                    {{-- @foreach ($anotherDetails as $id) --}}
+                    <form method="POST" action="/admin/customer/{{ $anotherReservation->id }}">
+                        {{-- @endforeach --}}
+                        @method('PATCH')
+                        @csrf
+
+                    <div class="form-group row">
+                        <label for="videoke_id" class="col-md-4 col-form-label text-md-right">Videoke Package</label>
+
+                        <div class="col-md-6">
+                            <select id="videoke_id" class="form-control" name="videoke_id" autocomplete="videoke_id" autofocus>
+                                    <option value="{{ $reserve->videoke_id }}">{{ $reserve->videoke->name }}</option>
+                                @foreach ($videokes as $videoke)
+                                    <option value="{{ $videoke->id }}">{{ $videoke->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="reserved_at" class="col-md-4 col-form-label text-md-right">Reservation Date:</label>
+                        <div class="input-group date form_datetime col-md-7" data-date-format="dd MM yyyy - HH:ii P" data-link-field="reserved_at">
+                            <input class="form-control" size="40" type="text" value="{{ $reserve->reserved_at }}" readonly>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        </div>
+                        <input type="hidden" id="reserved_at" name="reserved_at" value="{{ $reserve->reserved_at }}" /><br/>
+                    </div>
+
+                        {{-- <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">First Name</label>
+
+                            <div class="col-md-6">
+                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') ?? $user->first_name }}" autocomplete="first_name" autofocus>
+
+                                @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="form-group row">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-right">Last Name</label>
+
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') ?? $user->last_name }}" autocomplete="last_name" autofocus>
+
+                                @error('last_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="form-group row">
+                            <label for="gender" class="col-md-4 col-form-label text-md-right">Gender</label>
+
+                            <div class="col-md-6">
+                                <select id="gender" class="form-control" required name="gender" autocomplete="gender" autofocus>
+                                    <option>{{ $user->gender }}</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div> --}}
+
+                          {{-- <div class="form-group row">
+                                <label for="age" class="col-md-4 col-form-label text-md-right">Age</label>
+    
+                                <div class="col-md-6">
+                                    <input id="age" type="number" class="form-control @error('age') is-invalid @enderror" name="age" value="{{ old('age') ?? $user->age }}" autocomplete="age">
+    
+                                    @error('age')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div> --}}
+
+                        {{-- <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">Contact Number</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? $user->phone }}" autocomplete="phone">
+
+                                @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div> --}}
+
+                        {{-- <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $user->email }}" autocomplete="email">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div> --}}
+
+                        <div class="form-group row">
+                            <label for="payment_id" class="col-md-4 col-form-label text-md-right">Payment</label>
+
+                            <div class="col-md-6">
+                                <select id="payment_id" class="form-control" required name="payment_id">
+                                    {{-- <option disabled value="{{ $user->id }}">{{ $user->payment->name }}</option> --}}
+                                        <option value="{{ $reserve->payment_id }}">{{ $reserve->payment->name }}</option>
+                                    @foreach ($payments as $payment)
+                                        <option value="{{ $payment->id }}">{{ $payment->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="btn-group btn-group-md">
+                                    <button type="submit" class="btn btn-outline-primary">Edit Customer</button>
+                                    <a href="/admin/customers" class="btn btn-outline-secondary ml-4">Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @include('layouts.users.admin.session')
 
-
-    <table class="form-prevent-multiple-submits table table-bordered" id="table1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Account Number</th>
-                    <th>Date Created</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($payments as $payment)
-                    <tr>
-                        <td>{{ $payment->id }}</td>
-                        <td>{{ $payment->name }}</td>
-                        <td>{{ $payment->account_number }}</td>
-                        <td>{{ $payment->created_at->diffForHumans() }}</td>
-                        <td width="10">
-                            <div class="btn-group">
-                                    <a href="/admin/payments/{{ $payment->id }}/edit" class="btn btn-outline-primary" style="margin: 4px;">Edit</a>
-                                    <form action="/admin/payments/{{ $payment->id }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-        
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete {{ $payment->name }}?')" class="button-prevent-multiple-submits btn btn-outline-danger" style="margin: 4px;">Delete</button>
-                                    </form>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
 @section('lower-extends')
-<script src="{{ asset('js/submit.js') }}"></script>
 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
+<script type="text/javascript" src="{{ asset('jquery/jquery-1.8.3.min.js') }}" charset="UTF-8"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}" charset="UTF-8"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#table1').DataTable( {
-            "language": {
-                "emptyTable": "No Payment Found"
-            }
-        } );
-    } );
+
+  var date = new Date();
+      date.setDate(date.getDate());
+    
+      $('.form_datetime').datetimepicker({
+        format: "dd MM yyyy - HH:ii P",
+        pickerPosition: "center",
+        weekStart: 1,
+        todayBtn:  1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        isRTL: false,
+        autoclose: true,
+        startDate: date
+        // setDaysOfWeekDisabled: [],
+        // setDatesDisabled: 
+    });
 </script>
 @endsection
 @endsection

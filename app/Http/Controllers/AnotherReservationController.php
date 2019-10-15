@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class AnotherReservationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['reservation']);
+    }
+
     public function create(User $user)
     {
         $videokes = Videoke::all();
@@ -23,10 +28,14 @@ class AnotherReservationController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'videoke_id' => 'required',
-            // 'reserved_at' => 'required',
+            'videoke_id' => 'required|not_in:0',
+            'reserved_at' => 'required',
             'qr_password' => '',
-            'payment_id' => 'required',
+            'payment_id' => 'required|not_in:0',
+        ], [
+            'videoke_id.not_in' => 'The videoke field is required.',
+            'payment_id.not_in' => 'The payment field is required.',
+            'reserved_at.required' => 'The reservation date field is required.',
         ]);
 
         // $return = request()->validate([

@@ -82,7 +82,7 @@
                             <div class="col-md-12 text-center">
                                 <div class="btn-group btn-group-md">
                                     <button type="submit" class="btn btn-outline-primary">Confirm</button>
-                                    <a href="/courier/customers/{{ $user->id }}/access" class="btn btn-outline-secondary ml-4">Back</a>
+                                    <a href="/courier/customers" class="btn btn-outline-secondary ml-4">Back</a>
                                 </div>
                             </div>
                         </div>

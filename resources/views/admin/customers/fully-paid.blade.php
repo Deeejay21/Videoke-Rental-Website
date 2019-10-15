@@ -292,12 +292,6 @@
                 <td>{{ $user->check_format() }}</td>
                 <td>{{ $user->date_return_format() }}</td>
                 <td>{{ $user->created_at->format('F d, Y (D) - g:i A') }} - {{ $user->created_at->diffForHumans() }}</td>
-                {{-- @if ($user->date_return() == $currentTime)
-                    
-                @else
-                    
-                @endif
-                <td>{{ dd($user->notification_return()) }}</td> --}}
                 @if ( $user->usertype == 'Admin')
                 <td><h5><span class="badge badge-pill badge-info">{{ $user->usertype }}</span></h5></td>
                 @else
@@ -315,12 +309,52 @@
                 @else
                     <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_paid }}</span></h5></td>
                 @endif
-                @if ( $user->videoke_return->is_return == 'Return')
-                    <td><h5><span class="badge badge-pill badge-success">{{ $user->videoke_return->is_return }}</span></h5></td>
-                @elseif ($user->videoke_return->is_return == 'Pending')
-                    <td><h5><span class="badge badge-pill badge-danger">{{ $user->videoke_return->is_return }}</span></h5></td>
+                @if ( $user->is_return == 'Return')
+                    <td><h5><span class="badge badge-pill badge-success">{{ $user->is_return }}</span></h5></td>
+                @elseif ($user->is_return == 'Pending')
+                    <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_return }}</span></h5></td>
                 @else
-                    <td><h5><span class="badge badge-pill badge-warning">{{ $user->videoke_return->is_return }}</span></h5></td>
+                    <td><h5><span class="badge badge-pill badge-warning">{{ $user->is_return }}</span></h5></td>
+                @endif
+            </tr>
+        @endforeach
+        @foreach ($anotherPaid as $paid)
+            <tr>
+                <td>{{ $paid->user->id - 2 }}</td>
+                <td>{{ $paid->user->first_name }}</td>
+                <td>{{ $paid->user->last_name }}</td>
+                <td>{{ $paid->user->gender }}</td>
+                <td>{{ $paid->user->age }}</td>
+                <td>{{ $paid->user->phone }}</td>
+                <td>{{ $paid->user->email }}</td>
+                <td>{{ $paid->user->payment->name }}</td>
+                <td>{{ $paid->user->videoke->name }}</td>
+                <td>{{ $paid->check_format() }}</td>
+                <td>{{ $paid->date_return_format() }}</td>
+                <td>{{ $paid->created_at->format('F d, Y (D) - g:i A') }} - {{ $paid->created_at->diffForHumans() }}</td>
+                @if ( $paid->user->usertype == 'Admin')
+                <td><h5><span class="badge badge-pill badge-info">{{ $paid->user->usertype }}</span></h5></td>
+                @else
+                <td><h5><span class="badge badge-pill badge-secondary">{{ $paid->user->usertype }}</span></h5></td>
+                @endif
+                @if ( $paid->user->is_expired == 'Active' )
+                    <td><h5><span class="badge badge-pill badge-success">{{ $paid->user->is_expired }}</span></h5></td>
+                @else
+                    <td><h5><span class="badge badge-pill badge-danger">{{ $paid->user->is_expired }}</span></h5></td>
+                @endif
+                @if ($paid->user->is_paid == 'Paid')
+                    <td><h5><span class="badge badge-pill badge-success">{{ $paid->user->is_paid }}</span></h5></td>
+                @elseif ($paid->user->is_paid == 'Half Payment')
+                    <td><h5><span class="badge badge-pill badge-warning">{{ $paid->user->is_paid }}</span></h5></td>
+                @else
+                    <td><h5><span class="badge badge-pill badge-danger">{{ $paid->user->is_paid }}</span></h5></td>
+                @endif
+                @if ( $paid->user->is_return == 'Return')
+                    <td><h5><span class="badge badge-pill badge-success">{{ $paid->user->is_return }}</span></h5></td>
+                @elseif ($paid->user->is_return == 'Pending')
+                    <td><h5><span class="badge badge-pill badge-danger">{{ $paid->user->is_return }}</span></h5></td>
+                @else
+                    <td><h5><span class="badge badge-pill badge-warning">{{ $paid->user->is_return }}</span></h5></td>
                 @endif
             </tr>
         @endforeach

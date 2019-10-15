@@ -264,6 +264,8 @@
                         @method('PATCH')
                         @csrf
 
+                        <input type="hidden" name="videoke_return_issued_at" value="{{ $currentDate }}">
+
                         <div class="form-group row">
                             <label for="usertype" class="col-md-4 col-form-label text-md-right">User Type</label>
 
@@ -302,17 +304,17 @@
                             </div>
                         </div>
                         
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label for="is_return" class="col-md-4 col-form-label text-md-right">Videoke Status</label>
 
                             <div class="col-md-6">
                                 <select id="is_return" class="form-control" required name="is_return" autocomplete="is_return" autofocus>
-                                    <option>{{ $user->videoke_return->is_return }}</option>
+                                    <option>{{ $user->is_return }}</option>
                                     <option value="Operating">Operating</option>
                                     <option value="Return">Return</option>
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="row">
                             <div class="col-md-12 text-center">

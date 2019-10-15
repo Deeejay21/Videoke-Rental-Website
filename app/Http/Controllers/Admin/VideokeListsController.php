@@ -71,7 +71,7 @@ class VideokeListsController extends Controller
     private function validateRequest()
     {
         return request()->validate([
-            'number' => 'required',
+            'number' => 'required|unique:videoke_totals',
         ]);
     }
 }

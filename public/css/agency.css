@@ -10824,7 +10824,7 @@ img::-moz-selection {
 header.masthead {
   text-align: center;
   color: white;
-  background-image: url(/images/background.png);
+  background-image: url(/images/header-bg.jpg?e2d2a51c2932205b52f4a5ae1943eb97);
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;

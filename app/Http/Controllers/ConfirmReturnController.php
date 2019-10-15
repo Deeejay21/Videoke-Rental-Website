@@ -43,8 +43,13 @@ class ConfirmReturnController extends Controller
 
         // $qr = $qr->qr_password;
 
-        $qr = $user->another_reservation;
+        // $qr = $user->another_reservation;
+        $qr = User::with('another_reservation')
+            ->join('another_reservations', 'another_reservations.user_id', '=', 'users.id')
+            ->select('another_reservations.qr_password', 'users.id')
+            ->get();
 
+        // foreach ($qr->reverse() as $qr_pasword) {
         foreach ($qr as $qr_pasword) {
             $qr_pasword;
         }

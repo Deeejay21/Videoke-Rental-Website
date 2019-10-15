@@ -271,7 +271,7 @@
                 </thead>
                 <tbody>
                         @foreach ($users as $user)
-                        @if (($currentTime->format('F d, Y (D) - g:i A') < $user->videoke_return->return_at))
+                        @if (($currentTime->format('F d, Y (D) - g:i A') < $user->return_at))
                         <tr>
                             <td width="10">{{ $user->id }}</td>
                                 <td>{{ $user->first_name }} {{ $user->last_name }}</td>

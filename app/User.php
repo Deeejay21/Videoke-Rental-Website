@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -60,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function another_reservation()
     {
-        return $this->hasMany(AnotherReservation::class);
+        return $this->hasMany(AnotherReservation::class)->orderBy('created_at', 'DESC');
     }
 
     public function another_return()
@@ -70,11 +71,29 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function total_sales()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->where('users.usertype', 'User')
-            ->whereIn('users.is_paid', ['Paid', 'Half Payment'])
+            ->where('users.is_paid', 'Half Payment')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->where('users.usertype', 'User')
+            ->where('users.is_paid', 'Paid')
             ->sum('videokes.price');
+        
+        $anotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->where('another_reservations.is_paid', 'Half Payment')
+            ->sum('videokes.price') / 2;
+
+        $anotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->where('another_reservations.is_paid', 'Paid')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $anotherReservationHalf + $anotherReservationPaid;
     }
 
     public function total_customers()
@@ -82,9 +101,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return User::where([['is_paid', '<>', 'Paying'], ['usertype', 'User']])->count();
     }
 
-    public function total_transaction()
+    public function total_reservation()
     {
-        return User::where([['is_paid', 'Paid'], ['usertype', 'User']])->count();
+        $anotherReservation = AnotherReservation::where([['is_paid', 'Paid'], ['is_return', 'Return']])->count();
+        $user = User::where([['is_paid', 'Paid'], ['is_return', 'Return'], ['usertype', 'User']])->count();
+
+        return $anotherReservation + $user;
     }
 
     public function total_videoke()
@@ -94,134 +116,422 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function august()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '8')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '8')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '8')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '8')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function september()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '9')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '9')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '9')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '9')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function october()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '10')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '10')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '10')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '10')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function november()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '11')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '11')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '11')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '11')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function december()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '12')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '12')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '12')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '12')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function january()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '1')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '1')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '1')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '1')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function february()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '2')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '2')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '2')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '2')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function march()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '3')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '3')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '3')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '3')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function april()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '4')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '4')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '4')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '4')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function may()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '5')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '5')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '5')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '5')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function june()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '6')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '6')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '6')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '6')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     public function july()
     {
-        return User::with('videoke')
+        $userHalf = User::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
+            ->select('videokes.*', 'users.*')
+            ->where('is_paid', 'Half Payment')
+            ->where('users.usertype', 'User')
+            ->whereMonth('users.created_at', '7')
+            ->sum('videokes.price') / 2;
+
+        $userPaid = User::with('videoke')
             ->join('videokes', 'videokes.id', '=', 'users.videoke_id')
             ->select('videokes.*', 'users.*')
             ->where('is_paid', 'Paid')
             ->where('users.usertype', 'User')
             ->whereMonth('users.created_at', '7')
             ->sum('videokes.price');
+
+        $userAnotherReservationHalf = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Half Payment')
+            ->whereMonth('another_reservations.created_at', '7')
+            ->sum('videokes.price') / 2;
+
+        $userAnotherReservationPaid = AnotherReservation::with('videoke')
+            ->join('videokes', 'videokes.id', '=', 'another_reservations.videoke_id')
+            ->select('videokes.*', 'another_reservations.*')
+            ->where('is_paid', 'Paid')
+            ->whereMonth('another_reservations.created_at', '7')
+            ->sum('videokes.price');
+
+        return $userHalf + $userPaid + $userAnotherReservationHalf + $userAnotherReservationPaid;
     }
 
     protected $dates = ['checked_in_at', 'return_at', 'reserved_at', 'qrcode_issued_at', 'videoke_return_issued_at'];
@@ -313,7 +623,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->format('F d, Y' . ' (' . 'D' . ') - g:i A');
     }
 
-    public function date_return()
+    public function date_return_register()
     {
         $checked_in_at = $this->checked_in_at;
         $date_return = $this->videoke->number;
@@ -321,7 +631,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $date = date_create($checked_in_at);
 
         date_add($date,date_interval_create_from_date_string($date_return));
-        return date_format($date,"F d, Y' . ' (' . 'D' . ') - g:i A");
+        return date_format($date,"F d, Y");
     }
 
     public function date_return_format()
@@ -359,22 +669,49 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->qr_code()->create([
                 'qr_password' => Str::random(50),
             ]);
-            // $user->videoke_return()->create([
-            //     'return_at' => $user->date_return_format(),
-            // ]);
         });
     }
 
-    // public function qr()
-    // {
-    //     $qrs = $this->another_reservation;
+    public function halfNotification()
+    {
+        $currentTime = $this->currentDate();
 
-    //     // dd($qrs);
+        // dd($currentTime);
 
-    //     foreach ($qrs as $qr) {
-    //         $qr;
-    //     }
+        // $deliverUser = User::where([['usertype', 'User'], ['is_paid', 'Half Payment'], ['is_return', 'Operating']])->orderBy('created_at', 'DESC')->get(); // ASC dapat kapag sa time ng delivery customer
+        $deliverUser = User::where([['usertype', 'User'], ['is_paid', 'Half Payment'], ['is_return', 'Operating']])->orderBy('checked_in_at', 'DESC')->get();
+        
+        if ($deliverUser->count() == 0) {
+                return null;
+        } else {
+        foreach ($deliverUser as $deliver) {
+            $deliver;
+        }
 
-    //     return $qr;
-    // }
+    }
+
+        return ($deliver->checked_in_at->format('F d, Y')) == $currentTime->format('F d, Y') ? $deliver->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y') : false;
+    }
+
+    public function paidNotification()
+    {
+        $currentTime = $this->currentDate();
+
+        $deliverUser = User::where([['usertype', 'User'], ['is_paid', 'Paid'], ['is_return', 'Operating']])->orderby('checked_in_at', 'DESC')->get();
+        
+        if ($deliverUser->count() == 0) {
+                return null;
+        } else {
+        foreach ($deliverUser as $deliver) {
+            $deliver;
+        }
+    }
+
+        return ($deliver->date_return_notification() == $currentTime->format('F d, Y')) ? $deliver->date_return_notification() == $currentTime->format('F d, Y') : false;
+    }
+
+    public function currentDate()
+    {
+        return Carbon::now('Asia/Manila')->addDays(1);
+    }
 }

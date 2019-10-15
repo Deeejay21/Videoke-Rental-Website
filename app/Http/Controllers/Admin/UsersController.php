@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\User;
 use App\Videoke;
 use App\Payment;
+use App\AnotherReservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,8 +19,10 @@ class UsersController extends Controller
         $usersNotification = User::where('usertype', 'User')->get();
 
         $users = User::where('usertype', 'User')->where('is_paid', 'Half Payment')->get();
+
+        $anotherHalf = AnotherReservation::where('is_paid', 'Half Payment')->get();
         
-        return view('admin.customers.first-payment', compact('currentTime', 'usersNotification', 'users'));
+        return view('admin.customers.first-payment', compact('anotherHalf', 'currentTime', 'usersNotification', 'users'));
     }
 
     public function fullyPaid()
@@ -29,8 +32,10 @@ class UsersController extends Controller
         $usersNotification = User::where('usertype', 'User')->get();
 
         $users = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
+
+        $anotherPaid = AnotherReservation::where('is_paid', 'Paid')->get();
         
-        return view('admin.customers.fully-paid', compact('currentTime', 'usersNotification', 'users'));
+        return view('admin.customers.fully-paid', compact('anotherPaid', 'currentTime', 'usersNotification', 'users'));
     }
 
     public function paying()
@@ -40,8 +45,10 @@ class UsersController extends Controller
         $usersNotification = User::where('usertype', 'User')->get();
 
         $users = User::where('usertype', 'User')->where('is_paid', 'Paying')->get();
+
+        $anotherPaying = AnotherReservation::where('is_paid', 'Paying')->get();
         
-        return view('admin.customers.paying', compact('currentTime', 'usersNotification', 'users'));
+        return view('admin.customers.paying', compact('anotherPaying', 'currentTime', 'usersNotification', 'users'));
     }
     
     public function index()
@@ -50,9 +57,16 @@ class UsersController extends Controller
 
         $usersNotification = User::where('usertype', 'User')->get();
 
+        // $anotherCustomer = AnotherReservation::all();
+
+        $anotherCustomer = User::with('another_reservation')
+            ->join('another_reservations', 'another_reservations.user_id', '=', 'users.id')
+            ->select('another_reservations.*', 'users.first_name', 'users.last_name', 'users.age', 'users.gender', 'users.phone', 'users.email', 'users.is_expired')
+            ->get();
+
         $users = User::where('usertype', 'User')->get();
         
-        return view('admin.customers.index', compact('currentTime', 'usersNotification', 'users'));
+        return view('admin.customers.index', compact('anotherCustomer', 'currentTime', 'usersNotification', 'users'));
     }
 
     // public function create()

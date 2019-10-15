@@ -58,40 +58,40 @@
 </div>
 
 <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Edit Customer</div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">Edit Customer</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ $user->path_courier() }}">
-                        @method('PATCH')
-                        @csrf
+            <div class="card-body">
+                <form method="POST" action="{{ $user->path_courier() }}">
+                    @method('PATCH')
+                    @csrf
 
-                        <input type="hidden" value="{{ $currentDate }}" class="form-control" name="videoke_return_issued_at">
-                        
-                        <div class="form-group row">
-                            <label for="is_return" class="col-md-4 col-form-label text-md-right">Videoke Status</label>
+                    <input type="hidden" value="{{ $currentDate }}" class="form-control" name="videoke_return_issued_at">
+                    
+                    <div class="form-group row">
+                        <label for="is_return" class="col-md-4 col-form-label text-md-right">Videoke Status</label>
 
-                            <div class="col-md-6">
-                                <select id="is_return" class="form-control" required name="is_return" autocomplete="is_return" autofocus>
-                                    <option value="Return">Return</option>
-                                </select>
+                        <div class="col-md-6">
+                            <select id="is_return" class="form-control" required name="is_return" autocomplete="is_return" autofocus>
+                                <option value="Return">Return</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="btn-group btn-group-md">
+                                <button type="submit" class="btn btn-outline-primary">Return</button>
+                                <a href="/courier/customers" class="btn btn-outline-secondary ml-4">Back</a>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <div class="btn-group btn-group-md">
-                                    <button type="submit" class="btn btn-outline-primary">Return</button>
-                                    <a href="{{ $user->path_courier() }}" class="btn btn-outline-secondary ml-4">Back</a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
 @section('lower-extends')
 <script src="{{ asset('js/submit.js') }}"></script>

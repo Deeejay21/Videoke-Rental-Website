@@ -22,7 +22,6 @@
     </div>
   </nav>
   
-    <!-- Contact -->
     <section class="page-section">
       <div class="container">
           
@@ -34,28 +33,59 @@
                             <div class="card-header">Videoke Rates</div>
                             <div class="card-body">
                                 <ul>
-                                    <li class="pt-3 pb-1"><strong>1 Videoke ; 1 Day</strong> - PHP 500.00.</li>
-                                    <li class="pb-1"><strong>1 Videoke ; 2 Days</strong> - PHP 950.00.</li>
-                                    <li class="pb-1"><strong>1 Videoke ; 3 Days</strong> - PHP 1,400.00.</li>
-                                    <li class="pb-1"><strong>1 Videoke ; 4 Days</strong> - PHP 1,850.00.</li>
-                                    <li class="pb-1"><strong>1 Videoke ; 5 Days</strong> - PHP 2,300.00.</li>
-                                    <li class="pb-1"><strong>1 Videoke ; 6 Days</strong> - PHP 2,750.00.</li>
-                                    <li class="pb-1"><strong>1 Videoke ; 7 Days</strong> - PHP 3,000.00.</li>
+                                    @foreach ($videokes as $videokeRate)
+                                        <p><strong>{{ $videokeRate->name }} ; {{ $videokeRate->number }}</strong> - PHP {{ number_format($videokeRate->price, 2, '.', ',') }}.</p>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-7 pt">
                         <div class="card">
-                            <div class="card-header">Reserved Videoke Schedule</div>
+                            <div class="card-header">Dates that are not available</div>
                             <div class="card-body">
+                              @if ($userTotal == $videokeTotal)
+                                
                                 @foreach ($users as $user)
-                                @if ($user->is_paid == 'Paid')
+                                {{-- @if (($user->is_paid == 'Half Payment' || $user->is_paid == 'Paid') && $user->is_return == 'Operating') --}}
                                     <ul>
-                                        <li>{{ $user->checked_in_at->format('F d, Y g:i A') }} to {{ $user->date_return() }}</li>
+                                      
+                                      {{-- <li>{{ $user->checked_in_at->format('F d, Y') }} to {{ $user->date_return_register() }}</li> --}}
+                                      @php
+                                      //  $startTime = strtotime($user->checked_in_at);
+                                        // $endTime = strtotime($user->date_return_register());
+                                        // dd($endTime);
+                                        
+                                      //   // Loop between timestamps, 24 hours at a time
+                                      //   for ( $i = $startTime; $i <= $endTime; $i = $i + 86400 ) {
+                                      //     $thisDate = date( 'F d, Y', $i ); // 2010-05-01, 2010-05-02, etc
+                                      //     echo "$thisDate<br>";
+                                      //   }   
+
+
+                                      // $begin = new DateTime($user->checked_in_at);
+                                      // $end   = new DateTime( $user->date_return_register() );
+
+                                      // for($i = $begin; $i <= $end; $i->modify('+1 day')){
+                                      //     $date = $i->format("Y-m-d");
+                                      //     echo "$date<br>";
+                                      // }
+
+                                      $begin = new DateTime($user->checked_in_at);
+                                      $end = new DateTime($user->date_return_register());
+                                      $end = $end->modify( '+1 day' ); 
+
+                                      $interval = new DateInterval('P1D');
+                                      $daterange = new DatePeriod($begin, $interval ,$end);
+                                      // dd($daterange);
+
+                                      foreach($daterange as $date){
+                                          echo $date->format("F d, Y") . "<br>";
+                                      }
+                                      @endphp
                                     </ul>
-                                @endif
                                 @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -66,7 +96,7 @@
         <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading text-uppercase">Register</h2>
-            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            <h3 class="section-subheading text-muted">Create Your Account.</h3>
           </div>
         </div>
         

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use DB;
-use App\AnotherReservation;
+use App\User;
+use App\Videoke;
 use App\AnotherReturn;
+use App\AnotherReservation;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -18,10 +19,15 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware(['auth' => 'verified']);
+        $this->middleware(['edit'])->only(['edit']);
+        $this->middleware(['customer_status'])->only(['home', 'personalinformation', 'reservation', 'payment']);
+        $this->middleware('customer')->except('update');
     }
     
-    public function home(User $user, AnotherReservation $anotherReservation)
+    public function home(User $user)
     {
+        // $this->authorize('view', $user->another_reservation);
+
         // $anotherPaying = AnotherReservation::where([['is_paid', 'Paying'], ['is_return', 'Operating']])->get();
 
         // $anotherHalf = AnotherReservation::where([['is_paid', 'Half Payment'], ['is_return', 'Operating']])->get();
@@ -42,12 +48,24 @@ class UsersController extends Controller
 
         $anotherPaidReturnCount = $anotherPaidReturn->count();
 
-        return view('users.accounts.home', compact('anotherPaidReturnCount', 'anotherPaidReturn', 'anotherPaid', 'anotherHalf', 'anotherPaying', 'user'));
+        $videokes = Videoke::all();
+
+        return view('users.accounts.home', compact(
+            'videokes', 
+            'anotherPaidReturnCount', 
+            'anotherPaidReturn', 
+            'anotherPaid', 
+            'anotherHalf', 
+            'anotherPaying', 
+            'user'
+        ));
     }
 
     public function edit(User $user)
     {
-        return view('users.accounts.edit', compact('user'));
+        $videokes = Videoke::all();
+
+        return view('users.accounts.edit', compact('videokes', 'user'));
     }
 
     public function update()
@@ -74,6 +92,7 @@ class UsersController extends Controller
 
     public function personalinformation(User $user)
     {
+        $videokes = Videoke::all();
         //    $this->authorize('viewAny', User::class);
         $another = auth()->user()->another_reservation()->get();
 
@@ -91,18 +110,22 @@ class UsersController extends Controller
 
         $another = $another->count();
 
-        return view('users.accounts.personalinformation', compact('another', 'anotherOperating', 'anotherPaidReturnCount', 'anotherPaidReturn', 'anotherPaid', 'anotherHalf', 'anotherPaying', 'user'));
+        return view('users.accounts.personalinformation', compact('videokes', 'another', 'anotherOperating', 'anotherPaidReturnCount', 'anotherPaidReturn', 'anotherPaid', 'anotherHalf', 'anotherPaying', 'user'));
     }
 
     public function reservation(User $user)
     {
+        $videokes = Videoke::all();
+
         $anotherPaying = auth()->user()->another_reservation()->where([['is_paid', 'Paying'], ['is_return', 'Operating']])->get();
 
-        return view('users.accounts.reservation', compact('anotherPaying', 'user'));
+        return view('users.accounts.reservation', compact('videokes', 'anotherPaying', 'user'));
     }
 
     public function payment(User $user)
     {
+        $videokes = Videoke::all();
+
         $anotherPaying = auth()->user()->another_reservation()->where([['is_paid', 'Paying'], ['is_return', 'Operating']])->get();
 
         $anotherHalf = auth()->user()->another_reservation()->where([['is_paid', 'Half Payment'], ['is_return', 'Operating']])->get();
@@ -113,13 +136,20 @@ class UsersController extends Controller
 
         $anotherPaidReturnCount = $anotherPaidReturn->count();
 
-        return view('users.accounts.payment', compact('anotherPaidReturnCount', 'anotherPaidReturn', 'anotherPaid', 'anotherHalf', 'anotherPaying', 'user'));
+        return view('users.accounts.payment', compact('videokes', 'anotherPaidReturnCount', 'anotherPaidReturn', 'anotherPaid', 'anotherHalf', 'anotherPaying', 'user'));
     }
 
     public function preview(User $user)
     {
+        $videokes = Videoke::all();
+
         $anotherHalf = auth()->user()->another_reservation()->where([['is_paid', 'Half Payment'], ['is_return', 'Operating']])->get();
 
-        return view('users.accounts.preview', compact('anotherHalf', 'user'));
+        return view('users.accounts.preview', compact('videokes', 'anotherHalf', 'user'));
+    }
+    
+    public function expired(User $user)
+    {
+        return view('pages.status', compact('user'));
     }
 }

@@ -34,13 +34,9 @@
                             <div class="card-header">Videoke Rates</div>
                             <div class="card-body">
                                 <ul>
-                                    <li class="pb-2"><strong>1 Videoke ; 1 Day</strong> - PHP 500.00.</li>
-                                    <li class="pb-2"><strong>1 Videoke ; 2 Days</strong> - PHP 950.00.</li>
-                                    <li class="pb-2"><strong>1 Videoke ; 3 Days</strong> - PHP 1,400.00.</li>
-                                    <li class="pb-2"><strong>1 Videoke ; 4 Days</strong> - PHP 1,850.00.</li>
-                                    <li class="pb-2"><strong>1 Videoke ; 5 Days</strong> - PHP 2,300.00.</li>
-                                    <li class="pb-2"><strong>1 Videoke ; 6 Days</strong> - PHP 2,750.00.</li>
-                                    <li class="pb-2"><strong>1 Videoke ; 7 Days</strong> - PHP 3,000.00.</li>
+                                    @foreach ($videokes as $videoke)
+                                          <p><strong>{{ $videoke->name }} ; {{ $videoke->number }}</strong> - PHP {{ number_format($videoke->price, 2, ',', '.') }}.</p>
+                                      @endforeach
                                 </ul>
                             </div>
                         </div>

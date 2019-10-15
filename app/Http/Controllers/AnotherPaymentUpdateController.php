@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Payment;
+use App\Videoke;
 use Illuminate\Http\Request;
 
 class AnotherPaymentUpdateController extends Controller
@@ -12,9 +13,11 @@ class AnotherPaymentUpdateController extends Controller
     {
         $payments = Payment::all();
 
+        $videokes = Videoke::all();
+
         $anotherPayment = $user->another_reservation->where('is_paid', 'Paying');
 
-        return view('users.accounts.payment-updates', compact('payments', 'user', 'anotherPayment'));
+        return view('users.accounts.payment-updates', compact('videokes', 'payments', 'user', 'anotherPayment'));
     }
 
     public function update()

@@ -296,14 +296,14 @@
                     @else
                         <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_paid }}</span></h5></td>
                     @endif
-                    @if ($user->videoke_return->is_return == 'Return')
-                        <td><h5><span class="badge badge-pill badge-success">{{ $user->videoke_return->is_return }}</span></h5></td>
-                    @elseif ($user->videoke_return->is_return == 'Operating')
+                    @if ($user->is_return == 'Return')
+                        <td><h5><span class="badge badge-pill badge-success">{{ $user->is_return }}</span></h5></td>
+                    @elseif ($user->is_return == 'Operating')
                         <td>
-                            <h5><span class="badge badge-pill badge-warning mr-2">{{ $user->videoke_return->is_return }}</span></h5>
+                            <h5><span class="badge badge-pill badge-warning mr-2">{{ $user->is_return }}</span></h5>
                         </td>
                     @else
-                        <td><h5><span class="badge badge-pill badge-danger">{{ $user->videoke_return->is_return }}</span></h5></td>
+                        <td><h5><span class="badge badge-pill badge-danger">{{ $user->is_return }}</span></h5></td>
                     @endif
                     <td>{{ $user->created_at->format('F d, Y (D) - g:i A') }} - {{ $user->created_at->diffForHumans() }}</td>
                     <td>{{ $user->check_format() }}</td>
@@ -311,13 +311,13 @@
                     <td>{{ $user->date_return_format() }}</td>
 
                     @if ($user->is_paid == 'Paid')
-                    <td>{{ $user->qr_code_issued() }}</td>
+                    <td>{{ $user->qrcode_issued_at_format() }}</td>
                     @else
                         <td>Not Yet Issued</td>
                     @endif
                    
-                    @if ($user->videoke_return->is_return == 'Return')
-                        <td>{{ $user->return_at_issued() }}</td>
+                    @if ($user->is_return == 'Return')
+                        <td>{{ $user->videoke_return_issued_at_format() }}</td>
                     @else
                         <td>Not Yet Issued</td>
                     @endif
@@ -329,8 +329,14 @@
                         </div>
 
                         <div class="btn-group">
+                            @if ($user->is_paid == 'Paid')
+                                <a href="/admin/customers/{{ $user->id }}/access/edit" class="btn btn-outline-primary m-1">Edit</a>
+                                @elseif ($user->is_paid == 'Half Payment')
                                 <a href="/admin/customers/{{ $user->id }}/access/edit" class="btn btn-outline-primary m-1">Edit</a>
                                 <a href="/admin/customers/{{ $user->id }}/access/confirm" class="btn btn-outline-success m-1">Confirm</a>
+                                @elseif ($user->is_paid == 'Paying')
+                                <a href="/admin/customers/{{ $user->id }}/access/edit" class="btn btn-outline-primary m-1">Edit</a>
+                                @endif
                         </div>
                     </td>
                 </tr>

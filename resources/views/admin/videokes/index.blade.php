@@ -261,11 +261,11 @@
     </ol>
 </div>
 
-    <p><a href="/admin/videokes/create" class="btn btn-outline-primary">Add New Videoke</a></p>
+    <p><a href="/admin/videokes/create" class="btn btn-outline-primary">Add New Package</a></p>
 
 @include('layouts.users.admin.session')
 
-<table class="table table-bordered" id="table1">
+<table class="cell-border display hover" id="table1">
         <thead>
             <tr class="text-center">
                 <th>ID</th>
@@ -292,7 +292,7 @@
                                 @csrf
                                 @method('DELETE')
                                 
-                                <button type="submit" class="btn btn-outline-danger" style="margin: 4px;">Delete</button>
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete {{ $videoke->name }}?')" class="btn btn-outline-danger" style="margin: 4px;">Delete</button>
                             </form>
                         </div>
                     </td>
@@ -307,6 +307,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+            scrollY: 300,
             "language": {
                 "emptyTable": "No Videoke Package Found"
             }

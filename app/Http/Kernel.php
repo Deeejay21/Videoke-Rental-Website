@@ -62,6 +62,12 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'courier' => \App\Http\Middleware\CourierMiddleware::class,
+        'reservation' => \App\Http\Middleware\Reservation::class,
+        'another_reservation' => \App\Http\Middleware\AnotherReservationMiddleware::class,
+        'edit' => \App\Http\Middleware\EditCustomerMiddleware::class,
+        'edit_reservation' => \App\Http\Middleware\EditCustomerReservationMiddleware::class,
+        'customer_status' => \App\Http\Middleware\CustomerStatusMiddleware::class,
+        'customer' => \App\Http\Middleware\CustomerMiddleware::class,
     ];
 
     /**

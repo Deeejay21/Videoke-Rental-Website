@@ -265,7 +265,8 @@
 
 @include('layouts.users.admin.session')
 
-<table class="table table-bordered" id="table1">
+<div class="table-responsive">
+    <table class="cell-border display hover" id="table1">
         <thead>
             <tr class="text-center">
                 <th>Number</th>
@@ -276,8 +277,8 @@
         <tbody>
             @foreach ($videokes as $videoke)
                 <tr>
-                    <td>{{ $videoke->number }}</td>
-                    <td>{{ $videoke->created_at->diffForHumans() }}</td>
+                    <td width="10">{{ $videoke->number }}</td>
+                    <td>{{ $videoke->created_at->format('F d, Y (D) - g:i A') }} - {{ $videoke->created_at->diffForHumans() }}</td>
                     <td width="10">
                         <div class="btn-group">
 
@@ -286,7 +287,7 @@
                                 @csrf
                                 @method('DELETE')
                                 
-                                <button type="submit" class="btn btn-outline-danger" style="margin: 4px;">Delete</button>
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete Videoke {{ $videoke->number }}?')" class="btn btn-outline-danger" style="margin: 4px;">Delete</button>
                             </form>
                         </div>
                     </td>
@@ -294,6 +295,7 @@
             @endforeach
         </tbody>
     </table>
+</div>
 
 @section('lower-extends')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>

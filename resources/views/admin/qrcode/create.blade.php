@@ -266,6 +266,9 @@
                 <div class="card">
                     <div class="card-header">QR Code Confirmation</div>
                     <div class="card-body">
+
+                        <input type="hidden" value="{{ $currentDate }}" class="form-control" name="qrcode_issued_at">
+
                         <input type="hidden" value="Paid" class="form-control" name="is_paid">
 
                         <p><strong>Option 1:</strong></p>

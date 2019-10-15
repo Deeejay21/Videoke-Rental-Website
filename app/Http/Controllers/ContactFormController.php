@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ContactFormMail;
 use App\User;
+use App\Videoke;
+use Illuminate\Http\Request;
+use App\Mail\ContactFormMail;
+use Illuminate\Support\Facades\Mail;
 
 class ContactFormController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('customer')->except('store');
+    }
+    
     public function create(User $user)
     {
-        return view('users.accounts.writemessage', compact('user'));
+        $videokes = Videoke::all();
+
+        return view('users.accounts.writemessage', compact('videokes', 'user'));
     }
 
     public function store()

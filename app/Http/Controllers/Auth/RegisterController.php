@@ -65,9 +65,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z ]+$/'],
+            'last_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z ]+$/'],
             'checked_in_at' => ['required'], // validator for all of the day reserved
-            'last_name' => ['required', 'string', 'max:255'],
             'videoke_id' => ['required', 'string', 'max:255', 'not_in:0'],
             'payment_id' => ['required', 'string', 'max:255', 'not_in:0'],
             'gender' => ['required', 'string', 'max:255', 'not_in:0'],
@@ -76,6 +76,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
+            'first_name.regex' => 'Please avoid using numbers.',
+            'last_name.regex' => 'Please avoid using numbers.',
             'age.min' => 'The age must be at least 18 years old.',
             'age.max' => 'The age may not be greater than 70 years old.',
             'phone.phone' => 'The phone format is invalid.',
@@ -97,8 +99,8 @@ class RegisterController extends Controller
         return User::create([
             'videoke_id' => $data['videoke_id'],
             'first_name' => $data['first_name'],
-            'checked_in_at' => $data['checked_in_at'],
             'last_name' => $data['last_name'],
+            'checked_in_at' => $data['checked_in_at'],
             'gender' => $data['gender'],
             'age' => $data['age'],
             'phone' => $data['phone'],
