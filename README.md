@@ -1,2 +1,2 @@
 # Videoke-Rental-Website
-School Project
+School Thesis
