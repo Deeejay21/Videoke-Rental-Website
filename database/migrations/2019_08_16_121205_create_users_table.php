@@ -17,7 +17,11 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('first_name');
             $table->string('last_name');
-            // $table->unsignedBigInteger('address_id');
+            $table->string('address', 150);
+            $table->string('address_2', 150)->nullable();
+            $table->string('city', 80);
+            $table->string('brgy', 80);
+            $table->unsignedMediumInteger('zip')->nullable();
             $table->timestamp('checked_in_at')->nullable();
             $table->string('gender');
             $table->unsignedSmallInteger('age');

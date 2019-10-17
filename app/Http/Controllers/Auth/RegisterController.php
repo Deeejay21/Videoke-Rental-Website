@@ -67,6 +67,11 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z ]+$/'],
             'last_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z ]+$/'],
+            'address' => ['required', 'string', 'max:255'],
+            'address_2' => ['nullable', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'brgy' => ['required', 'string', 'max:255'],
+            'zip' => ['nullable', 'integer'],
             'checked_in_at' => ['required'], // validator for all of the day reserved
             'videoke_id' => ['required', 'string', 'max:255', 'not_in:0'],
             'payment_id' => ['required', 'string', 'max:255', 'not_in:0'],
@@ -100,6 +105,11 @@ class RegisterController extends Controller
             'videoke_id' => $data['videoke_id'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'address' => $data['address'],
+            'address_2' => $data['address_2'],
+            'city' => $data['city'],
+            'brgy' => $data['brgy'],
+            'zip' => $data['zip'],
             'checked_in_at' => $data['checked_in_at'],
             'gender' => $data['gender'],
             'age' => $data['age'],

@@ -95,6 +95,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/customers/{user}/access', 'AccessController@show'); 
     Route::get('/admin/customers/{user}/access/edit', 'AccessController@edit');
     Route::patch('/admin/customers/{user}/access', 'AccessController@update');
+    
+    Route::get('/admin/customer/{anotherReservation}/access', 'Admin\AnotherAccessController@show'); 
+    Route::get('/admin/customer/{anotherReservation}/access/edit', 'Admin\AnotherAccessController@edit');
+    Route::patch('/admin/customer/{anotherReservation}/access', 'Admin\AnotherAccessController@update');
+
+    Route::get('/admin/customer/{anotherReservation}/access/confirm', 'Admin\AnotherQRCodeController@create');
+    Route::post('/admin/customer/{anotherReservation}/access', 'Admin\AnotherQRCodeController@store');
 
     Route::get('/admin/customers/{user}/access/confirm', 'Admin\QRCodeController@create');
     Route::post('/admin/customers/{user}/access', 'Admin\QRCodeController@store');
@@ -119,6 +126,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/sales/december', 'Admin\SalesController@december');
     
     Route::get('/admin/notification', 'Admin\NotificationController@index');
+    Route::get('/admin/notification/customer/{user}', 'Admin\NotificationController@show');
+    Route::get('/admin/notification/customers/{user}', 'Admin\NotificationController@receipt');
 });
 
 Route::middleware(['auth', 'courier'])->group(function () {

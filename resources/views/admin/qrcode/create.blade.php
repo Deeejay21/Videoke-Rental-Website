@@ -271,12 +271,12 @@
 
                         <input type="hidden" value="Paid" class="form-control" name="is_paid">
 
-                        <p><strong>Option 1:</strong></p>
+                        <p><strong>Option 1:</strong> Via Camera</p>
                         <webcam-reader></webcam-reader>
 
                         <hr>
 
-                        <p><strong>Option 2:</strong></p>
+                        <p><strong>Option 2:</strong> Via Photo</p>
                         <file-reader></file-reader>
 
                         <p style="color: red; font-weight: bold;">{{ $errors->first('qr_password') }}</p>

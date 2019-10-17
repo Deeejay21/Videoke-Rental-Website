@@ -14,10 +14,6 @@ class DashboardController extends Controller
 {
     public function index(User $user)
     {
-        $usersNotification = User::where('usertype', 'User')->get();
-
-        $currentTime = $this->currentTime();
-
         $date = Carbon::now();
 
         $year = Carbon::now();
@@ -42,6 +38,10 @@ class DashboardController extends Controller
               ->backgroundColor('#716aca')
               ->fill(false);
               
-        return view('admin.dashboard.index', compact('chart', 'year', 'user', 'currentTime', 'usersNotification'));
+        return view('admin.dashboard.index', compact(
+            'chart', 
+            'year', 
+            'user',
+        ));
     }
 }

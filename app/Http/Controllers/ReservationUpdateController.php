@@ -24,12 +24,10 @@ class ReservationUpdateController extends Controller
     {
         $data = request()->validate([
             'checked_in_at' => 'required',
-            'videoke_id' => 'required'
+            'videoke_id'    => 'required'
         ]);
 
         auth()->user()->update($data);
-
-        // dd(request()->all());
 
         return redirect('/user/' . auth()->user()->id . '/account/reservation')->with('update', 'Your Reservation Details has been updated successfully.');
     }   

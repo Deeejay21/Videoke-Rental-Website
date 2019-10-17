@@ -8,19 +8,17 @@
 
 @section('sidebar')
 <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
-    <!-- Brand demo (see assets/css/demo/demo.css) -->
     <div class="app-brand demo">
         <span class="app-brand-logo demo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Brand Logo" class="img-fluid">
+            <img src="{{ asset('assets/img/logo-mic.png') }}" alt="Brand Logo" class="img-fluid">
         </span>
-        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin</a>
+        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin <strong>PANEL</strong></a>
         <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
             <i class="ion ion-md-menu align-middle"></i>
         </a>
     </div>
     <div class="sidenav-divider mt-0"></div>
 
-    <!-- Links -->
     <ul class="sidenav-inner py-1">
 
         <!-- Dashboards -->
@@ -33,24 +31,11 @@
 
         <!-- Notification -->
         <li class="sidenav-item">
-                <a href="javascript:" class="sidenav-link sidenav-toggle">
-                        <i class="sidenav-icon feather icon-bell"></i>
-                    <div>Notification <span class="badge badge-dot badge-danger"></span></div>
-                </a>
-                <ul class="sidenav-menu">
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/delivery" class="sidenav-link">
-                            <div>Videoke Delivery</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/return" class="sidenav-link">
-                            <div>Videoke Return</div>
-                        </a>
-                    </li>
-    
-                </ul>
-            </li>
+            <a href="/admin/notification" class="sidenav-link">
+                    <i class="sidenav-icon feather icon-bell"></i>
+                <div>Notification</div>
+            </a>
+        </li>
 
         <!-- Customers -->
         <li class="sidenav-item">
@@ -65,6 +50,11 @@
                     </a>
                 </li>
                 <li class="sidenav-item">
+                    <a href="/admin/customers/paying" class="sidenav-link">
+                        <div>Paying</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
                     <a href="/admin/customers/firstpayment" class="sidenav-link">
                         <div>First Payment</div>
                     </a>
@@ -72,11 +62,6 @@
                 <li class="sidenav-item">
                     <a href="/admin/customers/fullypaid" class="sidenav-link">
                         <div>Fully Paid</div>
-                    </a>
-                </li>
-                <li class="sidenav-item">
-                    <a href="/admin/customers/paying" class="sidenav-link">
-                        <div>Paying</div>
                     </a>
                 </li>
             </ul>
@@ -91,15 +76,20 @@
         </li>
 
         {{-- Videoke --}}
-        <li class="sidenav-item active open">
+        <li class="sidenav-item open active">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-mic"></i>
                 <div>Videoke</div>
             </a>
             <ul class="sidenav-menu">
                 <li class="sidenav-item">
-                    <a href="/admin/videokes" class="sidenav-link">
+                    <a href="/admin/videokelists" class="sidenav-link">
                         <div>Videoke List</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
+                    <a href="/admin/videokes" class="sidenav-link">
+                        <div>Videoke Package</div>
                     </a>
                 </li>
                 <li class="sidenav-item active">
@@ -234,14 +224,6 @@
                     </li>
             </ul>
         </li>
-
-        {{-- Report --}}
-        <li class="sidenav-item">
-            <a href="/admin/report" class="sidenav-link">
-                <i class="sidenav-icon feather icon-home"></i>
-                <div>Report</div>
-            </a>
-        </li>
     </ul>
 </div>
 @endsection
@@ -271,7 +253,7 @@
                 </thead>
                 <tbody>
                         @foreach ($users as $user)
-                        @if (($currentTime->format('F d, Y (D) - g:i A') < $user->return_at))
+                        @if ($currentTime->format('F d, Y') == $user->checked_in_at->format('F d, Y'))
                         <tr>
                             <td width="10">{{ $user->id }}</td>
                                 <td>{{ $user->first_name }} {{ $user->last_name }}</td>
@@ -279,6 +261,18 @@
                                 <td>{{ $user->videoke->name }}</td>
                                 <td>{{ $user->check_format() }}</td>
                                 <td>{{ $user->date_return_format() }}</td>
+                            </tr>
+                            @endif
+                        @endforeach
+                        @foreach ($anotherRent as $rent)
+                        @if ($rent->reserved_at->format('F d, Y') == $currentTime->format('F d, Y'))
+                        <tr>
+                            <td width="10">{{ $rent->id }}</td>
+                                <td>{{ $rent->user->first_name }} {{ $rent->user->last_name }}</td>
+                                <td>{{ $rent->payment->name }}</td>
+                                <td>{{ $rent->videoke->name }}</td>
+                                <td>{{ $rent->check_format() }}</td>
+                                <td>{{ $rent->date_return_format() }}</td>
                             </tr>
                             @endif
                             @endforeach

@@ -24,11 +24,5 @@ class ConfirmationController extends Controller
         } else {
             var_dump('Password is not match!');
         }
-
-        // if(Hash::check($request->current_password, $user->password)) {
-        //     var_dump('Password Confirm!');
-        // } else {
-        //     var_dump('Password is not match!');
-        // }
     }
 }

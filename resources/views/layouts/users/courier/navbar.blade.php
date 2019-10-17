@@ -20,9 +20,9 @@
     <div class="navbar-collapse collapse" id="layout-navbar-collapse">
         <!-- Divider -->
         <hr class="d-lg-none w-100 my-2">
-
+{{-- {{ dd($user->anotherPaidNotification()) }} --}}
         <div class="navbar-nav align-items-lg-center ml-auto">
-            {{-- @if ($whereHalf == True && $user->halfNotification() == true)
+            @if (($whereHalf == True && $user->halfNotification() == true) || ($anotherWhereHalf == True && $user->anotherHalfNotification() == True))
             <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
                 <a class="nav-link hide-arrow" href="/courier/notification">
                     <i class="feather icon-bell navbar-icon align-middle"></i>
@@ -30,12 +30,12 @@
                     <span class="d-lg-none align-middle">&nbsp; Notifications</span>
                 </a>
             </div>
-            @elseif ($wherePaid == True && $user->paidNotification() == true)
+            @elseif (($wherePaid == True && $user->paidNotification() == true) || ($anotherWherePaid == True && $user->anotherPaidNotification() == True))
             <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
                 <a class="nav-link hide-arrow" href="/courier/notification">
                     <i class="feather icon-bell navbar-icon align-middle"></i>
                     <span class="badge badge-danger badge-dot indicator"></span>
-                    <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                    <span class="d-lg-none align-middle">&nbsp; Notifications</span>    
                 </a>
             </div>
             @elseif (!$user->halfNotification() == true || !$user->paidNotification() == true)
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            @endif --}}
+            @endif
 
             <!-- Divider -->
             <div class="nav-item d-none d-lg-block text-big font-weight-light line-height-1 opacity-25 mr-3 ml-1">|</div>

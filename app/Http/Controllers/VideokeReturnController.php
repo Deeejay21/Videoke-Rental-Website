@@ -4,16 +4,13 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
+use App\AnotherReservation;
 use Illuminate\Http\Request;
 
 class VideokeReturnController extends Controller
 {
     public function edit(User $user)
     {
-        $usersNotification = User::where('usertype', 'User')->get();
-
-        $currentTime = $this->currentTime();
-
         $currentDate = Carbon::now('Asia/Manila');
 
         $anotherReservation = User::with('another_reservation')
@@ -24,13 +21,17 @@ class VideokeReturnController extends Controller
             ->where('users.usertype', 'User')
             ->get();
 
-        return view('users.videoke-return.edit', compact('anotherReservation', 'currentDate', 'user', 'currentTime', 'usersNotification'));
+        return view('users.videoke-return.edit', compact(
+            'anotherReservation', 
+            'currentDate', 
+            'user'
+        ));
     }
 
     public function update(User $user)
     {
         $data = request()->validate([
-            'is_return' => '',
+            'is_return'                => '',
             'videoke_return_issued_at' => ''
         ]);
 

@@ -10,9 +10,9 @@
 <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
     <div class="app-brand demo">
         <span class="app-brand-logo demo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Brand Logo" class="img-fluid">
+            <img src="{{ asset('assets/img/logo-mic.png') }}" alt="Brand Logo" class="img-fluid">
         </span>
-        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin</a>
+        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin <strong>PANEL</strong></a>
         <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
             <i class="ion ion-md-menu align-middle"></i>
         </a>
@@ -31,24 +31,11 @@
 
         <!-- Notification -->
         <li class="sidenav-item">
-                <a href="javascript:" class="sidenav-link sidenav-toggle">
-                        <i class="sidenav-icon feather icon-bell"></i>
-                    <div>Notification</div>
-                </a>
-                <ul class="sidenav-menu">
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/delivery" class="sidenav-link">
-                            <div>Videoke Delivery</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/return" class="sidenav-link">
-                            <div>Videoke Return</div>
-                        </a>
-                    </li>
-    
-                </ul>
-            </li>
+            <a href="/admin/notification" class="sidenav-link">
+                    <i class="sidenav-icon feather icon-bell"></i>
+                <div>Notification</div>
+            </a>
+        </li>
 
         <!-- Customers -->
         <li class="sidenav-item open active">
@@ -259,6 +246,11 @@
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Address</th>
+            <th>Address2</th>
+            <th>City</th>
+            <th>Brgy</th>
+            <th>Zip Code</th>
             <th>Gender</th>
             <th>Age</th>
             <th>Contact Number</th>
@@ -280,6 +272,11 @@
                 <td>{{ $customer->id }}</td>
                 <td>{{ $customer->first_name }}</td>
                 <td>{{ $customer->last_name }}</td>
+                <td>{{ $customer->address }}</td>
+                <td>{{ $customer->address_2 }}</td>
+                <td>{{ $customer->city }}</td>
+                <td>{{ $customer->brgy }}</td>
+                <td>{{ $customer->zip }}</td>
                 <td>{{ $customer->gender }}</td>
                 <td>{{ $customer->age }}</td>
                 <td>{{ $customer->phone }}</td>
@@ -308,7 +305,7 @@
                 @endif
                 <td>
                     <div class="btn-group">
-                        <a href="/admin/customers/{{ $customer->id }}/access" class="btn btn-outline-success" style="margin: 4px;">Status</a>
+                        <a href="/admin/customer/{{ $customer->id }}/access" class="btn btn-outline-success" style="margin: 4px;">Status</a>
                         <a href="/admin/customers/{{ $customer->id }}/edit-customer" class="btn btn-outline-primary" style="margin: 4px;">Edit</a>
                     <form class="form-prevent-multiple-submits" action="/admin/customer/{{ $customer->id }}" method="post">
                         @csrf
@@ -327,6 +324,11 @@
                 <td>{{ $user->id - 2 }}</td>
                 <td>{{ $user->first_name }}</td>
                 <td>{{ $user->last_name }}</td>
+                <td>{{ $user->address }}</td>
+                <td>{{ $user->address_2 }}</td>
+                <td>{{ $user->city }}</td>
+                <td>{{ $user->brgy }}</td>
+                <td>{{ $user->zip }}</td>
                 <td>{{ $user->gender }}</td>
                 <td>{{ $user->age }}</td>
                 <td>{{ $user->phone }}</td>

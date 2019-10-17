@@ -17,7 +17,6 @@ class CreateAnotherReservationsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('videoke_id');
-            // $table->string('reservation_status');
             $table->unsignedBigInteger('payment_id');
             $table->timestamp('reserved_at')->nullable();
             $table->string('qr_password', 60);

@@ -65,6 +65,10 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Address</th>
+                    <th>Address2</th>
+                    <th>City</th>
+                    <th>Brgy</th>
+                    <th>Zip Code</th>
                     <th>Phone Number</th>
                     <th>Reservation Delivery Date</th>
                     <th>Videoke Return Date</th>
@@ -78,6 +82,10 @@
                         <td>{{ $delivery->user->id - 2 }}</td>
                         <td>{{ $delivery->user->first_name }} {{ $delivery->user->last_name }}</td>
                         <td>{{ $delivery->user->address }}</td>
+                        <td>{{ $delivery->user->address_2 }}</td>
+                        <td>{{ $delivery->user->city }}</td>
+                        <td>{{ $delivery->user->brgy }}</td>
+                        <td>{{ $delivery->user->zip }}</td>
                         <td>{{ $delivery->user->phone }}</td>
                         {{-- <td>{{ $delivery->checked_in_at->format('F d, Y g:i A') }}</td> --}}
                         <td>{{ $delivery->reserve_format() }}</td>
@@ -97,6 +105,10 @@
                         <td>{{ $user->id - 2 }}</td>
                         <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                         <td>{{ $user->address }}</td>
+                        <td>{{ $user->address_2 }}</td>
+                        <td>{{ $user->city }}</td>
+                        <td>{{ $user->brgy }}</td>
+                        <td>{{ $user->zip }}</td>
                         <td>{{ $user->phone }}</td>
                         {{-- <td>{{ $user->checked_in_at->format('F d, Y g:i A') }}</td> --}}
                         <td>{{ $user->check_format() }}</td>
@@ -123,6 +135,10 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Address</th>
+                <th>Address2</th>
+                <th>City</th>
+                <th>Brgy</th>
+                <th>Zip Code</th>
                 <th>Phone Number</th>
                 <th>Reservation Delivery Date</th>
                 <th>Videoke Return Date</th>
@@ -137,6 +153,10 @@
                     <td>{{ $return->user->id - 2 }}</td>
                     <td>{{ $return->user->first_name }} {{ $return->user->last_name }}</td>
                     <td>{{ $return->user->address }}</td>
+                    <td>{{ $return->user->address_2 }}</td>
+                    <td>{{ $return->user->city }}</td>
+                    <td>{{ $return->user->brgy }}</td>
+                    <td>{{ $return->user->zip }}</td>
                     <td>{{ $return->user->phone }}</td>
                     <td>{{ $return->reserve_format() }}</td>
                     <td>{{ $return->reserve_return_format() }}</td>
@@ -155,6 +175,10 @@
                     <td>{{ $user->id - 2 }}</td>
                     <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                     <td>{{ $user->address }}</td>
+                    <td>{{ $user->address_2 }}</td>
+                    <td>{{ $user->city }}</td>
+                    <td>{{ $user->brgy }}</td>
+                    <td>{{ $user->zip }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->check_format() }}</td>
                     <td>{{ $user->date_return_format() }}</td>

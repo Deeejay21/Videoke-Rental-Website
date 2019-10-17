@@ -9,49 +9,28 @@ use App\Http\Controllers\Controller;
 
 class VideokeListsController extends Controller
 {
-    public function index()
+    public function index(User $user)
     {
-        $currentTime = $this->currentTime();
-
-        $usersNotification = User::where('usertype', 'User')->get();
-
         $videokes = VideokeTotal::all();
 
-        return view('admin.videokes.lists.index', compact('currentTime', 'usersNotification', 'videokes'));
+        return view('admin.videokes.lists.index', compact('user', 'videokes'));
     }
 
-    public function create()
+    public function create(User $user)
     {
-        $currentTime = $this->currentTime();
-
-        $usersNotification = User::where('usertype', 'User')->get();
-
-        return view('admin.videokes.lists.create', compact('currentTime', 'usersNotification'));
+        return view('admin.videokes.lists.create', compact('user'));
     }
 
     public function store(VideokeTotal $videokeTotal)
     {
-        $currentTime = $this->currentTime();
-
-        $usersNotification = User::where('usertype', 'User')->get();
-
         VideokeTotal::create($this->validateRequest());
 
         return redirect('/admin/videokelists')->with('success', 'Videoke has been successfully added.');
     }
 
-    public function show()
+    public function edit(User $user, VideokeTotal $videokeTotal)
     {
-        //
-    }
-
-    public function edit(VideokeTotal $videokeTotal)
-    {
-        $currentTime = $this->currentTime();
-
-        $usersNotification = User::where('usertype', 'User')->get();
-
-        return view('admin.videokes.lists.edit', compact('currentTime', 'usersNotification', 'videokeTotal'));
+        return view('admin.videokes.lists.edit', compact('user', 'videokeTotal'));
     }
 
     public function update(VideokeTotal $videokeTotal)
