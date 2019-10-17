@@ -20,6 +20,14 @@
         <br>
         <span><strong>Address:</strong> {{ $user->address }}</span>
         <br>
+        <span><strong>Address2:</strong> {{ $user->address_2 }}</span>
+        <br>
+        <span><strong>City:</strong> {{ $user->city }}</span>
+        <br>
+        <span><strong>Brgy:</strong> {{ $user->brgy }}</span>
+        <br>
+        <span><strong>Zip Code:</strong> {{ $user->zip }}</span>
+        <br>
         <span><strong>Gender:</strong> {{ $user->gender }}</span>
         <br>
         <span><strong>Age:</strong> {{ $user->age }}</span>

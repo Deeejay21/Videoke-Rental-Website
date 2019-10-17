@@ -17,7 +17,12 @@ class AnotherPaymentUpdateController extends Controller
 
         $anotherPayment = $user->another_reservation->where('is_paid', 'Paying');
 
-        return view('users.accounts.payment-updates', compact('videokes', 'payments', 'user', 'anotherPayment'));
+        return view('users.accounts.payment-updates', compact(
+            'anotherPayment',
+            'videokes', 
+            'payments', 
+            'user'
+        ));
     }
 
     public function update()
@@ -27,8 +32,6 @@ class AnotherPaymentUpdateController extends Controller
         ]);
 
         auth()->user()->another_reservation()->where('is_paid', 'Paying')->update($data);
-
-        // dd(request()->all());
 
         return redirect('/user/' . auth()->user()->id . '/account/payment')->with('update', 'Your payment has been updated successfully.');
     }

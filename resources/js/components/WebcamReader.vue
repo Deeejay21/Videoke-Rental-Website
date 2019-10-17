@@ -3,8 +3,14 @@
     <p class="error">{{ error }}</p>
 
     <p class="decode-result">
-      Last result:
-      <b>{{ result }}</b>
+      Scanned result:
+      <input
+        v-model="result"
+        readonly
+        type="password"
+        name="qr_password"
+        class="form-control col-6"
+      />
     </p>
 
     <qrcode-stream @decode="onDecode" @init="onInit" />

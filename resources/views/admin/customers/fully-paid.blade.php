@@ -8,19 +8,17 @@
 
 @section('sidebar')
 <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
-    <!-- Brand demo (see assets/css/demo/demo.css) -->
     <div class="app-brand demo">
         <span class="app-brand-logo demo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Brand Logo" class="img-fluid">
+            <img src="{{ asset('assets/img/logo-mic.png') }}" alt="Brand Logo" class="img-fluid">
         </span>
-        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin</a>
+        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin <strong>PANEL</strong></a>
         <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
             <i class="ion ion-md-menu align-middle"></i>
         </a>
     </div>
     <div class="sidenav-divider mt-0"></div>
 
-    <!-- Links -->
     <ul class="sidenav-inner py-1">
 
         <!-- Dashboards -->
@@ -33,27 +31,14 @@
 
         <!-- Notification -->
         <li class="sidenav-item">
-                <a href="javascript:" class="sidenav-link sidenav-toggle">
-                        <i class="sidenav-icon feather icon-bell"></i>
-                    <div>Notification <span class="badge badge-dot badge-danger"></span></div>
-                </a>
-                <ul class="sidenav-menu">
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/delivery" class="sidenav-link">
-                            <div>Videoke Delivery</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/return" class="sidenav-link">
-                            <div>Videoke Return</div>
-                        </a>
-                    </li>
-    
-                </ul>
-            </li>
+            <a href="/admin/notification" class="sidenav-link">
+                    <i class="sidenav-icon feather icon-bell"></i>
+                <div>Notification</div>
+            </a>
+        </li>
 
         <!-- Customers -->
-        <li class="sidenav-item active open">
+        <li class="sidenav-item open active">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-user"></i>
                 <div>Customers</div>
@@ -65,6 +50,11 @@
                     </a>
                 </li>
                 <li class="sidenav-item">
+                    <a href="/admin/customers/paying" class="sidenav-link">
+                        <div>Paying</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
                     <a href="/admin/customers/firstpayment" class="sidenav-link">
                         <div>First Payment</div>
                     </a>
@@ -72,11 +62,6 @@
                 <li class="sidenav-item active">
                     <a href="/admin/customers/fullypaid" class="sidenav-link">
                         <div>Fully Paid</div>
-                    </a>
-                </li>
-                <li class="sidenav-item">
-                    <a href="/admin/customers/paying" class="sidenav-link">
-                        <div>Paying</div>
                     </a>
                 </li>
             </ul>
@@ -98,8 +83,13 @@
             </a>
             <ul class="sidenav-menu">
                 <li class="sidenav-item">
-                    <a href="/admin/videokes" class="sidenav-link">
+                    <a href="/admin/videokelists" class="sidenav-link">
                         <div>Videoke List</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
+                    <a href="/admin/videokes" class="sidenav-link">
+                        <div>Videoke Package</div>
                     </a>
                 </li>
                 <li class="sidenav-item">
@@ -233,14 +223,6 @@
                         </ul>
                     </li>
             </ul>
-        </li>
-
-        {{-- Report --}}
-        <li class="sidenav-item">
-            <a href="/admin/report" class="sidenav-link">
-                <i class="sidenav-icon feather icon-home"></i>
-                <div>Report</div>
-            </a>
         </li>
     </ul>
 </div>

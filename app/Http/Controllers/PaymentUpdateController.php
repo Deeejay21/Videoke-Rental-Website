@@ -20,7 +20,11 @@ class PaymentUpdateController extends Controller
 
         $videokes = Videoke::all();
 
-        return view('users.accounts.payment-update', compact('videokes', 'user', 'payments'));
+        return view('users.accounts.payment-update', compact(
+            'videokes', 
+            'payments',
+            'user' 
+        ));
     }
 
     public function update()
@@ -30,8 +34,6 @@ class PaymentUpdateController extends Controller
         ]);
 
         auth()->user()->update($data);
-
-        // dd(request()->all());
 
         return redirect('/user/' . auth()->user()->id . '/account/payment')->with('update', 'Your Payment Details has been updated successfully.');
     }

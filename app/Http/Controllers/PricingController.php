@@ -26,13 +26,6 @@ class PricingController extends Controller
         $videokes = Videoke::all();
 
         $payments = Payment::all();
-        // $startTime = strtotime( '2010-05-01 12:00' );
-        // $endTime = strtotime( '2010-05-10 12:00' );
-        
-        // // Loop between timestamps, 24 hours at a time
-        // for ( $i = $startTime; $i <= $endTime; $i = $i + 86400 ) {
-        //   $thisDate = date( 'Y-m-d', $i ); // 2010-05-01, 2010-05-02, etc
-        // }
 
         $videokeTotal = VideokeTotal::all()->count();
 
@@ -43,10 +36,10 @@ class PricingController extends Controller
         return view('pages.pricing.show', compact(
             'videokeTotal', 
             'userTotal', 
-            'videoke', 
             'payments', 
-            'users', 
-            'videokes'
+            'videokes',
+            'videoke', 
+            'users'
         ));
     }
 }

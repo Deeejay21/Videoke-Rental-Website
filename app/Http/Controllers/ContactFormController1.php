@@ -19,9 +19,9 @@ class ContactFormController1 extends Controller
     public function store()
     {
         $data = request()->validate([
-            'name' => 'required',
-            'email' => 'email|required',
-            'message' => 'required',
+            'name'      => 'required',
+            'email'     => 'email|required',
+            'message'   => 'required',
         ]);
 
         Mail::to('videoke-rental@gmail.com')->send(new ContactFormMail1($data));

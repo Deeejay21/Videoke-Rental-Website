@@ -12,9 +12,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function currentTime()
-    {
-        return Carbon::now('Asia/Manila')->addDays(4);
-        // dd($return);
-    }
+    // protected function currentTime()
+    // {
+    //     // return Carbon::now('Asia/Manila');
+    //     // dd($return);
+    // }
 }

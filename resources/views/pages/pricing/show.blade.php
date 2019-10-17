@@ -26,77 +26,45 @@
       <div class="container">
           
             <div class="row pb-5">
-                    {{-- <div class="col-md-2">
-                    </div> --}}
-                    <div class="col-md-5 pt mb-2">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6">
                         <div class="card">
-                            <div class="card-header">Videoke Rates</div>
-                            <div class="card-body">
+                            <div class="card-header font-weight-bolder text-center pl-5">VIDEOKE RATES</div>
+                            <div class="card-body text-center">
                                 <ul>
-                                    @foreach ($videokes as $videokeRate)
-                                        <p><strong>{{ $videokeRate->name }} ; {{ $videokeRate->number }}</strong> - PHP {{ number_format($videokeRate->price, 2, '.', ',') }}.</p>
-                                    @endforeach
+                                    @foreach ($videokes as $videokeRates)
+                                          <p><strong>{{ $videokeRates->name }} ; {{ $videokeRates->number }}</strong> - PHP {{ number_format($videokeRates->price, 2, '.', ',') }}.</p>
+                                      @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7 pt">
+                    {{-- <div class="col-md-7 pt">
                         <div class="card">
-                            <div class="card-header">Dates that are not available</div>
+                            <div class="card-header">Reserved Videoke Schedule</div>
                             <div class="card-body">
-                              @if ($userTotal == $videokeTotal)
-                                
+                              @if ($users->count() == 0)
+                                  <td>No Reservation Yet</td>
+                              @endif
                                 @foreach ($users as $user)
-                                {{-- @if (($user->is_paid == 'Half Payment' || $user->is_paid == 'Paid') && $user->is_return == 'Operating') --}}
+                                @if (($currentTime < $user->date_return()) && ($user->is_paid == 'Paid'))
                                     <ul>
-                                      
-                                      {{-- <li>{{ $user->checked_in_at->format('F d, Y') }} to {{ $user->date_return_register() }}</li> --}}
-                                      @php
-                                      //  $startTime = strtotime($user->checked_in_at);
-                                        // $endTime = strtotime($user->date_return_register());
-                                        // dd($endTime);
-                                        
-                                      //   // Loop between timestamps, 24 hours at a time
-                                      //   for ( $i = $startTime; $i <= $endTime; $i = $i + 86400 ) {
-                                      //     $thisDate = date( 'F d, Y', $i ); // 2010-05-01, 2010-05-02, etc
-                                      //     echo "$thisDate<br>";
-                                      //   }   
-
-
-                                      // $begin = new DateTime($user->checked_in_at);
-                                      // $end   = new DateTime( $user->date_return_register() );
-
-                                      // for($i = $begin; $i <= $end; $i->modify('+1 day')){
-                                      //     $date = $i->format("Y-m-d");
-                                      //     echo "$date<br>";
-                                      // }
-
-                                      $begin = new DateTime($user->checked_in_at);
-                                      $end = new DateTime($user->date_return_register());
-                                      $end = $end->modify( '+1 day' ); 
-
-                                      $interval = new DateInterval('P1D');
-                                      $daterange = new DatePeriod($begin, $interval ,$end);
-                                      // dd($daterange);
-
-                                      foreach($daterange as $date){
-                                          echo $date->format("F d, Y") . "<br>";
-                                      }
-                                      @endphp
+                                      <li>{{ $user->checked_in_at->format('F d, Y g:i A') }} to {{ $user->date_return() }}</li>
                                     </ul>
-                                @endforeach
                                 @endif
+                                @endforeach
                             </div>
                         </div>
-                    </div>
-                    {{-- <div class="col-md-2">
-                        </div> --}}
+                    </div> --}}
+                    <div class="col-md-3">
+                        </div>
                 </div>
 
         <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading text-uppercase">Register</h2>
-            <h3 class="section-subheading text-muted">Create Your Account.</h3>
+            <h3 class="section-subheading text-muted">Create Your Account</h3>
           </div>
         </div>
         
@@ -109,48 +77,103 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                   <div class="form-group">
-                        <label for="videoke_id" class="col-form-label text-md-right">Videoke Package</label>
-                        <select id="videoke_id" class="form-control" name="videoke_id" autocomplete="videoke_id" autofocus>
-                                <option value="{{ $videoke->id }}">{{ $videoke->name }}</option>
-                        </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="checked_in_at" class="col-form-label text-md-right">Date of Reservation</label>
-                    <div class="input-group date form_datetime" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
-                        <input class="form-control fs @error('checked_in_at') is-invalid @enderror" size="40" type="text" value="{{ old('checked_in_at') }}" readonly style="background-color: #fff;">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                        @error('checked_in_at')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror  
-                    </div>
-                    <input type="hidden" id="checked_in_at" name="checked_in_at" value="" /><br/>
+                    <label for="videoke_id" class="col-form-label text-md-right">Videoke Package</label>
+                    <select id="videoke_id" class="form-control" name="videoke_id" autocomplete="videoke_id" autofocus>
+                            <option value="{{ $videoke->id }}">{{ $videoke->name }}</option>
+                    </select>
               </div>
 
-                  <p align="center"><small>Note: If you want to order 2 or more videoke, you can login with your account and reserve another videoke.</small></p>
-
                   <div class="form-group">
-                    <label for="name" class="col-form-label text-md-right">First Name</label>
-                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="first_name" autofocus>
-
-                                @error('first_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <label for="checked_in_at" class="col-form-label text-md-right">Date of Reservation</label>
+                        <div class="input-group date form_datetime" data-date-format="dd MM yyyy - HH:ii P" data-link-field="checked_in_at">
+                            <input class="form-control fs @error('checked_in_at') is-invalid @enderror" size="40" value="{{ old('checked_in_at') }}" type="text" readonly style="background-color: #fff;">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                            @error('checked_in_at')
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                          @enderror  
+                        </div>
+                        <input type="hidden" id="checked_in_at" name="checked_in_at" value="{{ old('checked_in_at') }}" /><br/>
                   </div>
 
-                  <div class="form-group">
-                    <label for="last_name" class="col-form-label text-md-right">Last Name</label>
-                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="last_name" autofocus>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="name" class="col-form-label text-md-right">First Name</label>
+                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="first_name" autofocus>
+    
+                        @error('first_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                      </div>
+                    </div>
+    
+                      <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="last_name" class="col-form-label text-md-right">Last Name</label>
+                        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="last_name" autofocus>
+                            
                         @error('last_name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                      </div>
+                      </div>
                   </div>
+
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" name="address" value="{{ old('address') }}" class="form-control @error('address') is-invalid @enderror" placeholder="1234 Main St">
+                    @error('address')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror 
+                  </div>
+                  <div class="form-group">
+                    <label for="address_2">Address 2</label>
+                    <input type="text" name="address_2" value="{{ old('address_2') }}" class="form-control @error('address_2') is-invalid @enderror" placeholder="Apartment, studio, or floor">
+                    @error('address_2')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror 
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="city">City</label>
+                      <input type="text" name="city" value="{{ old('city') }}" class="form-control @error('city') is-invalid @enderror">
+                      @error('city')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror 
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="brgy">Brgy.</label>
+                      <input type="text" name="brgy" value="{{ old('brgy') }}" class="form-control @error('brgy') is-invalid @enderror">
+                      @error('brgy')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror 
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="zip">Zip</label>
+                      <input type="text" name="zip" value="{{ old('zip') }}" class="form-control @error('zip') is-invalid @enderror">
+                      @error('zip')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror 
+                    </div>
+                  </div>
+
+                  <p><strong>Note:</strong> Our location is only for <strong>Palmera area</strong>, we cannot provide any services outside the location. Thank you.</p>
 
                   <div class="form-group">
                     <label for="gender" class="col-form-label text-md-right">Gender</label>
@@ -226,30 +249,6 @@
                     @enderror 
                   </div>
 
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
-                  <div class="form-group">
-                    
-                  </div>
-
                 </div>
                 <div class="col-md-3"></div>
                 {{-- <div class="col-md-6">
@@ -272,15 +271,22 @@
         <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}" charset="UTF-8"></script>
         <script type="text/javascript">
-            $('.form_datetime').datetimepicker('setDatesDisabled', ['2019-11-21'], {
-                //language:  'fr',
+        
+          var date = new Date();
+              date.setDate(date.getDate());
+            
+              $('.form_datetime').datetimepicker({
+                format: "dd MM yyyy - HH:ii P",
+                pickerPosition: "center",
                 weekStart: 1,
                 todayBtn:  1,
-                autoclose: 1,
                 todayHighlight: 1,
                 startView: 2,
                 forceParse: 0,
                 showMeridian: 1,
+                isRTL: false,
+                autoclose: true,
+                startDate: date
                 // setDaysOfWeekDisabled: [],
                 // setDatesDisabled: 
             });

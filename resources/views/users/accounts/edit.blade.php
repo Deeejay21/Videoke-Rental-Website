@@ -39,7 +39,54 @@
               </div>
               </div>
           </div>
-          
+
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" name="address" value="{{ old('address') ?? $user->address }}" class="form-control @error('address') is-invalid @enderror" placeholder="1234 Main St">
+            @error('address')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror 
+          </div>
+          <div class="form-group">
+            <label for="address_2">Address 2</label>
+            <input type="text" name="address_2" value="{{ old('address_2') ?? $user->address_2 }}" class="form-control @error('address_2') is-invalid @enderror" placeholder="Apartment, studio, or floor">
+            @error('address_2')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror 
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="city">City</label>
+              <input type="text" name="city" value="{{ old('city') ?? $user->city }}" class="form-control @error('city') is-invalid @enderror">
+              @error('city')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror 
+            </div>
+            <div class="form-group col-md-4">
+              <label for="brgy">Brgy.</label>
+              <input type="text" name="brgy" value="{{ old('brgy') ?? $user->brgy }}" class="form-control @error('brgy') is-invalid @enderror">
+              @error('brgy')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror 
+            </div>
+            <div class="form-group col-md-2">
+              <label for="zip">Zip</label>
+              <input type="text" name="zip" value="{{ old('zip') ?? $user->zip }}" class="form-control @error('zip') is-invalid @enderror">
+              @error('zip')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror 
+            </div>
+          </div>
 
           <div class="form-group">
             <label for="gender" class="col-form-label text-md-right">Gender</label>

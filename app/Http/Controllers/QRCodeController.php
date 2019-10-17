@@ -4,19 +4,16 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
+use App\AnotherReservation;
 use Illuminate\Http\Request;
 
 class QRCodeController extends Controller
 {
     public function edit(User $user)
     {
-        $usersNotification = User::where('usertype', 'User')->get();
-
-        $currentTime = $this->currentTime();
-
         $currentDate = Carbon::now('Asia/Manila');
 
-        return view('users.qrcode.edit', compact('currentDate', 'usersNotification', 'currentTime', 'user'));
+        return view('users.qrcode.edit', compact('currentDate', 'user'));
     }
 
     public function update(Request $request, User $user)
@@ -31,13 +28,13 @@ class QRCodeController extends Controller
             $user->qr_code()->update($data);
     
             $status = request()->validate([
-                'is_paid' => '',
+                'is_paid'          => '',
                 'qrcode_issued_at' => '',
             ]);
             
             $user->qr_code()->update($data);
-            $user->update($status);
 
+            $user->update($status);
             
             return redirect('/courier/customers')->with('success', 'Customer ' . $user->first_name . ' payment done successfully.');
         } else {

@@ -4,52 +4,61 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use App\Payment;
+use App\AnotherReservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TransactionsController extends Controller
 {
-    public function index()
+    public function index(User $user)
     {
-        $currentTime = $this->currentTime();
+        $transactions = User::where('usertype', 'User')->whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $usersNotification = User::where('usertype', 'User')->get();
+        $anotherTransaction = AnotherReservation::whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $transactions = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
-
-        return view('admin.transaction.index', compact('currentTime', 'usersNotification', 'transactions'));
+        return view('admin.transaction.index', compact(
+            'anotherTransaction', 
+            'transactions',
+            'user', 
+        ));
     }
 
-    public function palawanExpress()
+    public function palawanExpress(User $user)
     {
-        $currentTime = $this->currentTime();
+        $transactions = User::where('usertype', 'User')->whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $usersNotification = User::where('usertype', 'User')->get();
+        $anotherPalawan = AnotherReservation::whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $transactions = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
-
-        return view('admin.transaction.palawan-express', compact('currentTime', 'usersNotification', 'transactions'));
+        return view('admin.transaction.palawan-express', compact(
+            'anotherPalawan', 
+            'transactions',
+            'user', 
+        ));
     }
 
-    public function smartPadala()
+    public function smartPadala(User $user)
     {
-        $currentTime = $this->currentTime();
+        $transactions = User::where('usertype', 'User')->whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $usersNotification = User::where('usertype', 'User')->get();
+        $anotherSmart = AnotherReservation::whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $transactions = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
-
-        return view('admin.transaction.smart-padala', compact('currentTime', 'usersNotification', 'transactions'));
+        return view('admin.transaction.smart-padala', compact(
+            'anotherSmart', 
+            'transactions',
+            'user', 
+        ));
     }
     
-    public function bayadCenter()
+    public function bayadCenter(User $user)
     {
-        $currentTime = $this->currentTime();
+        $transactions = User::where('usertype', 'User')->whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $usersNotification = User::where('usertype', 'User')->get();
+        $anotherBayad = AnotherReservation::whereIn('is_paid', ['Half Payment', 'Paid'])->get();
 
-        $transactions = User::where('usertype', 'User')->where('is_paid', 'Paid')->get();
-
-        return view('admin.transaction.bayad-center', compact('currentTime', 'usersNotification', 'transactions'));
+        return view('admin.transaction.bayad-center', compact(
+            'anotherBayad', 
+            'transactions',
+            'user', 
+        ));
     }
 }

@@ -5306,6 +5306,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -42222,8 +42228,28 @@ var render = function() {
       _c("p", { staticClass: "error" }, [_vm._v(_vm._s(_vm.error))]),
       _vm._v(" "),
       _c("p", { staticClass: "decode-result" }, [
-        _vm._v("\n    Last result:\n    "),
-        _c("b", [_vm._v(_vm._s(_vm.result))])
+        _vm._v("\n    Scanned result:\n    "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.result,
+              expression: "result"
+            }
+          ],
+          staticClass: "form-control col-6",
+          attrs: { readonly: "", type: "password", name: "qr_password" },
+          domProps: { value: _vm.result },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.result = $event.target.value
+            }
+          }
+        })
       ]),
       _vm._v(" "),
       _c("qrcode-stream", { on: { decode: _vm.onDecode, init: _vm.onInit } })

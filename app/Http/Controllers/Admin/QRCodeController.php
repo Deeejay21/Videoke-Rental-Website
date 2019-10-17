@@ -11,13 +11,9 @@ class QRCodeController extends Controller
 {
     public function create(User $user)
     {
-        $currentTime = $this->currentTime();
-
-        $usersNotification = User::where('usertype', 'User')->get();
-
         $currentDate = Carbon::now('Asia/Manila');
 
-        return view('admin.qrcode.create', compact('currentDate', 'user', 'currentTime', 'usersNotification'));
+        return view('admin.qrcode.create', compact('currentDate', 'user'));
     }
 
     public function store(Request $request, User $user)
@@ -32,11 +28,12 @@ class QRCodeController extends Controller
             $user->qr_code()->update($data);
     
             $status = request()->validate([
-                'is_paid' => '',
+                'is_paid'          => '',
                 'qrcode_issued_at' => '',
             ]);
             
             $user->qr_code()->update($data);
+            
             $user->update($status);
             
             return redirect('/admin/customers/' . $user->id . '/access')->with('success', 'Customer ' . $user->first_name . ' payment done successfully.');

@@ -4,6 +4,7 @@ namespace App;
 
 use DB;
 use Carbon\Carbon;
+use App\AnotherReservation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -672,13 +673,22 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    
+    // public function reserve_return_notification_format()
+    // {
+    //     $reserved_at = $this->reserved_at;
+    //     $date_return = $this->videoke->number;
+        
+    //     $date = date_create($reserved_at);
+
+    //     date_add($date,date_interval_create_from_date_string($date_return));
+    //     return date_format($date,"F d, Y");
+    // }
+
     public function halfNotification()
     {
         $currentTime = $this->currentDate();
 
-        // dd($currentTime);
-
-        // $deliverUser = User::where([['usertype', 'User'], ['is_paid', 'Half Payment'], ['is_return', 'Operating']])->orderBy('created_at', 'DESC')->get(); // ASC dapat kapag sa time ng delivery customer
         $deliverUser = User::where([['usertype', 'User'], ['is_paid', 'Half Payment'], ['is_return', 'Operating']])->orderBy('checked_in_at', 'DESC')->get();
         
         if ($deliverUser->count() == 0) {
@@ -687,10 +697,24 @@ class User extends Authenticatable implements MustVerifyEmail
         foreach ($deliverUser as $deliver) {
             $deliver;
         }
-
+    }
+        return ($deliver->checked_in_at->format('F d, Y')) == $currentTime->format('F d, Y') ? $deliver->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y') : false;
     }
 
-        return ($deliver->checked_in_at->format('F d, Y')) == $currentTime->format('F d, Y') ? $deliver->checked_in_at->format('F d, Y') == $currentTime->format('F d, Y') : false;
+    public function anotherHalfNotification()
+    {
+        $currentTime = $this->currentDate();
+
+        $anotherDeliverUser = AnotherReservation::where([['is_paid', 'Half Payment'], ['is_return', 'Operating']])->orderBy('reserved_at', 'DESC')->get();
+        
+        if ($anotherDeliverUser->count() == 0) {
+                return null;
+        } else {
+        foreach ($anotherDeliverUser as $anotherDeliver) {
+            $anotherDeliver;
+        }
+    }
+        return ($anotherDeliver->reserved_at->format('F d, Y')) == $currentTime->format('F d, Y') ? $anotherDeliver->reserved_at->format('F d, Y') == $currentTime->format('F d, Y') : false;
     }
 
     public function paidNotification()
@@ -706,12 +730,27 @@ class User extends Authenticatable implements MustVerifyEmail
             $deliver;
         }
     }
-
         return ($deliver->date_return_notification() == $currentTime->format('F d, Y')) ? $deliver->date_return_notification() == $currentTime->format('F d, Y') : false;
+    }
+
+    public function anotherPaidNotification()
+    {
+        $currentTime = $this->currentDate();
+
+        $anotherDeliverUser = AnotherReservation::where([['is_paid', 'Paid'], ['is_return', 'Operating']])->orderby('reserved_at', 'DESC')->get();
+
+        if ($anotherDeliverUser->count() == 0) {
+                return null;
+        } else {
+        foreach ($anotherDeliverUser as $anotherDeliver) {
+            $anotherDeliver;
+        }
+    }
+        return ($anotherDeliver->reserve_return_notification_format() == $currentTime->format('F d, Y')) ? $anotherDeliver->reserve_return_notification_format() == $currentTime->format('F d, Y') : false;
     }
 
     public function currentDate()
     {
-        return Carbon::now('Asia/Manila')->addDays(1);
+        return Carbon::now('Asia/Manila')->addDays(8);
     }
 }

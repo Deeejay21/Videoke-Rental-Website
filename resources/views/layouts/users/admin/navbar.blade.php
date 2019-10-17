@@ -73,6 +73,35 @@
         <hr class="d-lg-none w-100 my-2">
 
         <div class="navbar-nav align-items-lg-center ml-auto">
+                @if (($whereHalf == True && $user->halfNotification() == true) || ($anotherWhereHalf == True && $user->anotherHalfNotification() == True))
+                <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                    <a class="nav-link hide-arrow" href="/admin/notification">
+                        <i class="feather icon-bell navbar-icon align-middle"></i>
+                        <span class="badge badge-danger badge-dot indicator"></span>
+                        <span class="d-lg-none align-middle">&nbsp; Notifications</span>
+                    </a>
+                </div>
+                @elseif (($wherePaid == True && $user->paidNotification() == true) || ($anotherWherePaid == True && $user->anotherPaidNotification() == True))
+                <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
+                    <a class="nav-link hide-arrow" href="/admin/notification">
+                        <i class="feather icon-bell navbar-icon align-middle"></i>
+                        <span class="badge badge-danger badge-dot indicator"></span>
+                        <span class="d-lg-none align-middle">&nbsp; Notifications</span>    
+                    </a>
+                </div>
+                @elseif (!$user->halfNotification() == true || !$user->paidNotification() == true)
+                <div class="nav-item dropdown mr-lg-3">
+                    <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
+                        <i class="feather icon-bell navbar-icon align-middle"></i>
+                        <span class="d-lg-none align-middle">&nbsp; Notification</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="list-group list-group-flush">
+                            <div href="javascript:" class="text-muted pl-3">No Notification Yet</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 {{-- @foreach ($usersNotification as $user)
                 @if (($user->is_paid == 'Paid') && ($user->videoke_return->is_return == 'Operating') && ($user->date_return_notification() == $currentTime->format('F d, Y')))
                 <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">

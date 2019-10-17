@@ -8,19 +8,17 @@
 
 @section('sidebar')
 <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-dark">
-    <!-- Brand demo (see assets/css/demo/demo.css) -->
     <div class="app-brand demo">
         <span class="app-brand-logo demo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Brand Logo" class="img-fluid">
+            <img src="{{ asset('assets/img/logo-mic.png') }}" alt="Brand Logo" class="img-fluid">
         </span>
-        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin</a>
+        <a href="/admin" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Admin <strong>PANEL</strong></a>
         <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
             <i class="ion ion-md-menu align-middle"></i>
         </a>
     </div>
     <div class="sidenav-divider mt-0"></div>
 
-    <!-- Links -->
     <ul class="sidenav-inner py-1">
 
         <!-- Dashboards -->
@@ -33,24 +31,11 @@
 
         <!-- Notification -->
         <li class="sidenav-item">
-                <a href="javascript:" class="sidenav-link sidenav-toggle">
-                        <i class="sidenav-icon feather icon-bell"></i>
-                    <div>Notification <span class="badge badge-dot badge-danger"></span></div>
-                </a>
-                <ul class="sidenav-menu">
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/delivery" class="sidenav-link">
-                            <div>Videoke Delivery</div>
-                        </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="/admin/notification/return" class="sidenav-link">
-                            <div>Videoke Return</div>
-                        </a>
-                    </li>
-    
-                </ul>
-            </li>
+            <a href="/admin/notification" class="sidenav-link">
+                    <i class="sidenav-icon feather icon-bell"></i>
+                <div>Notification</div>
+            </a>
+        </li>
 
         <!-- Customers -->
         <li class="sidenav-item">
@@ -65,6 +50,11 @@
                     </a>
                 </li>
                 <li class="sidenav-item">
+                    <a href="/admin/customers/paying" class="sidenav-link">
+                        <div>Paying</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
                     <a href="/admin/customers/firstpayment" class="sidenav-link">
                         <div>First Payment</div>
                     </a>
@@ -72,11 +62,6 @@
                 <li class="sidenav-item">
                     <a href="/admin/customers/fullypaid" class="sidenav-link">
                         <div>Fully Paid</div>
-                    </a>
-                </li>
-                <li class="sidenav-item">
-                    <a href="/admin/customers/paying" class="sidenav-link">
-                        <div>Paying</div>
                     </a>
                 </li>
             </ul>
@@ -98,8 +83,13 @@
             </a>
             <ul class="sidenav-menu">
                 <li class="sidenav-item">
-                    <a href="/admin/videokes" class="sidenav-link">
+                    <a href="/admin/videokelists" class="sidenav-link">
                         <div>Videoke List</div>
+                    </a>
+                </li>
+                <li class="sidenav-item">
+                    <a href="/admin/videokes" class="sidenav-link">
+                        <div>Videoke Package</div>
                     </a>
                 </li>
                 <li class="sidenav-item">
@@ -140,7 +130,7 @@
                         <div>Smart Padala</div>
                     </a>
                 </li>
-                <li class="sidenav-item">
+                <li class="sidenav-item active">
                     <a href="/admin/transaction/bayadcenter" class="sidenav-link">
                         <div>Bayad Center</div>
                     </a>
@@ -149,7 +139,7 @@
         </li>
 
         {{-- Sales --}}
-        <li class="sidenav-item active open">
+        <li class="sidenav-item open active">
             <a href="javascript:" class="sidenav-link sidenav-toggle">
                 <i class="sidenav-icon feather icon-shopping-cart"></i>
                 <div>Sales</div>
@@ -234,14 +224,6 @@
                     </li>
             </ul>
         </li>
-
-        {{-- Report --}}
-        <li class="sidenav-item">
-            <a href="/admin/report" class="sidenav-link">
-                <i class="sidenav-icon feather icon-home"></i>
-                <div>Report</div>
-            </a>
-        </li>
     </ul>
 </div>
 @endsection
@@ -264,7 +246,7 @@
                 <th>Last Name</th>
                 <th>Amount</th>
                 <th>Date Created</th>
-                <th>Action</th>
+                {{-- <th>Action</th> --}}
             </tr>
         </thead>
         <tbody>
@@ -274,21 +256,30 @@
                     <td>{{ $user->first_name }}</td>
                     <td>{{ $user->last_name }}</td>
                     <td>{{ $user->videoke->price }}</td>
-                    <td>{{ $user->created_at->format('F/d/Y' . ' (' . 'D' . ')') }} - {{ $user->created_at->diffForHumans() }}</td>
-                    <td width="10">
+                    <td>{{ $user->created_at->format('F d, Y (D) - g:i A') }} - {{ $user->created_at->diffForHumans() }}</td>
+                    {{-- <td width="10">
                         <div class="btn-group">
-
                             <a href="/admin/report" class="btn btn-outline-danger" style="margin: 4px;">PDF</a>
                             <a href="/admin/report" class="btn btn-outline-success" style="margin: 4px;">Excel</a>
                             <a href="/admin/report" class="btn btn-outline-primary" style="margin: 4px;">Print</a>
-                            {{-- <form action="/admin/videokes/{{ $videoke->id }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                
-                                <button type="submit" class="btn btn-outline-danger" style="margin: 4px;">Delete</button>
-                            </form> --}}
                         </div>
-                    </td>
+                    </td> --}}
+                </tr>
+            @endforeach
+            @foreach ($anotherSales as $sales)
+                <tr>
+                    <td width="10">{{ $sales->id - 2 }}</td>
+                    <td>{{ $sales->user->first_name }}</td>
+                    <td>{{ $sales->user->last_name }}</td>
+                    <td>{{ $sales->videoke->price }}</td>
+                    <td>{{ $sales->created_at->format('F d, Y (D) - g:i A') }} - {{ $sales->created_at->diffForHumans() }}</td>
+                    {{-- <td width="10">
+                        <div class="btn-group">
+                            <a href="/admin/report" class="btn btn-outline-danger" style="margin: 4px;">PDF</a>
+                            <a href="/admin/report" class="btn btn-outline-success" style="margin: 4px;">Excel</a>
+                            <a href="/admin/report" class="btn btn-outline-primary" style="margin: 4px;">Print</a>
+                        </div>
+                    </td> --}}
                 </tr>
             @endforeach
         </tbody>
@@ -298,10 +289,16 @@
 
 @section('lower-extends')
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.print.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
         $('#table1').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                'print'
+            ],
             "language": {
                 "emptyTable": "No Sales List"
             }
